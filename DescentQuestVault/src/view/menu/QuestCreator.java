@@ -366,6 +366,7 @@ public class QuestCreator extends SubContainer implements Serializable{
 			vent.initialise(this);
 			
 		}
+		ItemController.getItemController().readValues(g);
 		eventPanel.setBaseTrigger(g.getBaseTrigger());
 	}
 

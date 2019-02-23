@@ -270,10 +270,16 @@ public class ItemController {
 
 			// TODO Auto-generated method stub
 			for(Item value:customvalues) {
-				file.a(value);
+				file.addCustomValue((CustomValue) value);
 			}
-			file.setBaseTrigger((StartUpTrigger)basetrigger);
+			//file.setBaseTrigger((StartUpTrigger)basetrigger);
 			
+		
+	}
+
+
+	public void readValues(WorldSaveFile g) {
+		customvalues.addAll(g.getCustomValues());
 		
 	}
     
