@@ -21,8 +21,9 @@ import model.values.IntegerValueItem;
 import model.values.Modification;
 import view.viewItems.NameChangeListener;
 import view.viewItems.ItemBox.ItemInfoContainer;
+import view.viewItems.ItemBox.ValueChangeListener;
 
-public class IfIntegerTrigger extends Trigger implements NameChangeListener {
+public class IfIntegerTrigger extends Trigger implements NameChangeListener,ValueChangeListener {
 	
 	
 	private Comparison comp;
@@ -61,6 +62,8 @@ public class IfIntegerTrigger extends Trigger implements NameChangeListener {
 		comp=equals;
 		theItem=integerValueItem;
 		integerValueItem.addNameChangeListener(this);
+		theItem.addValueChangeListener(this);
+		restateName(integerValueItem.getName());
 		
 	}
 	public IfIntegerTrigger(Comparison comp, IntegerValueItem theItem, int compvalue) {
@@ -69,6 +72,8 @@ public class IfIntegerTrigger extends Trigger implements NameChangeListener {
 		this.theItem = theItem;
 		this.compvalue = compvalue;
 		theItem.addNameChangeListener(this);
+		theItem.addValueChangeListener(this);
+		restateName(theItem.getName());
 	}
 	
 	
@@ -205,5 +210,11 @@ public class IfIntegerTrigger extends Trigger implements NameChangeListener {
 		IfIntegerTrigger toreturn=new IfIntegerTrigger(comp,theItem,compvalue);
 		this.addAllTriggers(toreturn);
 		return toreturn;
+	}
+
+	@Override
+	public void valueChanged(int theInteger) {
+		trigger();
+		
 	}
 }

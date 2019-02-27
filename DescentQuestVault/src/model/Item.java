@@ -17,7 +17,7 @@ public abstract class Item implements Serializable {
 
 	private String name;
 	protected boolean available=true;
-	private ArrayList<AvailabilityChangeListener> availabilityChangeListeners=new ArrayList<AvailabilityChangeListener>();
+	private transient ArrayList<AvailabilityChangeListener> availabilityChangeListeners=new ArrayList<AvailabilityChangeListener>();
 	
 	protected int availability;
 
@@ -148,6 +148,9 @@ public abstract class Item implements Serializable {
 
 	public void addAvailabilityChangeListener(ListContainer listContainer) {
 		// TODO Auto-generated method stub
+		if(availabilityChangeListeners==null) {
+			availabilityChangeListeners=new ArrayList<AvailabilityChangeListener>();
+		}
 		availabilityChangeListeners.add(listContainer);
 	}
 

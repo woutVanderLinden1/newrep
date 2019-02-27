@@ -13,6 +13,7 @@ import model.event.MovementString;
 import model.event.Trigger;
 import model.event.extraevents.StopAble;
 import model.event.extraevents.TextOption;
+import model.values.CustomInteger;
 import view.Items.Map.MapItem;
 import view.Items.Map.ViewDoor;
 import view.Items.Map.ViewMonster;
@@ -137,7 +138,6 @@ public interface IView {
 
 	void loadGame(WorldSaveFile g);
 
-	void addStartUpTrigger();
 
 	void addGameToken(ViewToken toplace);
 
@@ -177,7 +177,12 @@ public interface IView {
 
 	MonsterTurnTrigger getMovement();
 
+	void prepareInitialMenu();
 
 
+
+	void addStartTriggers(CustomInteger hope);
+
+	
 	
 }

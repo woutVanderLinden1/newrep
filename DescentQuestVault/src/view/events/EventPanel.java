@@ -15,6 +15,7 @@ import model.SelectedArea;
 import model.event.StartUpTrigger;
 import model.event.Trigger;
 import model.event.Univent;
+import model.values.CustomInteger;
 import view.viewItems.TitleBox;
 import view.viewItems.ItemBox.SelectAble;
 
@@ -96,9 +97,9 @@ public class EventPanel extends SubContainer implements Serializable {
 		eventBox.addUniventToTriggerField(vent, trigger,b);
 	}
 
-	public void addStartUpTrigger() {
+	public void addStartTriggers(CustomInteger hope) {
 		// TODO Auto-generated method stub
-		eventBox.addbaseTrigger();
+		eventBox.addBaseTriggers(hope);
 	}
 
 	public void setBaseTrigger(StartUpTrigger baseTrigger) {

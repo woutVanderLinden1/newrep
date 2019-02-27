@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.UserInputController;
+import controller.commands.LoadCommand;
 import controller.commands.SaveGameCommand;
 import controller.commands.TestGameCommand;
 import controller.commands.select.RotateSelectedCommand;
@@ -92,11 +93,33 @@ public class MapPanel extends SubContainer implements Serializable {
 				UserInputController.getController().performCommand(comm);
 			}
 		});
+		JButton loadButton=new JButton("load");
+		MapPanel map=this;
+		loadButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LoadCommand comm=new LoadCommand(map);
+				UserInputController.getController().performCommand(comm);
+			}
+		});
+		
+		
+		JButton backToMenuButton=new JButton("to Main");
+		
+		backToMenuButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				OpenMainMenuCommand comm=new OpenMainMenuCommand();
+				UserInputController.getController().performCommand(comm);
+			}
+		});
 		optionPanel=new MapOptionPanel(width,100);
 		mapGrid=new GridPanel(width,height-110,userInput);
 		this.add(optionPanel);
 		optionPanel.add(testButton);
 		optionPanel.add(saveButton);
+		optionPanel.add(loadButton);
+		optionPanel.add(backToMenuButton);
 		this.add(mapGrid);
 	//	gamePanel.setPreferredSize(new Dimension(width,height));
 		

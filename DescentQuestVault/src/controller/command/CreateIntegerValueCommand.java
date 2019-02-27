@@ -17,4 +17,7 @@ public class CreateIntegerValueCommand extends BasicCommand implements ICommand 
 
 	}
 
+	public String getStringName() {
+		return "create integer value";
+	}
 }

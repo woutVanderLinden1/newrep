@@ -20,9 +20,11 @@ public class LoadCommand extends BasicCommand implements ICommand {
 
 	private Component com;
 	
-	public LoadCommand(QuestEditorMenu questEditorMenu) {
+	public LoadCommand(Component questEditorMenu) {
 		com=questEditorMenu;
 	}
+	
+	
 
 	@Override
 	public void perform() {

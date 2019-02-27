@@ -80,7 +80,7 @@ import view.viewItems.MonsterItem;
 import view.viewItems.TileItem;
 import view.viewItems.TokenItem;
 
-public class ListContainer extends SubContainer  implements Serializable,AvailabilityChangeListener{
+public class ListContainer extends SubContainer  implements Serializable,AvailabilityChangeListener,ValueChangeListener{
 
 	private ArrayList <ImageItem> itemList=new ArrayList<ImageItem>();
 	private int defaultSize= 100;
@@ -99,7 +99,8 @@ public class ListContainer extends SubContainer  implements Serializable,Availab
 		System.out.println(width+" ,"+height);
 		// TODO Auto-generated constructor stub
 		this.setBackground(Color.black);
-
+		ItemController control=ItemController.getItemController();
+		control.addChangeValueListener(this);
 //		pan.setPreferredSize(new Dimension(width,height));
 //		scrollPane=new JScrollPane(pan,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 //	        	    JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -374,7 +375,7 @@ public class ListContainer extends SubContainer  implements Serializable,Availab
 	
 	@Override
 	public void depleted(Item item) {
-		System.out.println("depeltion happens");
+		System.out.println("depletion happens");
 		for(int i=0;i<currentbuttons.size();i++) {
 			ItemButton butt=currentbuttons.get(i);
 			if(butt.getItem().getItem()==item) {
@@ -404,6 +405,24 @@ public class ListContainer extends SubContainer  implements Serializable,Availab
 		}
 		this.revalidate();
 		this.repaint();
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void trigger() {
+		if(box!=null) {
+			if(box.getSelectedItem()==ItemOptions.Value) {
+				addButtons(itemcontrol.getValues());
+			}
+		}
+		
+	}
+
+
+	@Override
+	public void valueChanged(int theInteger) {
 		// TODO Auto-generated method stub
 		
 	}

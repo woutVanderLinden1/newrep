@@ -13,4 +13,8 @@ public class CreateBooleanValueCommand extends BasicCommand implements ICommand 
 		view.renewItemList();
 	}
 
+	
+	public String getStringName() {
+		return "create boolean value";
+	}
 }

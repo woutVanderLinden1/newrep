@@ -137,7 +137,7 @@ public class MainFrame extends JFrame{
 	public void initialiseMenu(Menu mainMenu) {
 		
 		resizeListeners.clear();
-		System.out.println("removed all");
+		System.out.println("removed all gone back to menu");
 		lpane.removeAll();
 		lpane.revalidate();
 	

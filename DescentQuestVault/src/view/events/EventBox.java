@@ -22,6 +22,9 @@ import misc.listeners.TilePlaceListener;
 import misc.listeners.TriggerFieldListener;
 import misc.save.WorldSaveFile;
 import model.event.Event;
+import model.event.GameLoseEvent;
+import model.event.GameWonEvent;
+import model.event.IfIntegerTrigger;
 import model.event.MonsterTurnTrigger;
 import model.event.StartUpTrigger;
 import model.event.Trigger;
@@ -29,6 +32,8 @@ import model.event.Univent;
 import model.event.extraevents.TestOption;
 import model.event.extraevents.TextStop;
 import model.event.extraevents.TextTrigger;
+import model.values.CustomInteger;
+import model.values.IntegerValueItem;
 import view.Items.Map.MapItem;
 import view.Items.Map.ViewDoor;
 import view.Items.Map.ViewMonster;
@@ -536,14 +541,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		
 	}
 	public void addbaseTrigger() {
-		UserInputController control=UserInputController.getController();
-		basetrigger=new StartUpTrigger();
-		
-		baseTriggerField=this.addTrigger(basetrigger);
-		//baseTriggerField.addTrigger(new TestOption(),false);
-		
-		control.addStartGameListener((StartUpTrigger) basetrigger);
-		
+	
 	}
 
 	public void setBaseBaseTrigger(StartUpTrigger baseTrigger2) {
@@ -654,6 +652,49 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		file.setBaseTrigger((StartUpTrigger)basetrigger);
 		return file;
 		//save the events to the file
+	}
+
+	public void addBaseTriggers(CustomInteger hope) {
+		addBaseTrigger();
+		addLoseEvent(hope);
+		addWinEvent();
+		
+		
+		//we also need to add game won and game lost
+		//and put game lost at when hope=0;
+		
+		
+	}
+
+	private void addWinEvent() {
+		GameWonEvent ev=new GameWonEvent();
+		this.addEvent(ev);
+		
+	}
+
+	private void addLoseEvent(CustomInteger hope) {
+	
+		GameLoseEvent lose=new GameLoseEvent();
+		IntegerValueItem it=new IntegerValueItem(hope);
+		
+		IfIntegerTrigger hopetrigger=(IfIntegerTrigger) it.getIftrigger().copy();
+		hopetrigger.addEvent(lose);
+		hopetrigger.setCompvalue(-1);
+		this.addTrigger(hopetrigger);
+		
+
+		
+	}
+
+	private void addBaseTrigger() {
+		UserInputController control=UserInputController.getController();
+		basetrigger=new StartUpTrigger();
+		
+		baseTriggerField=this.addTrigger(basetrigger);
+		//baseTriggerField.addTrigger(new TestOption(),false);
+		
+		control.addStartGameListener((StartUpTrigger) basetrigger);
+		
 	}
 
 }

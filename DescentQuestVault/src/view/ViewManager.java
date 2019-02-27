@@ -19,6 +19,7 @@ import model.event.MovementString;
 import model.event.Trigger;
 import model.event.extraevents.StopAble;
 import model.event.extraevents.TextOption;
+import model.values.CustomInteger;
 import view.Items.Map.MapItem;
 import view.Items.Map.ViewDoor;
 import view.Items.Map.ViewMonster;
@@ -357,8 +358,8 @@ public class ViewManager implements IView {
 	}
 
 	@Override
-	public void addStartUpTrigger() {
-		quester.addStartUpTrigger();
+	public void addStartTriggers(CustomInteger hope) {
+		quester.addStartTriggers(hope);
 	}
 
 	@Override
@@ -471,6 +472,8 @@ public class ViewManager implements IView {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 	
 

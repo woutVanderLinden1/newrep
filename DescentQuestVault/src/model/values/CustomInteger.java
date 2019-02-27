@@ -1,11 +1,16 @@
 package model.values;
 
+import java.util.ArrayList;
+
+import model.event.IfIntegerTrigger;
 import view.viewItems.ItemBox.ItemOptions;
+import view.viewItems.ItemBox.ValueChangeListener;
 
 public class CustomInteger extends CustomValue<Integer> {
 
 	
 	private int theInteger=0;
+	private ArrayList<ValueChangeListener> valuechangelisteners=new ArrayList<ValueChangeListener>();
 	
 	private static int nrintegers=0;
 	
@@ -32,11 +37,25 @@ public class CustomInteger extends CustomValue<Integer> {
 
 	public void setTheInteger(int theInteger) {
 		this.theInteger = theInteger;
+		triggerValueChangeListeners();
+	}
+
+	private void triggerValueChangeListeners() {
+		
+		for(ValueChangeListener listen: valuechangelisteners) {
+			listen.valueChanged(theInteger);
+		}
+		
 	}
 
 	@Override
 	public ValueKind getValueKind() {
 		// TODO Auto-generated method stub
 		return ValueKind.INTEGER;
+	}
+
+	public void addValueChangeListener(IfIntegerTrigger ifIntegerTrigger) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -6,6 +6,8 @@ import model.generators.ModifierGenerator;
 import model.generators.ModifierGeneratorItem;
 import model.generators.TextGenerator;
 import model.generators.TextGeneratorItem;
+import model.generators.ValueGenerator;
+import model.generators.ValueGeneratorItem;
 import model.values.BooleanValueItem;
 import model.values.CustomBoolean;
 import model.values.CustomInteger;
@@ -46,7 +48,8 @@ public class ItemFactory {
 	public static ImageItem createItem(Generator tile) {
 		// TODO Auto-generated method stub
 		switch(tile.getGeneratorKind()) {
-		
+		case Value:
+			return new ValueGeneratorItem((ValueGenerator) tile);
 		
 		case Text:
 			return new TextGeneratorItem((TextGenerator) tile);

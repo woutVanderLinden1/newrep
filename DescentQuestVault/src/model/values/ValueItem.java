@@ -57,6 +57,10 @@ public abstract class ValueItem extends ImageItem<CustomValue> implements EventH
 	}
 
 
+	public void changeName(String newname) {
+		this.setName(newname);
+		val.setName(newname);
+	}
 
 	
 

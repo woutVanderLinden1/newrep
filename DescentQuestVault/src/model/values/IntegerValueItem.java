@@ -21,13 +21,27 @@ import model.event.InitialiseBooleanEvent;
 import model.event.ModifyIntegerValueEvent;
 import model.event.SetBooleanValueEvent;
 import model.event.Univent;
+import model.event.modifier.IfIntegerModifier;
 import view.viewItems.ItemBox.ImageItem;
 import view.viewItems.ItemBox.ItemInfoContainer;
 import view.viewItems.ItemBox.ItemOptions;
+import view.viewItems.ItemBox.ValueChangeListener;
 
 public class IntegerValueItem extends ValueItem {
 
 	
+
+	public IfIntegerModifier getIfmodifier() {
+		return ifmodifier;
+	}
+
+	public void setIfmodifier(IfIntegerModifier ifmodifier) {
+		this.ifmodifier = ifmodifier;
+	}
+
+	public IfIntegerTrigger getIftrigger() {
+		return iftrigger;
+	}
 
 	private CustomInteger val;
 	
@@ -37,11 +51,14 @@ public class IntegerValueItem extends ValueItem {
 
 	private ModifyIntegerValueEvent modifyEvent;
 	private IfIntegerTrigger iftrigger;
+	private IfIntegerModifier ifmodifier;
 	private CompareToOtherIntegerTrigger comparetrigger;
+
 	//private WhileBooleanTrigger whiletrigger;
 	
 	public IntegerValueItem(CustomInteger val) {
 		super(val);
+		this.val=val;
 		setModifyEvent(new ModifyIntegerValueEvent(Modification.SET,this));
 		setIftrigger(new IfIntegerTrigger(Comparison.EQUALS,this));
 		setComparetrigger(new CompareToOtherIntegerTrigger(Comparison.EQUALS,this));
@@ -95,6 +112,11 @@ public class IntegerValueItem extends ValueItem {
 	public ValueKind getValueKind() {
 		// TODO Auto-generated method stub
 		return ValueKind.INTEGER;
+	}
+
+	public void addValueChangeListener(IfIntegerTrigger ifIntegerTrigger) {
+		// TODO Auto-generated method stub
+		val.addValueChangeListener(ifIntegerTrigger);
 	}
 	
 

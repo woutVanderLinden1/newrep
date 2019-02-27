@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
+
 
 import misc.save.WorldSaveFile;
 import model.Tile.tilesets.ConnectionInDoor;
@@ -22,16 +21,19 @@ import model.Tile.tilesets.coresetOutDoor.*;
 import model.event.StartUpTrigger;
 import model.generators.ModifierGenerator;
 import model.generators.TextGenerator;
+import model.generators.ValueGenerator;
 import model.values.CustomBoolean;
 import model.values.CustomInteger;
 import model.values.CustomValue;
 import view.events.BaseField;
+import view.viewItems.ItemBox.ListContainer;
+import view.viewItems.ItemBox.ValueChangeListener;
 
-public class ItemController {
+public  class ItemController {
 
     private HashMap<String, Item> biMap = new HashMap<String, Item>();
 
-    
+    private ArrayList<ValueChangeListener> valuelisteners=new ArrayList<ValueChangeListener>();
     private static ArrayList<Item> coresetOutDoorTiles=new ArrayList<Item>(Arrays.asList(
 			new Tile1A(),
 			new Tile2A(),
@@ -111,13 +113,13 @@ public class ItemController {
 	
     private ArrayList<Item> customvalues=new ArrayList<Item>(
     		Arrays.asList(
-    		new CustomBoolean()	,
-    		new CustomInteger()	
+    	
     		));
 	private ArrayList<Item> generators=new ArrayList<Item>(
 			Arrays.asList(
 			new ModifierGenerator()	,
-			new TextGenerator()	
+			new TextGenerator()	,
+			new ValueGenerator()
 			));
      
     private static ItemController control;
@@ -279,8 +281,39 @@ public class ItemController {
 
 
 	public void readValues(WorldSaveFile g) {
+		System.out.println("values are read");
+		for(CustomValue v:g.getCustomValues()) {
+			System.out.println(v);
+		}
 		customvalues.addAll(g.getCustomValues());
+		triggerValueChangeListeners();
 		
+	}
+
+
+	private void triggerValueChangeListeners() {
+		for(ValueChangeListener valuelistener:valuelisteners) {
+			valuelistener.trigger();
+		}
+		
+	}
+
+
+	public void addChangeValueListener(ValueChangeListener listContainer) {
+		valuelisteners.add(listContainer);
+		
+	}
+
+
+	public static void reset() {
+		control=null;
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void addAllValues(CustomInteger[] hope) {
+		customvalues.addAll(Arrays.asList(hope));
 	}
     
 }

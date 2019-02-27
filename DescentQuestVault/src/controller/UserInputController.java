@@ -29,6 +29,7 @@ import frame.SubContainer;
 import misc.SampleFile;
 import misc.listeners.ButtonPressedListener;
 import model.IModel;
+import model.ItemController;
 import model.Monster.Monster;
 import model.event.MonsterTurnTrigger;
 import model.event.StartUpTrigger;
@@ -50,6 +51,8 @@ import view.events.TriggerContainer;
 import view.events.TriggerField;
 import view.game.GameSquare;
 import view.menu.CommandButton;
+import view.menu.MainMenu;
+import view.menu.Menu;
 import view.menu.QuestGame;
 import view.viewItems.ShapeItem;
 import view.viewItems.TileItem;
@@ -792,6 +795,15 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	public MonsterTurnTrigger getMovement() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void openMainMenu() {
+	
+		theFrame.initialiseMenu(new MainMenu(theFrame.getWidth(),theFrame.getHeight()));
+		ItemController.reset();
+		//control=null;
+		// TODO Auto-generated method stub
+		
 	}
 
 

@@ -19,6 +19,7 @@ import misc.save.WorldSaveFile;
 import model.ItemController;
 import model.event.Trigger;
 import model.event.Univent;
+import model.values.CustomInteger;
 import view.Items.Map.MapItem;
 import view.Items.Map.MapPanel;
 import view.Items.Map.ViewDoor;
@@ -360,13 +361,16 @@ public class QuestCreator extends SubContainer implements Serializable{
 	//place each event and each object connected to that event
 	//reinitialise object images.
 	public void loadGame(WorldSaveFile g) {
+		
 		for(Univent vent:g.getUnivents()) {
 			//add the univent
 			eventPanel.addUniventToTriggerField(vent, null);
 			vent.initialise(this);
 			
 		}
+		
 		ItemController.getItemController().readValues(g);
+		
 		eventPanel.setBaseTrigger(g.getBaseTrigger());
 	}
 
@@ -377,9 +381,9 @@ public class QuestCreator extends SubContainer implements Serializable{
 	}
 
 
-	public void addStartUpTrigger() {
+	public void addStartTriggers(CustomInteger hope) {
 		// TODO Auto-generated method stub
-		eventPanel.addStartUpTrigger();
+		eventPanel.addStartTriggers(hope);
 	}
 
 
@@ -440,6 +444,9 @@ public class QuestCreator extends SubContainer implements Serializable{
 		// TODO Auto-generated method stub
 		eventPanel.clearEventBox();
 	}
+
+
+
 
 
 
