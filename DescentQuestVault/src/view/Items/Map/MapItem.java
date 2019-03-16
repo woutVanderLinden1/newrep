@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import frame.SubContainer;
+import misc.ActivateAble;
+import model.Activation;
 import model.event.Univent;
 import view.viewItems.GridPanel;
 import view.viewItems.NameChangeListener;
@@ -19,7 +21,7 @@ import view.viewItems.ItemBox.ImageItem;
 import view.viewItems.ItemBox.SelectAble;
 import view.viewItems.ItemBox.SelectKind;
 
-public abstract class MapItem implements SelectAble, Serializable, EventHolder{
+public abstract class MapItem implements SelectAble, Serializable, EventHolder,ActivateAble{
 	/**
 	 * 
 	 */
@@ -33,7 +35,10 @@ public abstract class MapItem implements SelectAble, Serializable, EventHolder{
 
 	protected String name;
 	protected ArrayList<ViewSquare> occupyingSquares;
+	protected ArrayList<Activation> activations=new ArrayList<Activation>();
 
+	
+	
 	
 	protected MapItem(ImageItem image, ViewSquare square, int i, int j) {
 		item =(ShapeItem) image.clone();
@@ -44,6 +49,14 @@ public abstract class MapItem implements SelectAble, Serializable, EventHolder{
 	
 		point=new Point(i,j);
 		occupyingSquares=new ArrayList<ViewSquare>();
+	}
+	
+	public ArrayList<Activation> getActivations(){
+		return activations;
+	}
+	
+	public void addActivation(Activation act) {
+		activations.add(act);
 	}
 	
 	

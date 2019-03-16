@@ -4,6 +4,7 @@ import controller.commands.Game.RemoveGameDoorCommand;
 import controller.commands.Game.RemoveGameTileCommand;
 import view.Items.Map.ViewDoor;
 import view.Items.Map.ViewTile;
+import view.game.GameTile;
 import view.menu.QuestCreator;
 import view.viewItems.NameChangeListener;
 
@@ -11,12 +12,13 @@ public class RemoveTileEvent extends Event implements NameChangeListener{
 
 	private ViewTile toremove;
 	private RemoveGameTileCommand command;
+	private GameTile gametile;
 	
 	private boolean namebased=true;
 	
 	public RemoveTileEvent(ViewTile viewTile) {
 		toremove=viewTile;
-		setCommand(new RemoveGameTileCommand(viewTile));
+		
 		commands.add(command);
 		setIDName("removeTile "+ toremove.getIDName());
 		setName("remove tile "+ toremove.getName());
@@ -75,6 +77,13 @@ public class RemoveTileEvent extends Event implements NameChangeListener{
 	public Univent copy() {
 		return new RemoveTileEvent(toremove);
 		
+	}
+	
+	public void setGameTile(GameTile newtile) {
+		commands.remove(command);
+		gametile=newtile;
+		setCommand(new RemoveGameTileCommand(gametile));
+		commands.add(command);
 	}
 
 }

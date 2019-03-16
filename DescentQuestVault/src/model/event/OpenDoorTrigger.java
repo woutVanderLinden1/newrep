@@ -12,6 +12,7 @@ public class OpenDoorTrigger extends Trigger implements OpenDoorListener,NameCha
 	 */
 	private static final long serialVersionUID = 1L;
 	private ViewDoor door;
+	private GameDoor gamedoor;
 	private boolean namebased=true;
 	
 	public ViewDoor getDoor() {
@@ -88,6 +89,12 @@ public class OpenDoorTrigger extends Trigger implements OpenDoorListener,NameCha
 		 OpenDoorTrigger toreturn=new OpenDoorTrigger(door);
 		 this.addAllTriggers(toreturn);
 		return toreturn;
+	}
+
+
+	public void setGameDoor(GameDoor gameDoor) {
+		// TODO Auto-generated method stub
+		this.gamedoor=gameDoor;
 	}
 
 }

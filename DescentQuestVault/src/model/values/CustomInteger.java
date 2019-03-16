@@ -37,6 +37,7 @@ public class CustomInteger extends CustomValue<Integer> {
 
 	public void setTheInteger(int theInteger) {
 		this.theInteger = theInteger;
+		
 		triggerValueChangeListeners();
 	}
 
@@ -56,6 +57,6 @@ public class CustomInteger extends CustomValue<Integer> {
 
 	public void addValueChangeListener(IfIntegerTrigger ifIntegerTrigger) {
 		// TODO Auto-generated method stub
-		
+		valuechangelisteners.add(ifIntegerTrigger);
 	}
 }

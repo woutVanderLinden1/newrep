@@ -2,12 +2,13 @@ package controller.commands.Game;
 
 import controller.commands.BasicCommand;
 import view.Items.Map.ViewTile;
+import view.game.GameTile;
 
 public class RemoveGameTileCommand extends BasicCommand {
 
-	private ViewTile tile;
+	private GameTile tile;
 	
-	public RemoveGameTileCommand(ViewTile viewTile) {
+	public RemoveGameTileCommand(GameTile viewTile) {
 		tile=viewTile;
 	}
 

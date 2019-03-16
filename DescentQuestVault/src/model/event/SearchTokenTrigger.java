@@ -2,6 +2,7 @@ package model.event;
 
 import model.event.Trigger;
 import view.Items.Map.ViewToken;
+import view.game.GameToken;
 import view.viewItems.NameChangeListener;
 
 public class SearchTokenTrigger extends Trigger implements NameChangeListener{
@@ -40,5 +41,11 @@ public class SearchTokenTrigger extends Trigger implements NameChangeListener{
 		SearchTokenTrigger toreturn=new SearchTokenTrigger(token);
 		this.addAllTriggers(toreturn);
 		return toreturn;
+	}
+
+
+	public void setToken(GameToken gameToken) {
+		// TODO Auto-generated method stub
+		token=gameToken;
 	}
 }

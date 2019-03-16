@@ -33,6 +33,56 @@ public  class ItemController {
 
     private HashMap<String, Item> biMap = new HashMap<String, Item>();
 
+    private CustomInteger hope=new CustomInteger("Hope",0);
+	public CustomInteger getPeril() {
+		return peril;
+	}
+
+
+	public void setPeril(CustomInteger peril) {
+		this.peril = peril;
+	}
+
+
+	public CustomInteger getFame() {
+		return fame;
+	}
+
+
+	public void setFame(CustomInteger fame) {
+		this.fame = fame;
+	}
+
+
+	public CustomInteger getGold() {
+		return gold;
+	}
+
+
+	public void setGold(CustomInteger gold) {
+		this.gold = gold;
+	}
+
+
+	public CustomInteger getDespair() {
+		return despair;
+	}
+
+
+	public void setDespair(CustomInteger despair) {
+		this.despair = despair;
+	}
+
+
+	public CustomInteger getHope() {
+		return hope;
+	}
+
+
+	private CustomInteger peril=new CustomInteger("peril",0);
+	private CustomInteger fame=new CustomInteger("fame",0);
+	private CustomInteger gold=new CustomInteger("gold",0);
+	private CustomInteger despair=new CustomInteger("despair",0);
     private ArrayList<ValueChangeListener> valuelisteners=new ArrayList<ValueChangeListener>();
     private static ArrayList<Item> coresetOutDoorTiles=new ArrayList<Item>(Arrays.asList(
 			new Tile1A(),
@@ -113,7 +163,11 @@ public  class ItemController {
 	
     private ArrayList<Item> customvalues=new ArrayList<Item>(
     		Arrays.asList(
-    	
+    				hope,
+    				peril,
+    				despair,
+    				fame,
+    				gold
     		));
 	private ArrayList<Item> generators=new ArrayList<Item>(
 			Arrays.asList(
@@ -314,6 +368,12 @@ public  class ItemController {
 
 	public void addAllValues(CustomInteger[] hope) {
 		customvalues.addAll(Arrays.asList(hope));
+	}
+
+
+	public void setHope(CustomInteger hope) {
+		// TODO Auto-generated method stub
+		this.hope=hope;
 	}
     
 }

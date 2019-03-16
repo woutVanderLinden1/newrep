@@ -5,12 +5,14 @@ import controller.commands.Game.RemoveGameDoorCommand;
 import controller.commands.Game.RemoveGameTokenCommand;
 import model.event.Event;
 import view.Items.Map.ViewToken;
+import view.game.GameToken;
 import view.menu.QuestCreator;
 import view.viewItems.NameChangeListener;
 
 public class RemoveSearchTokenEvent extends Event implements NameChangeListener {
 
 	private ViewToken toremove;
+	private GameToken token;
 	private ICommand command;
 	private boolean namebased=true;
 	
@@ -32,8 +34,8 @@ public class RemoveSearchTokenEvent extends Event implements NameChangeListener 
 
 	public RemoveSearchTokenEvent(ViewToken viewToken) {
 		toremove=viewToken;
-		setCommand(new RemoveGameTokenCommand(toremove));
-		commands.add(command);
+		//setCommand(new RemoveGameTokenCommand(toremove));
+	//	commands.add(command);
 		setIDName("remove token "+ toremove.getIDName());
 		setName("remove token "+ toremove.getName());
 		viewToken.addNameChangeListener(this);
@@ -66,7 +68,15 @@ public class RemoveSearchTokenEvent extends Event implements NameChangeListener 
 	@Override
 	public Univent copy() {
 		// TODO Auto-generated method stub
-		return new RemoveSearchTokenEvent(toremove);
+		return new RemoveSearchTokenEvent(token);
+	}
+
+	public void setGameToken(GameToken gameToken) {
+		// TODO Auto-generated method stub
+		commands.remove(command);
+		token=gameToken;
+		setCommand(new RemoveGameTokenCommand(gameToken));
+		commands.add(command);
 	}
 
 }

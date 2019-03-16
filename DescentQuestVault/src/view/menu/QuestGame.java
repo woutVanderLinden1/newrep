@@ -18,6 +18,7 @@ import view.Items.Map.ViewMonster;
 import view.Items.Map.ViewSquare;
 import view.Items.Map.ViewTile;
 import view.Items.Map.ViewToken;
+import view.game.GameDoor;
 import view.game.GameMapPanel;
 import view.game.GameMonster;
 import view.game.MonsterKind;
@@ -57,7 +58,7 @@ public class QuestGame extends SubContainer {
 		gamemap.showActivateAbles(point,list);
 	}
 
-	public void removeGameDoor(ViewDoor door) {
+	public void removeGameDoor(GameDoor door) {
 		gamemap.removeGameDoor(door);
 	}
 
@@ -123,6 +124,13 @@ public class QuestGame extends SubContainer {
 	public void addHeroPlaceListener(GameController gamecontrol) {
 		// TODO Auto-generated method stub
 		gamemap.addHeroPlaceListener(gamecontrol);
+	}
+
+
+
+	public void removeGameMonster(GameMonster toremove) {
+		// TODO Auto-generated method stub
+		gamemap.removeGameMonster(toremove);
 	}
 
 

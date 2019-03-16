@@ -159,9 +159,9 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 	}
 
 
-	public void removeGameDoor(ViewDoor door) {
+	public void removeGameDoor(GameDoor door) {
 		// TODO Auto-generated method stub
-		grid.removeGameDoor(door);
+		grid.removeDoor(door);
 	}
 
 	public void addGameToken(ViewToken toplace) {
@@ -385,6 +385,13 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		basefile=sampleFile;
 		addHeroes(basefile.getHeroes());
 		grid.initialise(sampleFile);
+	}
+
+
+	public void removeGameMonster(GameMonster toremove) {
+		// TODO Auto-generated method stub
+		monsterPanel.removeMonster(toremove);
+		grid.removeGameMonster(toremove);
 	}
 
 

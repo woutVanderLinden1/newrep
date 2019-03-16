@@ -214,6 +214,7 @@ public class IfIntegerTrigger extends Trigger implements NameChangeListener,Valu
 
 	@Override
 	public void valueChanged(int theInteger) {
+		System.out.println("the value changed to "+theInteger);
 		trigger();
 		
 	}

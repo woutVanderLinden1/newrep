@@ -3,6 +3,7 @@ package model.event;
 import controller.commands.Game.PlaceGameDoorCommand;
 import controller.commands.Game.RemoveGameDoorCommand;
 import view.Items.Map.ViewDoor;
+import view.game.GameDoor;
 import view.menu.QuestCreator;
 import view.viewItems.NameChangeListener;
 
@@ -10,16 +11,26 @@ public class RemoveDoorEvent extends Event implements NameChangeListener{
 
 	
 	private ViewDoor toremove;
+	private GameDoor gamedoor;
 	private RemoveGameDoorCommand command;
 	private boolean namebased=true;
 	
 	public RemoveDoorEvent(ViewDoor viewDoor) {
 		toremove=viewDoor;
-		setCommand(new RemoveGameDoorCommand(viewDoor));
-		commands.add(command);
+	
 		setIDName("removeDoor "+ toremove.getIDName());
 		setName("remove door "+ toremove.getName());
 		viewDoor.addNameChangeListener(this);
+	}
+
+	public RemoveDoorEvent(ViewDoor viewDoor, GameDoor gamedoor2) {
+		toremove=viewDoor;
+		
+		//commands.add(command);
+		setIDName("removeDoor "+ toremove.getIDName());
+		setName("remove door "+ toremove.getName());
+		viewDoor.addNameChangeListener(this);
+		setGameDoor(gamedoor2);
 	}
 
 	public ViewDoor getToremove() {
@@ -74,6 +85,15 @@ public class RemoveDoorEvent extends Event implements NameChangeListener{
 	@Override
 	public Univent copy() {
 		// TODO Auto-generated method stub
-		return new RemoveDoorEvent(toremove);
+		return new RemoveDoorEvent(toremove,gamedoor);
+	}
+
+	public void setGameDoor(GameDoor gameDoor) {
+		// TODO Auto-generated method stub
+		commands.remove(command);
+		gamedoor=gameDoor;
+		setCommand(new RemoveGameDoorCommand(gameDoor));
+		
+		commands.add(command);
 	}
 }

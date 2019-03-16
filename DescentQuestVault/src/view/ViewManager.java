@@ -14,6 +14,7 @@ import frame.MainFrame;
 import misc.ActivateAble;
 import misc.SampleFile;
 import misc.save.WorldSaveFile;
+import model.Activation;
 import model.event.MonsterTurnTrigger;
 import model.event.MovementString;
 import model.event.Trigger;
@@ -28,8 +29,12 @@ import view.Items.Map.ViewTile;
 import view.Items.Map.ViewToken;
 import view.events.BaseField;
 import view.events.TriggerField;
+import view.game.GameDoor;
 import view.game.GameMonster;
+import view.game.GameTile;
+import view.game.GameToken;
 import view.game.MonsterKind;
+import view.hero.GameHero;
 import view.menu.MainMenu;
 import view.menu.Menu;
 import view.menu.Menus;
@@ -345,7 +350,7 @@ public class ViewManager implements IView {
 	}
 
 	@Override
-	public void removeGameDoor(ViewDoor door) {
+	public void removeGameDoor(GameDoor door) {
 		// TODO Auto-generated method stub
 		game.removeGameDoor(door);
 	}
@@ -369,13 +374,13 @@ public class ViewManager implements IView {
 	}
 
 	@Override
-	public void removeGameToken(ViewToken token) {
+	public void removeGameToken(GameToken token) {
 		// TODO Auto-generated method stub
 		game.removeGameToken(token);
 	}
 
 	@Override
-	public void removeGameTile(ViewTile tile) {
+	public void removeGameTile(GameTile tile) {
 		// TODO Auto-generated method stub
 		game.removeGameTile(tile);
 	}
@@ -471,6 +476,31 @@ public class ViewManager implements IView {
 	public MonsterTurnTrigger getMovement() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void defeatHero(GameHero hero) {
+		// TODO Auto-generated method stub
+		hero.defeat();
+		
+	}
+
+	@Override
+	public void removeGameMonster(GameMonster toremove) {
+		// TODO Auto-generated method stub
+		game.removeGameMonster(toremove);
+	}
+
+	@Override
+	public void addActivationToActivateAble(ActivateAble active) {
+		// TODO Auto-generated method stub
+		quester.addActivationToActivateAble(active);
+	}
+
+	@Override
+	public void removeActivationFromActivateAble(Activation activation, ActivateAble active) {
+		// TODO Auto-generated method stub
+		quester.removeActivationFromActivateAble(activation,active);
 	}
 
 

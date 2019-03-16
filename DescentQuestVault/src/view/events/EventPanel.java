@@ -127,6 +127,11 @@ public class EventPanel extends SubContainer implements Serializable {
 		eventBox.saveThis(thefile);
 	}
 
+	public void removeTrigger(Trigger trigger) {
+		// TODO Auto-generated method stub
+		eventBox.removeTrigger(trigger);
+	}
+
 	
 
 }

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 import frame.SubContainer;
+import model.Activation;
 import model.event.Event;
 import model.event.PlaceMonsterEvent;
 import model.event.PlaceSearchTokenEvent;
@@ -67,17 +68,17 @@ public class ViewToken extends MapItem {
 		
 	}
 
-	private void setRemoveSearchTokenEvent(RemoveSearchTokenEvent removeSearchTokenEvent) {
+	protected void setRemoveSearchTokenEvent(RemoveSearchTokenEvent removeSearchTokenEvent) {
 		removeevent=removeSearchTokenEvent;
 		
 	}
 
-	private void setPlaceSearchTokenEvent(PlaceSearchTokenEvent placeSearchTokenEvent) {
+	protected void setPlaceSearchTokenEvent(PlaceSearchTokenEvent placeSearchTokenEvent) {
 		// TODO Auto-generated method stub
 		placeevent=placeSearchTokenEvent;
 	}
 
-	private void setOpenSearchTokenTrigger(SearchTokenTrigger searchTokenTrigger) {
+	protected void setOpenSearchTokenTrigger(SearchTokenTrigger searchTokenTrigger) {
 		// TODO Auto-generated method stub
 		searchtrigger=searchTokenTrigger;
 	}
@@ -96,5 +97,12 @@ public class ViewToken extends MapItem {
 		toreturn.add(removeevent);
 		toreturn.add(this.searchtrigger);
 		return toreturn; 
+	}
+
+
+	@Override
+	public void removeActivation(Activation activation) {
+		// TODO Auto-generated method stub
+		
 	}
 }

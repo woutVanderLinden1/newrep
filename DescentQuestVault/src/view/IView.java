@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import controller.commands.ICommand;
 import misc.ActivateAble;
 import misc.save.WorldSaveFile;
+import model.Activation;
 import model.Item;
 import model.event.MonsterTurnTrigger;
 import model.event.MovementString;
@@ -22,8 +23,12 @@ import view.Items.Map.ViewTile;
 import view.Items.Map.ViewToken;
 import view.events.BaseField;
 import view.events.TriggerField;
+import view.game.GameDoor;
 import view.game.GameMonster;
+import view.game.GameTile;
+import view.game.GameToken;
 import view.game.MonsterKind;
+import view.hero.GameHero;
 import view.menu.Menus;
 import view.viewItems.DoorItem;
 import view.viewItems.MonsterItem;
@@ -132,7 +137,7 @@ public interface IView {
 
 	void showActivateAbles(Point point,ArrayList<ActivateAble> list);
 
-	void removeGameDoor(ViewDoor door);
+	void removeGameDoor(GameDoor door);
 
 	WorldSaveFile saveGame();
 
@@ -141,9 +146,9 @@ public interface IView {
 
 	void addGameToken(ViewToken toplace);
 
-	void removeGameToken(ViewToken token);
+	void removeGameToken(GameToken token);
 
-	void removeGameTile(ViewTile tile);
+	void removeGameTile(GameTile tile);
 
 	ArrayList<ViewSquare> getOccupiedSquares(ViewSquare square, ViewMonster themonster);
 
@@ -183,6 +188,15 @@ public interface IView {
 
 	void addStartTriggers(CustomInteger hope);
 
+	void defeatHero(GameHero hero);
+
+	void removeGameMonster(GameMonster toremove);
+
+	void addActivationToActivateAble(ActivateAble active);
+
+	void removeActivationFromActivateAble(Activation activation, ActivateAble active);
+
+	
 	
 	
 }

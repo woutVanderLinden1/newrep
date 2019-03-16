@@ -5,12 +5,14 @@ import java.awt.Color;
 import controller.commands.Game.PlaceGameDoorCommand;
 import controller.commands.Game.PlaceGameTileCommand;
 import view.Items.Map.ViewDoor;
+import view.game.GameDoor;
 import view.menu.QuestCreator;
 import view.viewItems.NameChangeListener;
 
 public class PlaceDoorEvent extends Event implements NameChangeListener {
 
 	private ViewDoor toplace;
+	private GameDoor gamedoor;
 	private PlaceGameDoorCommand command;
 	private boolean namebased=true;
 	
@@ -79,6 +81,11 @@ public class PlaceDoorEvent extends Event implements NameChangeListener {
 	public Univent copy() {
 		// TODO Auto-generated method stub
 		return new PlaceDoorEvent(toplace);
+	}
+
+	public void setGameDoor(GameDoor gameDoor) {
+		// TODO Auto-generated method stub
+		gamedoor=gameDoor;
 	}
 	
 

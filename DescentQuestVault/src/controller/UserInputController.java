@@ -37,6 +37,7 @@ import model.event.Trigger;
 import model.event.Univent;
 import model.event.extraevents.StopAble;
 import model.event.extraevents.TextStop;
+import model.values.CustomInteger;
 import monsterEditor.MonsterEditorView;
 import view.IDrawWindow;
 import view.IView;
@@ -49,7 +50,9 @@ import view.events.EventField;
 import view.events.MultiTriggerField;
 import view.events.TriggerContainer;
 import view.events.TriggerField;
+import view.game.GameMonster;
 import view.game.GameSquare;
+import view.hero.GameHero;
 import view.menu.CommandButton;
 import view.menu.MainMenu;
 import view.menu.Menu;
@@ -105,6 +108,7 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	private boolean dragging;
 	private boolean tileMoveing;
 	private OldTilePlace oldTile;
+	private CustomInteger hope;
 
 
 	private boolean norefresh;
@@ -806,6 +810,20 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		
 	}
 
+
+	public void removeMonster(GameMonster monster) {
+		gamecontrol.removeMonster(monster);
+	}
+
+	public void defeatHero(GameHero hero) {
+		System.out.println("hero defeated");
+		// TODO Auto-generated method stub
+		ItemController control=ItemController.getItemController();
+		CustomInteger hope=control.getHope();
+		System.out.println("hope instance 2 "+hope);
+		hope.setTheInteger(hope.getTheInteger()-1);
+		System.out.println("hope changed to "+hope.getTheInteger());
+	}
 
 
 

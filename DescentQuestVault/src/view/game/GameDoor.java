@@ -22,6 +22,16 @@ public class GameDoor extends ViewDoor implements ActivateAble {
 		activationList.add(new OpenDoorActivation(this));
 	}
 
+	
+	public void setTriggers(ViewDoor toplace) {
+		toplace.getOpenDoorTrigger().setGameDoor(this);
+		this.setOpenDoorTrigger(toplace.getOpenDoorTrigger());
+		toplace.getPlaceDoorEvent().setGameDoor(this);
+		this.setPlaceDoorEvent(toplace.getPlaceDoorEvent());
+		toplace.getRemoveDoorEvent().setGameDoor(this);
+		this.setRemoveDoorEvent(toplace.getRemoveDoorEvent());
+		
+	}
 	@Override
 	public boolean isActivateAble() {
 		return true;

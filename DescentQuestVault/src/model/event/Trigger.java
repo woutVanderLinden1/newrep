@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import controller.UserInputController;
 import controller.commands.Game.HoldToContinueCommand;
+import view.game.GameDoor;
 import view.menu.QuestCreator;
 import view.viewItems.ItemBox.ImageItem;
 import view.viewItems.ItemBox.ItemInfoContainer;
@@ -166,6 +167,8 @@ public abstract class Trigger extends Univent implements EventBase {
 		}
 		
 	}
+
+	
 	
 	
 }

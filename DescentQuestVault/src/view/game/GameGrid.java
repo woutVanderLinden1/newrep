@@ -394,27 +394,27 @@ public class GameGrid extends SubContainer {
 	}
 
 
-
+/*
 
 	public void removeGameDoor(ViewDoor door) {
-		// TODO Auto-generated method stub
-		for(int i=0;i<doors.size();i++) {
-			GameDoor door2=doors.get(i);
-			if(door2.isBaseDoor(door)) {
+	
 				
 			
 				this.removeDoor(door2);
-				i--;
-			}
-		}
-	}
-	
-	private void removeDoor(GameDoor door) {
 		
-		GameSquare square=(GameSquare) door.getBaseSquare();
-		Point poi=door.getPointOff();
+	}
+	*/
+	public void removeDoor(GameDoor door) {
+		
+		//GameSquare square=(GameSquare) door.getBaseSquare();
+		//Point poi=door.getPointOff();
+		System.out.println("door to remove "+door);
 		for(ViewSquare squar:door.getOccupyingSquares()) {
+			
 			squar.removeItem(door);
+		}
+		for(GameDoor thedoor:doors) {
+			System.out.println("containsdoor "+ thedoor);
 		}
 		doors.remove(door);
 	
@@ -467,9 +467,10 @@ public class GameGrid extends SubContainer {
 		token.setPoint(new Point(gamesquare.getX()-(xval*squareWidth),gamesquare.getY()-yval*squareWidth));
 		markTiles(xoff,xstartoff,yoff,ystartoff,shape,token);
 		monsters.add(token);
+		toplace.addMapMonster(token);
 	}
 
-	public void removeGameToken(GameToken token) {
+	public void removeGameToken(ViewToken token) {
 		GameSquare square=(GameSquare) token.getBaseSquare();
 		Point poi=token.getPointOff();
 		for(ViewSquare squar:token.getOccupyingSquares()) {
@@ -479,35 +480,18 @@ public class GameGrid extends SubContainer {
 	
 		
 	}
-
+/*
 	public void removeGameToken(ViewToken token) {
-		// TODO Auto-generated method stub
-		for(int i=0;i<tokens.size();i++) {
-			GameToken token2=tokens.get(i);
-			if(token2.isBaseToken(token)) {
-				
-			
-				this.removeGameToken(token2);
-				i--;
-			}
-		}
+		this.removeGameToken(token);
 	}
+	
+/*
+	public void removeGameTile(ViewTile tile) {
+		this.removeGameTile(tile);
+	}
+	*/
 
 	public void removeGameTile(ViewTile tile) {
-		// TODO Auto-generated method stub
-		for(int i=0;i<tiles.size();i++) {
-			GameTile token2=tiles.get(i);
-			if(token2.isBaseTile(tile)) {
-				
-			
-				this.removeGameTile(token2);
-				i--;
-			}
-		}
-		
-	}
-
-	public void removeGameTile(GameTile tile) {
 	
 		for(ViewSquare squar:tile.getOccupyingSquares()) {
 			squar.removeTile();
@@ -570,6 +554,15 @@ public class GameGrid extends SubContainer {
 	public void initialise(BaseFile sampleFile) {
 		// TODO Auto-generated method stub
 		thefile=sampleFile;
+	}
+
+	public void removeGameMonster(GameMonster toremove) {
+		// TODO Auto-generated method stub
+		System.out.println("removed a monster");
+		for(GameMonster mon:toremove.getMapMonsters()) {
+			monsters.remove(mon);
+		}
+		
 	}
 
 

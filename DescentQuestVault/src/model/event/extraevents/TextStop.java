@@ -31,6 +31,13 @@ public class TextStop extends Event implements StopAble {
 		nrtextstops++;
 		return "textstop"+nrtextstops;
 	}
+	public TextStop(String thestring) {
+		thetext=thestring;
+		this.setIDName("textStop");
+		this.setName(getNewName());
+		options=new ArrayList<TextOption>();
+		options.add(new TextOption("continue",new ContinueCommand(this)));
+	}
 	
 	public TextStop() {
 		thetext="pls press continue";

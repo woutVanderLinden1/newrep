@@ -35,6 +35,7 @@ import model.event.extraevents.StopAble;
 import monstercreator.SampleMovement;
 import monstercreator.SingleMovement;
 import view.Items.Map.ViewMonster;
+import view.game.GameMonster;
 import view.game.MonsterKind;
 import view.menu.QuestCreator;
 import view.viewItems.MonsterItem;
@@ -43,16 +44,19 @@ import view.viewItems.ItemBox.ItemInfoContainer;
 public class SingleMovementEvent extends Event implements StopAble{
 
 	private MonsterItem mon;
+	//private ViewMonster ;
 	private SingleMovement ment;
 	private boolean stopped;
 
 	public SingleMovementEvent(ViewMonster mon){
+		
 		this.mon=(MonsterItem) mon.getImageItem();
 		ment=new SampleMovement();
 		this.setName("simple movement");
 		this.setIDName("simpleMovement");
 	
 	}
+	
 	public SingleMovementEvent(MonsterItem monsterItem) {
 		mon=monsterItem;
 		ment=new SampleMovement();
@@ -65,6 +69,7 @@ public class SingleMovementEvent extends Event implements StopAble{
 		this.setName("simple movement");
 		this.setIDName("simpleMovement");
 	}
+	
 
 	@Override
 	public void initialise(QuestCreator questCreator) {
@@ -82,10 +87,10 @@ public class SingleMovementEvent extends Event implements StopAble{
 			showMinionMovement();
 			showMasterMovement();
 		}
+
+		
 		
 	
-		UserInputController control=UserInputController.getController();
-		control.performCommand(new EndTurnCommand());
 	}
 	private void showMinionMovement() {
 		UserInputController control=UserInputController.getController();

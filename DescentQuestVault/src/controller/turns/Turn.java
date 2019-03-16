@@ -20,5 +20,8 @@ public abstract class Turn {
 	public void performTurn() {
 		turnhold.startTurn();
 	}
+	public void refreshTurn() {
+		turnhold.refreshTurn();
+	}
 	public abstract TurnKind getTurnKind();
 }

@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 
 import frame.SubContainer;
 import misc.Tools;
+import model.Activation;
 import model.event.Event;
 import model.event.PlaceTileEvent;
 import model.event.RemoveTileEvent;
@@ -37,7 +38,7 @@ public class ViewTile extends MapItem implements SelectAble {
 	private ArrayList<ViewTileExit> exits;
 
 	private Event placeTileEvent;
-	private Event removeTileEvent;
+	private RemoveTileEvent removeTileEvent;
 	ArrayList<Univent> eventlist=new ArrayList<Univent>();
 	private static int tilenr=0;
 	
@@ -81,7 +82,7 @@ public class ViewTile extends MapItem implements SelectAble {
 		eventlist.add(removeTileEvent);
 		
 	}
-	private void setRemoveTileEvent(RemoveTileEvent removeTileEvent2) {
+	protected void setRemoveTileEvent(RemoveTileEvent removeTileEvent2) {
 		removeTileEvent=removeTileEvent2;
 		
 	}
@@ -277,6 +278,17 @@ public class ViewTile extends MapItem implements SelectAble {
 		
 	 
 		return eventlist; 
+	}
+
+	public RemoveTileEvent getRemoveTileEvent() {
+		// TODO Auto-generated method stub
+		return removeTileEvent;
+	}
+
+	@Override
+	public void removeActivation(Activation activation) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

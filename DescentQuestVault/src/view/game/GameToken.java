@@ -27,6 +27,14 @@ public class GameToken extends ViewToken implements ActivateAble {
 
 
 
+	public void setTriggers(ViewToken toplace) {
+		this.setOpenSearchTokenTrigger(toplace.getSearchTokenTrigger());
+		this.setPlaceSearchTokenEvent(toplace.getPlaceSearchTokenEvent());
+		toplace.getRemoveSearchTokenEvent().setGameToken(this);
+		this.setRemoveSearchTokenEvent(toplace.getRemoveSearchTokenEvent());
+		toplace.getSearchTokenTrigger().setToken(this);
+	}
+
 
 
 	@Override

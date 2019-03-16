@@ -7,6 +7,7 @@ import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 
 import frame.SubContainer;
+import model.Activation;
 import model.event.Event;
 import model.event.OpenDoorTrigger;
 import model.event.PlaceDoorEvent;
@@ -23,9 +24,9 @@ import view.viewItems.ItemBox.SelectKind;
 public class ViewDoor extends MapItem implements SelectAble {
 
 	private int scalefactor=260;
-	private Event placeDoorEvent;
-	private Trigger openDoorTrigger;
-	private Event removeDoorEvent;
+	private PlaceDoorEvent placeDoorEvent;
+	private OpenDoorTrigger openDoorTrigger;
+	private RemoveDoorEvent removeDoorEvent;
 	
 	private static int doornr=0;
 	
@@ -34,27 +35,27 @@ public class ViewDoor extends MapItem implements SelectAble {
 		return "door"+doornr;
 	}
 	
-	public Event getPlaceDoorEvent() {
+	public PlaceDoorEvent getPlaceDoorEvent() {
 		return placeDoorEvent;
 	}
 
-	public void setPlaceDoorEvent(Event placeDoorEvent) {
+	public void setPlaceDoorEvent(PlaceDoorEvent placeDoorEvent) {
 		this.placeDoorEvent = placeDoorEvent;
 	}
 
-	public Trigger getOpenDoorTrigger() {
+	public OpenDoorTrigger getOpenDoorTrigger() {
 		return openDoorTrigger;
 	}
 
-	public void setOpenDoorTrigger(Trigger openDoorTrigger) {
+	public void setOpenDoorTrigger(OpenDoorTrigger openDoorTrigger) {
 		this.openDoorTrigger = openDoorTrigger;
 	}
 
-	public Event getRemoveDoorEvent() {
+	public RemoveDoorEvent getRemoveDoorEvent() {
 		return removeDoorEvent;
 	}
 
-	public void setRemoveDoorEvent(Event removeDoorEvent) {
+	public void setRemoveDoorEvent(RemoveDoorEvent removeDoorEvent) {
 		this.removeDoorEvent = removeDoorEvent;
 	}
 
@@ -115,6 +116,14 @@ public class ViewDoor extends MapItem implements SelectAble {
 		toreturn.add(this.openDoorTrigger);
 		return toreturn; 
 	}
+
+	@Override
+	public void removeActivation(Activation activation) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 
 
 

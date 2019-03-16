@@ -24,4 +24,22 @@ public class OpenDoorActivation extends Activation {
 		// TODO Auto-generated method stub
 		return "Open door";
 	}
+
+	@Override
+	public void changeName(String text) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Trigger getTrigger() {
+		// TODO Auto-generated method stub
+		return opendoortrigger;
+	}
+
+	@Override
+	public void setTrigger(Trigger trig) {
+		// TODO Auto-generated method stub
+		opendoortrigger=trig;
+	}
 }

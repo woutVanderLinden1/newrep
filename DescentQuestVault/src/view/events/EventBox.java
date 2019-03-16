@@ -238,7 +238,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		
 	}
 
-	private void removeTrigger(Trigger trigger) {
+	public void removeTrigger(Trigger trigger) {
 		for(int i=0;i<fields.size();i++) {
 			BaseField field=fields.get(i);
 

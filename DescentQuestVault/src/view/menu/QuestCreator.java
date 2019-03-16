@@ -15,7 +15,10 @@ import javax.swing.JSplitPane;
 import controller.UserInputController;
 import controller.commands.ICommand;
 import frame.SubContainer;
+import misc.ActivateAble;
 import misc.save.WorldSaveFile;
+import model.Activation;
+import model.CustomActivation;
 import model.ItemController;
 import model.event.Trigger;
 import model.event.Univent;
@@ -27,6 +30,7 @@ import view.Items.Map.ViewMonster;
 import view.Items.Map.ViewSquare;
 import view.Items.Map.ViewTile;
 import view.Items.Map.ViewToken;
+import view.events.ActivationTrigger;
 import view.events.BaseField;
 import view.events.EventPanel;
 import view.events.TriggerField;
@@ -443,6 +447,21 @@ public class QuestCreator extends SubContainer implements Serializable{
 	public void clearEventBox() {
 		// TODO Auto-generated method stub
 		eventPanel.clearEventBox();
+	}
+
+
+	public void addActivationToActivateAble(ActivateAble active) {
+		
+		CustomActivation act=new CustomActivation("activate "+active.getName());
+		eventPanel.addUniventToTriggerField(act.getActivationTrigger(),null);
+		active.addActivation(act);
+		
+	}
+
+
+	public void removeActivationFromActivateAble(Activation activation, ActivateAble active) {
+		eventPanel.removeTrigger(activation.getTrigger());
+		active.removeActivation(activation);
 	}
 
 

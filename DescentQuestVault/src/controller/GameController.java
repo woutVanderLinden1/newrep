@@ -125,6 +125,12 @@ public class GameController implements IGameController, AddGameHeroListener,AddG
 		monsterTurnList.addAll(basemonsterturns);
 		heroturns.addAll(baseheroturns);
 		rounds++;
+		for(Turn turn:heroturns) {
+			turn.refreshTurn();
+		}
+		for(Turn turn:monsterTurnList) {
+			turn.refreshTurn();
+		}
 		triggerNextRoundListeners();
 		// TODO Auto-generated method stub
 		
@@ -137,6 +143,29 @@ public class GameController implements IGameController, AddGameHeroListener,AddG
 		}
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	public void removeMonster(GameMonster monster) {
+		// TODO Auto-generated method stub
+		
+		for(int i=0;i<monsterTurnList.size();i++) {
+			MonsterTurn turn=monsterTurnList.get(i);
+			if(turn.getTurnhold()==monster) {
+				monsterTurnList.remove(turn);
+				i--;
+			}
+		
+			
+		}
+		for(int i=0;i<basemonsterturns.size();i++) {
+			MonsterTurn turn=basemonsterturns.get(i);
+			if(turn.getTurnhold()==monster) {
+				basemonsterturns.remove(turn);
+				i--;
+			}
+		
+		}
 	}
 	
 	
