@@ -3,8 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import model.Monster.Barghest;
-import model.Monster.Zombie;
+import model.Monster.*;
 import model.door.ClosedDoor;
 import model.door.NormalDoor;
 import model.event.Event;
@@ -37,7 +36,14 @@ public class Resources {
 	
 	public static ArrayList<Item> AvailableMonsters=new ArrayList<Item>(Arrays.asList(
 			new Zombie(),
-			new Barghest()
+			new Barghest(),
+			new Spider(),
+			new Merroid(),
+			new GoblinArcher(),
+			new FleshMoulder(),
+			new Ettin(),
+			new Elemental(),
+			new ShadowDragon()
 			
 			));
 	

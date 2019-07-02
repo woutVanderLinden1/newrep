@@ -20,13 +20,13 @@ import model.event.extraevents.TextTrigger;
 import model.event.monster.DefaultZombieMoveTrigger;
 import view.viewItems.ItemBox.ItemInfoContainer;
 
-public class ShadowDragon extends Monster {
+public class Merroid extends Monster {
 
 	private int[][] shape;
 	
-	public ShadowDragon() {
-		super("shadowDragon");
-		int[][] mat ={ {1,1,1},{1,1,1}};
+	public Merroid() {
+		super("merroid");
+		int[][] mat ={ {1,1},{1,1}};
 		map.put(2,new MonsterSet(0,1));
 		map.put(3,new MonsterSet(1,0));
 		map.put(4,new MonsterSet(1,1));
@@ -44,7 +44,7 @@ public class ShadowDragon extends Monster {
 	@Override
 	public double getScaleWidth() {
 		// TODO Auto-generated method stub
-		return 0.73;
+		return 0.5;
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class ShadowDragon extends Monster {
 	@Override
 	public int getLeftOff() {
 		// TODO Auto-generated method stub
-		return 33;
+		return 0;
 	}
 
 	@Override

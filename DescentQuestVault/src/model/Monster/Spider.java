@@ -20,16 +20,16 @@ import model.event.extraevents.TextTrigger;
 import model.event.monster.DefaultZombieMoveTrigger;
 import view.viewItems.ItemBox.ItemInfoContainer;
 
-public class ShadowDragon extends Monster {
+public class Spider extends Monster {
 
 	private int[][] shape;
 	
-	public ShadowDragon() {
-		super("shadowDragon");
-		int[][] mat ={ {1,1,1},{1,1,1}};
-		map.put(2,new MonsterSet(0,1));
-		map.put(3,new MonsterSet(1,0));
-		map.put(4,new MonsterSet(1,1));
+	public Spider() {
+		super("spider");
+		int[][] mat ={ {1}};
+		map.put(2,new MonsterSet(1,2));
+		map.put(3,new MonsterSet(1,3));
+		map.put(4,new MonsterSet(1,4));
 		shape=mat;
 		defaultMovement=new DefaultZombieMoveTrigger(this);
 		// TODO Auto-generated constructor stub
@@ -44,19 +44,19 @@ public class ShadowDragon extends Monster {
 	@Override
 	public double getScaleWidth() {
 		// TODO Auto-generated method stub
-		return 0.73;
+		return 0.24;
 	}
 
 	@Override
 	public double getScaleHeight() {
 		// TODO Auto-generated method stub
-		return 0.5;
+		return 0.24;
 	}
 
 	@Override
 	public int getLeftOff() {
 		// TODO Auto-generated method stub
-		return 33;
+		return -33;
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class ShadowDragon extends Monster {
 	@Override
 	public int getTopOff() {
 		// TODO Auto-generated method stub
-		return -5;
+		return 0;
 	}
 
 	@Override
@@ -116,10 +116,11 @@ public class ShadowDragon extends Monster {
 	@Override
 	public int getMonsterLimit() {
 		// TODO Auto-generated method stub
-		return 2;
+		return 5;
 	}
 
 
 	
 
 }
+
