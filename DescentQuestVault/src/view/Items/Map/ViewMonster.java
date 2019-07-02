@@ -30,6 +30,7 @@ import controller.command.AddActivationToMapItemCommand;
 import controller.command.RemoveActivationFromMapItemCommand;
 import controller.commands.AddTriggerToTriggerFieldCommand;
 import controller.commands.ICommand;
+import controller.commands.select.SelectCommand;
 import frame.SubContainer;
 import misc.ActivateAble;
 import model.Activation;
@@ -70,8 +71,12 @@ public class ViewMonster extends MapItem implements ActivateAble{
 		
 		placeMonsterEvent=new PlaceMonsterEvent(this);
 		removeMonsterEvent=new RemoveMonsterEvent(this);
+		System.out.println("firstchek "+ removeMonsterEvent);
 		defeatTrigger=new DefeatMonsterTrigger(this);
-		activationList.add(new DefeatMonsterActivation());
+		DefeatMonsterActivation act=new DefeatMonsterActivation(defeatTrigger);
+		activationList.add(act);
+		activations.add(act);
+		defeatTrigger.addEvent(removeMonsterEvent);
 		//setIDName(image.getIDName());
 		// TODO Auto-generated constructor stub
 	}
@@ -149,12 +154,19 @@ public class ViewMonster extends MapItem implements ActivateAble{
 	public void addMonsterSpecifics(ItemInfoContainer itemInfoText) {
 		addMonsterMovementEventButton(itemInfoText);
 		addMonsterMovementCombBox(itemInfoText);
+		
+		InitialiseActivation(itemInfoText);
+	}
+	
+	@Override
+	public void InitialiseActivation( ItemInfoContainer itemInfoText) {
 		addNewActivationCreator(itemInfoText);
 		addActivationsShower(itemInfoText);
 	}
+	
 
 	private void addActivationsShower(ItemInfoContainer itemInfoText) {
-		for(Activation act:activationList) {
+		for(Activation act:activations) {
 				//add text for activatione
 			//add removebutton
 			//when added add nes trigger.
@@ -168,13 +180,14 @@ public class ViewMonster extends MapItem implements ActivateAble{
 	private void addActivationAddTriggerToField(Activation act, ItemInfoContainer itemInfoText) {
 		JButton button=new JButton("add");
 		ActivateAble hold=this;
+		ViewMonster mon=this;
 		button.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				UserInputController control=UserInputController.getController();
 				control.performCommand(new  AddTriggerToTriggerFieldCommand(act.getTrigger(),null));
-			
+				control.performCommand(new SelectCommand(mon));
 			}
 			
 		});
@@ -197,7 +210,7 @@ public class ViewMonster extends MapItem implements ActivateAble{
 	}
 
 	private void addActivationRemoveButton(Activation act, ItemInfoContainer itemInfoText) {
-		JButton button=new JButton("add");
+		JButton button=new JButton("remove");
 		ActivateAble hold=this;
 		button.addActionListener(new ActionListener() {
 			
@@ -210,7 +223,7 @@ public class ViewMonster extends MapItem implements ActivateAble{
 			
 		});
 		 JLabel field = new JLabel();
-		 field.setText("New Activation");
+		 field.setText(act.getName());
 		
 		 field.setEnabled(false);
 		 field.setBackground(Color.yellow);
@@ -276,13 +289,15 @@ public class ViewMonster extends MapItem implements ActivateAble{
 	private void addNewActivationCreator(ItemInfoContainer itemInfoText) {
 		JButton button=new JButton("add");
 		ActivateAble hold=this;
+		ViewMonster mon=this;
 		button.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				UserInputController control=UserInputController.getController();
 				control.performCommand(new  AddActivationToMapItemCommand(hold));
-			
+				control.performCommand(new SelectCommand(mon));
+				//control.performCommand(new RenewItemList);
 			}
 			
 		});
@@ -429,7 +444,7 @@ public class ViewMonster extends MapItem implements ActivateAble{
 	@Override
 	public ArrayList<Activation> getActivations() {
 		// TODO Auto-generated method stub
-		return null;
+		return super.getActivations();
 	}
 
 	@Override
@@ -443,7 +458,22 @@ public class ViewMonster extends MapItem implements ActivateAble{
 		// TODO Auto-generated method stub
 		activationList.remove(activation);
 	}
-	
+
+	public RemoveMonsterEvent getRemoveMonsterEvent() {
+		// TODO Auto-generated method stub
+		return removeMonsterEvent;
+	}
+
+	public void setRemoveMonsterEvent(RemoveMonsterEvent removeMonsterEvent) {
+		this.removeMonsterEvent = removeMonsterEvent;
+	}
+
+	public int getMonsterLimit() {
+		// TODO Auto-generated method stub
+		return ((MonsterItem) item).getMonsterLimit();
+	}
+
+
 	
 	
 }

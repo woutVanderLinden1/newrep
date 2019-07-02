@@ -64,17 +64,15 @@ public abstract class Trigger extends Univent implements EventBase {
 	
 	public void triggerHere(ArrayList<Univent> totrigger) {
 	
-		
-		for(Univent ev:totrigger) {
-			
-				ev.trigger();
-			
-				
-			
-		
-			
-			
-		}
+		EventTriggerStack triggerstack=EventTriggerStack.getTriggerStack();
+		triggerstack.addNewEvents(totrigger);
+		triggerstack.triggerNextStackEvent();
+		/*
+		    	for(Univent ev:totrigger) {
+		    		ev.trigger();
+		    	}
+		    	*/
+	
 	
 		//keep them as a continue prepared
 		//if continue pressed trigger the rest

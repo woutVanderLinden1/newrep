@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import view.game.mappanel.GameMapPanel;
+
 public class ButtonPanel extends JPanel implements ActionPerformListener{
 
 	ArrayList<JButton> butts=new ArrayList<JButton>();

@@ -24,6 +24,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import controller.EndPhaseListener;
 import controller.UserInputController;
 import misc.listeners.IResizeListeners;
 import model.Monster.Monster;
@@ -54,11 +55,13 @@ public class MainFrame extends JFrame{
 	protected JLayeredPane lpane = new JLayeredPane();
 	private QuestGame currentGame;
 	
-	private ArrayList<StartGameListener> gamestartlisteners=new ArrayList<StartGameListener>();
+	
+	
+	public static MainFrame mainFrame;
 	
 	public MainFrame(){
 	
-		
+		mainFrame=this;
 		this.addComponentListener(new ComponentAdapter() 
 		{  
 		        public void componentResized(ComponentEvent evt) {
@@ -384,7 +387,7 @@ public class MainFrame extends JFrame{
 		
 	//	this.add(lpane);
 		viewMan.startGame(gamemenu);
-		notifyGameStartListeners();
+		gamemenu.startGame();
 		revalidate();
 		repaint();
 		
@@ -405,23 +408,7 @@ public class MainFrame extends JFrame{
 		repaint();
 	}
 
-	public void addGameStartListener(StartGameListener listen) {
-		gamestartlisteners.add(listen);
-	}
-	
-	public void notifyGameStartListeners() {
-		
-		for(StartGameListener listen:gamestartlisteners) {
-			 Thread thread = new Thread(){
-				    public void run(){
-				    	listen.gameStarted();
-				 }
-			 };
 
-			 thread.start();
-			
-		}
-	}
 
 	public void openMonsterEditor() {
 		System.out.println("monstereditor opened");
@@ -432,6 +419,11 @@ public class MainFrame extends JFrame{
 
 	public void openMonsterEditor(Monster mon) {
 	
+		
+	}
+
+	public void addEndPhaseListener(EndPhaseListener trig) {
+		// TODO Auto-generated method stub
 		
 	}
 

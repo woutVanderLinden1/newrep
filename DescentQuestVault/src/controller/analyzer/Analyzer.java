@@ -24,6 +24,7 @@ import controller.commands.select.StartDragEventCommand;
 import controller.commands.select.StartDragTriggerCommand;
 import controller.commands.select.StartTileDragCommand;
 import controller.commands.select.UnselectTileCommand;
+import model.event.Event;
 import view.IDrawWindow;
 
 import view.IView;
@@ -33,6 +34,7 @@ import view.Items.Map.ViewSquare;
 import view.Items.Map.ViewTile;
 import view.events.BaseField;
 import view.events.EventField;
+import view.events.EventItem;
 import view.events.MultiTriggerField;
 import view.events.TriggerContainer;
 import view.events.TriggerField;
@@ -337,7 +339,11 @@ public class Analyzer {
 		if(view.hasSelected()) {
 			switch(selected.getKind()) {
 			case EVENT:
-				break;
+				Event event=(Event) ((EventItem) selected).getEv().copy();
+				BaseField field=new EventField(event,100);
+				return new StartDragEventCommand(field,ev.getX(),ev.getY(),ev.getXOnScreen(),ev.getYOnScreen());
+				
+			
 			case TILEITEM:
 				return new StartDragCommand(selected,x,y);
 			

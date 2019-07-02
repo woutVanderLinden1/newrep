@@ -49,6 +49,7 @@ import controller.commands.makeVisibleCommand;
 import controller.commands.select.DeleteSelectedCommand;
 import controller.commands.select.RotateSelectedCommand;
 import frame.SubContainer;
+import misc.ActivateAble;
 import misc.NameHolder;
 import model.SelectedArea;
 import model.event.Event;
@@ -100,7 +101,7 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 		itemInfoText.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		JScrollPane pane=new JScrollPane(itemInfoText,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
         	    JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		pane.setPreferredSize(new Dimension(width,this.getHeight()-250));
+		pane.setPreferredSize(new Dimension(width,this.getHeight()-440));
 		pane.setLocation(5,375);
 		itemInfoSize=300;
 		this.add(pane);
@@ -183,7 +184,7 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 
 	public void refreshImage() {
 		imagePanel.removeAll();
-		System.out.println("resettti");
+		System.out.println("resetti");
 		itemInfoText.reset();
 		if(selected.getHolded()==null) {
 			System.out.println("holded is null");
@@ -234,13 +235,13 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 				ViewDoor viewdoor=((ViewDoor) holded);
 				angle=viewdoor.getAngle();
 				showEvents(viewdoor);
-			
+				addActivations(viewdoor);
 				break;
 			case VIEWTOKEN:
 				ViewToken viewtoken=((ViewToken) holded);
 				angle=viewtoken.getAngle();
 				showEvents(viewtoken);
-				
+				addActivations(viewtoken);
 				break;
 			case GENERATOR:
 				showCommands((GeneratorItem) holded);
@@ -306,6 +307,11 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 
 
 	
+
+	private void addActivations(ActivateAble viewdoor) {
+		// TODO Auto-generated method stub
+		viewdoor.InitialiseActivation(itemInfoText);
+	}
 
 	protected void showMonsterSpecifics(MonsterItem imageItem) {
 		System.out.println("showing monster item specifics");
@@ -412,6 +418,7 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 
 	protected void showEvents(EventHolder holder) {
 		ArrayList<Univent> eventlist=holder.getEvents();
+		
 		for(Univent vent:eventlist) {
 			JButton button=new JButton("add");
 			button.addActionListener(new ActionListener() {
@@ -557,7 +564,7 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 			  }
 
 			  public void warn() {
-				  System.out.println("changedname "+field.getText());
+				 // System.out.println("changedname "+field.getText());
 					holder.changeName((String)field.getText());
 			  }
 			});

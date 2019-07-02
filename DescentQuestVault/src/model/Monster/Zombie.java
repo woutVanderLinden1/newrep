@@ -113,6 +113,12 @@ public class Zombie extends Monster {
 		
 	}
 
+	@Override
+	public int getMonsterLimit() {
+		// TODO Auto-generated method stub
+		return 5;
+	}
+
 
 	
 

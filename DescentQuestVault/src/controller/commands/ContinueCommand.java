@@ -1,5 +1,6 @@
 package controller.commands;
 
+import model.event.EventTriggerStack;
 import model.event.extraevents.StopAble;
 import model.event.extraevents.TextStop;
 
@@ -14,9 +15,10 @@ public class ContinueCommand extends BasicCommand {
 
 	@Override
 	public void perform() {
-		stop.continueStop();
+		//stop.continueStop();
 		// TODO Auto-generated method stub
-
+		EventTriggerStack stack=EventTriggerStack.getTriggerStack();
+		stack.triggerNextStackEvent();
 	}
 
 }

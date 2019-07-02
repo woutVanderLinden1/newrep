@@ -5,10 +5,12 @@ import controller.commands.ICommand;
 import view.game.GameMonster;
 
 public class RemoveGameMonsterCommand extends BasicCommand implements ICommand {
-	GameMonster toremove;
+	private GameMonster toremove;
 
 	public RemoveGameMonsterCommand(GameMonster monster) {
 		toremove=monster;
+		System.out.println(monster);
+		System.out.println(" in event "+toremove.getName());
 	}
 
 	@Override

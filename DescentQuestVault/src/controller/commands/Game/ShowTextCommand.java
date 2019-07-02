@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import controller.commands.BasicCommand;
 import controller.commands.ICommand;
+import frame.MainFrame;
 import model.event.extraevents.TextOption;
 
 public class ShowTextCommand extends BasicCommand implements ICommand {
@@ -31,7 +32,8 @@ public class ShowTextCommand extends BasicCommand implements ICommand {
 			view.showTextDialog(text);
 		}
 		// TODO Auto-generated method stub
-		
+		MainFrame.mainFrame.revalidate();
+		MainFrame.mainFrame.repaint();
 	}
 
 }

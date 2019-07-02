@@ -14,6 +14,7 @@ public class RemoveActivationFromMapItemCommand extends BasicCommand implements 
 		// TODO Auto-generated constructor stub
 		active=hold;
 		activation=act;
+		
 	}
 
 	@Override

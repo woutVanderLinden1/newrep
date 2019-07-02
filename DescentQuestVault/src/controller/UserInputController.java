@@ -28,6 +28,7 @@ import frame.MainFrame;
 import frame.SubContainer;
 import misc.SampleFile;
 import misc.listeners.ButtonPressedListener;
+import misc.save.WorldSaveFile;
 import model.IModel;
 import model.ItemController;
 import model.Monster.Monster;
@@ -35,8 +36,10 @@ import model.event.MonsterTurnTrigger;
 import model.event.StartUpTrigger;
 import model.event.Trigger;
 import model.event.Univent;
+import model.event.advancedevents.PerilEvent;
 import model.event.extraevents.StopAble;
 import model.event.extraevents.TextStop;
+import model.event.trigger.EndPhaseTrigger;
 import model.values.CustomInteger;
 import monsterEditor.MonsterEditorView;
 import view.IDrawWindow;
@@ -109,6 +112,8 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	private boolean tileMoveing;
 	private OldTilePlace oldTile;
 	private CustomInteger hope;
+	
+	private BaseEventController baseEventControl;
 
 
 	private boolean norefresh;
@@ -129,9 +134,16 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		refreshState();
 		Toolkit.getDefaultToolkit().addAWTEventListener(listen, AWTEvent.MOUSE_EVENT_MASK);
 		Toolkit.getDefaultToolkit().addAWTEventListener(listen, AWTEvent.MOUSE_MOTION_EVENT_MASK);
-	
+
 	}
 	
+	public void initialiseBaseEventController(BaseEventController baseEventController) {
+		// TODO Auto-generated method stub
+		this.baseEventControl=baseEventController;
+		view.initialiseBaseEvents(baseEventController);
+		//eventPanel.setBaseTrigger(g.getBaseTrigger());
+	}
+
 	public IDrawWindow getActiveWindow(){
 		return view.getActiveWindow();
 	}
@@ -600,16 +612,23 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		oldevent=null;
 	}
 
+	/*
 	public void addStartGameListener(StartUpTrigger basetrigger) {
-		theFrame.addGameStartListener(basetrigger);
+		
+		//theFrame.addGameStartListener(basetrigger);
 		
 	}
+	*/
 
 	public void startGame() {
 		gamecontrol=new GameController();
 		QuestGame game=new QuestGame(theFrame.getSize());
+		
+		game.addGameStartListener(baseEventControl.getStartuptrigger());
+		game.addEndPhaseListener(baseEventControl.getEndtrigger());
 		game.addMonsterPlaceListener(gamecontrol);
 		game.addHeroPlaceListener(gamecontrol);
+		game.setGameController(gamecontrol);
 		game.initialiseGame(new SampleFile());
 		theFrame.startTestGame(game);
 		
@@ -716,6 +735,14 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	
 	}
 
+	public BaseEventController getBaseEventControl() {
+		return baseEventControl;
+	}
+
+	public void setBaseEventControl(BaseEventController baseEventControl) {
+		this.baseEventControl = baseEventControl;
+	}
+
 	public void addToMarkedSquares(ViewSquare square) {
 		
 		monsterColorStack.peek().addtoViewSquares(square);
@@ -820,9 +847,27 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		// TODO Auto-generated method stub
 		ItemController control=ItemController.getItemController();
 		CustomInteger hope=control.getHope();
+		
 		System.out.println("hope instance 2 "+hope);
-		hope.setTheInteger(hope.getTheInteger()-1);
+		control.setHopeValue(hope.getTheInteger()-1);
+		//hope.setTheInteger(hope.getTheInteger()-1);
 		System.out.println("hope changed to "+hope.getTheInteger());
+	}
+
+	public void addEndPhaseListener(EndPhaseListener trig) {
+		// TODO Auto-generated method stub
+		theFrame.addEndPhaseListener(trig);
+	}
+
+	public void saveThis(WorldSaveFile thefile) {
+		thefile.setBaseEventControl(this.baseEventControl);
+		
+	}
+
+	public void startEditor() {
+		initialiseBaseEventController(new BaseEventController(new StartUpTrigger(),new EndPhaseTrigger()));
+		// TODO Auto-generated method stub
+		
 	}
 
 

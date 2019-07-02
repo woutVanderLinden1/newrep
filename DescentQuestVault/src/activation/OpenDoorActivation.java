@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.Activation;
 import model.event.Trigger;
+import view.Items.Map.ViewDoor;
 import view.game.GameDoor;
 
 public class OpenDoorActivation extends Activation {
@@ -11,8 +12,9 @@ public class OpenDoorActivation extends Activation {
 	
 	private Trigger opendoortrigger;
 	
-	public OpenDoorActivation(GameDoor gameDoor) {
-		opendoortrigger=gameDoor.getOpenDoorTrigger();
+	public OpenDoorActivation(ViewDoor viewDoor) {
+		opendoortrigger=viewDoor.getOpenDoorTrigger();
+		//this.setName
 	}
 
 	public void trigger() {
@@ -42,4 +44,6 @@ public class OpenDoorActivation extends Activation {
 		// TODO Auto-generated method stub
 		opendoortrigger=trig;
 	}
+
+	
 }

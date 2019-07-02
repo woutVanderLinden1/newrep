@@ -36,6 +36,7 @@ public class AddMonsterToViewSquareCommand extends BasicCommand implements IComm
 		MapItem it=null;
 		if(monster!=null) {
 			it=view.addItemToSquare(monster,square);
+			
 		}
 		else {
 			it=view.addViewItemToSquare(viewmonster,square);
@@ -45,7 +46,7 @@ public class AddMonsterToViewSquareCommand extends BasicCommand implements IComm
 		control.startMonsterPlacement(((ViewMonster) it).getPlaceMonsterSquares(),(ViewMonster) it);
 		
 		//	view.addDoorToSquare(door,square);
-		control.performCommand(new ShowOccupiedCommand(square, (ShapeItem) monster.getImageItem(), new Color(40,225,40,95)));
+		control.performCommand(new ShowOccupiedCommand(square, (ShapeItem) it.getImageItem(), new Color(40,225,40,95)));
 		
 	}
 }

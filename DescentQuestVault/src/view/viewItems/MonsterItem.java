@@ -120,6 +120,13 @@ public class MonsterItem extends ShapeItem {
 		
 		
 	}
+
+
+
+	public int getMonsterLimit() {
+		// TODO Auto-generated method stub
+		return monster.getMonsterLimit();
+	}
 	
 
 	

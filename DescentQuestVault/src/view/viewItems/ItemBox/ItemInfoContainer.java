@@ -48,7 +48,7 @@ public class ItemInfoContainer extends SubContainer {
 		lebles.add(lab);
 		this.add(lab);
 		this.add(field);
-		increaseSize(lab.getHeight());
+		increaseSize(lab.getHeight()+50);
 		
 	}
 
@@ -69,7 +69,7 @@ public class ItemInfoContainer extends SubContainer {
 		lebles.add(lab);
 		this.add(lab);
 		this.add(button);
-		increaseSize(lab.getHeight());
+		increaseSize(lab.getHeight()+50);
 		
 	}
 
@@ -101,7 +101,7 @@ public class ItemInfoContainer extends SubContainer {
 		lebles.add(lab);
 		this.add(lab);
 		this.add(button);
-		increaseSize(lab.getHeight());
+		increaseSize(lab.getHeight()+50);
 		
 	}
 

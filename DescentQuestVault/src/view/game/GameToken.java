@@ -22,7 +22,8 @@ public class GameToken extends ViewToken implements ActivateAble {
 		super((TokenItem)toplace.getImageItem(),gamesquare,0,0);
 		this.setTriggers(toplace);
 		tokenbasic=toplace;
-		activationList.add(new SearchTokenActivation(this));
+		
+		activationList=toplace.getActivations();
 	}
 
 

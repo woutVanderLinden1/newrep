@@ -27,4 +27,6 @@ public abstract class Door extends Item {
 	public ItemOptions getItemKind() {
 		return ItemOptions.Door;
 	}
+
+	public abstract boolean isClosedDoor() ;
 }

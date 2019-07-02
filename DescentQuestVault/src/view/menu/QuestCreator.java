@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import controller.BaseEventController;
 import controller.UserInputController;
 import controller.commands.ICommand;
 import frame.SubContainer;
@@ -354,6 +355,8 @@ public class QuestCreator extends SubContainer implements Serializable{
 	public WorldSaveFile saveThis() {
 		
 		WorldSaveFile thefile=new WorldSaveFile();
+		UserInputController UIControl=UserInputController.getController();
+		UIControl.saveThis(thefile);
 		eventPanel.saveThis(thefile);
 		ItemController control=ItemController.getItemController();
 		control.saveThis(thefile);
@@ -374,8 +377,9 @@ public class QuestCreator extends SubContainer implements Serializable{
 		}
 		
 		ItemController.getItemController().readValues(g);
+		UserInputController control=UserInputController.getController();
+		control.initialiseBaseEventController(g.getControl());
 		
-		eventPanel.setBaseTrigger(g.getBaseTrigger());
 	}
 
 
@@ -462,6 +466,12 @@ public class QuestCreator extends SubContainer implements Serializable{
 	public void removeActivationFromActivateAble(Activation activation, ActivateAble active) {
 		eventPanel.removeTrigger(activation.getTrigger());
 		active.removeActivation(activation);
+	}
+
+
+	public void initialiseBaseEvents(BaseEventController baseEventController) {
+		// TODO Auto-generated method stub
+		eventPanel.setBaseTriggers(baseEventController);
 	}
 
 

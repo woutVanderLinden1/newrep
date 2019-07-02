@@ -3,6 +3,7 @@ package misc.save;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import controller.BaseEventController;
 import model.event.StartUpTrigger;
 import model.event.Univent;
 import model.values.CustomBoolean;
@@ -18,9 +19,10 @@ public class WorldSaveFile implements Serializable {
 //	private ArrayList<CustomInteger> customIntegers;
 //	private ArrayList<CustomBoolean> customBooleans;
 	private ArrayList<CustomValue> customValues=new ArrayList<CustomValue>();
+	private BaseEventController control;
 
 	private ArrayList<Univent> univentList=new ArrayList<Univent>();
-	private StartUpTrigger baseTrigger;
+	
 	
 	public ArrayList<CustomValue> getCustomValues() {
 		return customValues;
@@ -32,12 +34,14 @@ public class WorldSaveFile implements Serializable {
 
 	
 	
-	public StartUpTrigger getBaseTrigger() {
-		return baseTrigger;
+	
+
+	public BaseEventController getControl() {
+		return control;
 	}
 
-	public void setBaseTrigger(StartUpTrigger baseTrigger) {
-		this.baseTrigger = baseTrigger;
+	public void setControl(BaseEventController control) {
+		this.control = control;
 	}
 
 	public void addUnivent(Univent univent) {
@@ -52,6 +56,11 @@ public class WorldSaveFile implements Serializable {
 
 	public void addCustomValue(CustomValue value) {
 		customValues.add(value);
+	}
+
+	public void setBaseEventControl(BaseEventController baseEventControl) {
+		// TODO Auto-generated method stub
+		control=baseEventControl;
 	}
 
 }

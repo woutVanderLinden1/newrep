@@ -504,8 +504,12 @@ public class GameGrid extends SubContainer {
 	public void addGameMonster(GameMonster gamemon) {
 		// TODO Auto-generated method stub
 		//add to the mosnters to the selected squares
+		
 		MonsterItem it=gamemon.getMonsterItem();
 		Map<Integer, MonsterSet> map=it.getMap();
+		if(map==null) {
+			return;
+		}
 		MonsterSet workingset=map.get(thefile.getNrHeroes());
 		ArrayList<ViewSquare> squares=new ArrayList<ViewSquare>(gamemon.getPlaceMonsterSquares());
 		

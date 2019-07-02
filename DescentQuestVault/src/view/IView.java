@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import controller.BaseEventController;
 import controller.commands.ICommand;
 import misc.ActivateAble;
 import misc.save.WorldSaveFile;
@@ -160,7 +161,7 @@ public interface IView {
 
 	void showTextDialog(String text, ArrayList<TextOption> newoptions);
 
-	void addGameMonster(ViewMonster toplace);
+	GameMonster addGameMonster(ViewMonster toplace);
 
 	
 
@@ -195,6 +196,10 @@ public interface IView {
 	void addActivationToActivateAble(ActivateAble active);
 
 	void removeActivationFromActivateAble(Activation activation, ActivateAble active);
+
+	void initialiseBaseEvents(BaseEventController baseEventController);
+
+	void removeMapMonster(GameMonster toremove);
 
 	
 	

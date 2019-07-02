@@ -1,4 +1,4 @@
-package view.game;
+package view.game.mappanel;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -46,6 +46,15 @@ import view.Items.Map.ViewMonster;
 import view.Items.Map.ViewSquare;
 import view.Items.Map.ViewTile;
 import view.Items.Map.ViewToken;
+import view.game.ActivationFactory;
+import view.game.ButtonPanel;
+import view.game.GameDoor;
+import view.game.GameGrid;
+import view.game.GameMonster;
+import view.game.HeroPanel;
+import view.game.MonsterKind;
+import view.game.MonsterPanel;
+import view.game.MoveToBackListener;
 import view.hero.GameHero;
 import view.hero.ViewHero;
 import view.viewItems.DoorItem;
@@ -72,6 +81,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		grid=new GameGrid(defaultSize);
 		grid.addMoveToBackListener(this);
 		this.add(mapPanels);
+	
 		mapPanels.setSize(defaultSize);
 		mapPanels.setPreferredSize(defaultSize);
 		mapPanels.add(grid,2,2);
@@ -94,7 +104,37 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		  
 		// addHeroes(basefile.getHeroes());
 		 
-		 
+			Goldpanel goldpanel=new Goldpanel();
+			//goldpanel.setBackground(Color.white);
+			goldpanel.setSize(120,30);
+			mapPanels.add(goldpanel,2,2);
+			mapPanels.moveToFront(goldpanel);
+			goldpanel.setBackground(new Color(0,0,0,0));
+			goldpanel.setLocation(50,mapPanels.getHeight()-140); 
+			
+			FamePanel famepanel=new FamePanel();
+			//goldpanel.setBackground(Color.white);
+			famepanel.setSize(120,30);
+			mapPanels.add(famepanel,2,2);
+			mapPanels.moveToFront(famepanel);
+			famepanel.setBackground(new Color(0,0,0,0));
+			famepanel.setLocation(170,mapPanels.getHeight()-140); 
+			
+			PerilPanel perilpanel=new PerilPanel();
+			//goldpanel.setBackground(Color.white);
+			perilpanel.setSize(120,30);
+			mapPanels.add(perilpanel,2,2);
+			mapPanels.moveToFront(perilpanel);
+			perilpanel.setBackground(new Color(0,0,0,0));
+			perilpanel.setLocation(290,mapPanels.getHeight()-140);
+			
+			HopePanel hopepanel=new HopePanel();
+			//goldpanel.setBackground(Color.white);
+			hopepanel.setSize(120,30);
+			mapPanels.add(hopepanel,2,2);
+			mapPanels.moveToFront(hopepanel);
+			hopepanel.setBackground(new Color(0,0,0,0));
+			hopepanel.setLocation(410,mapPanels.getHeight()-140);
 	}
 
 
@@ -111,15 +151,17 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		// TODO Auto-generated method stub
 		
 	}
-	public void addGameMonster(ViewMonster toplace) {
+	public GameMonster addGameMonster(ViewMonster toplace) {
 		monsterPanel.setSize(100,450);
 		monsterPanel.setLocation(this.getWidth()-200,100);
 		GameMonster gamemon=new GameMonster(toplace);
+	//	topla
 		monsterPanel.addMonster(gamemon);
 		grid.addGameMonster(gamemon);
 		mapPanels.moveToFront(monsterPanel);
 		// TODO Auto-generated method stub
 		this.triggerMonsterPlaceListeners(gamemon);
+		return gamemon;
 	}
 	
 	private void addMonsters(ArrayList<ViewMonster> monsters) {
@@ -197,6 +239,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 
 
 	public void showTextDialog(String text) {
+		mapPanels.moveToBack(temporaryPanel);
 		// TODO Auto-generated method stub
 		//grid.showTextDialog(text);
 		textPanel.removeAll();
@@ -212,10 +255,14 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		textPanel.setLocation(200,10);
 		area.setSize(mapPanels.getWidth()-80,300);
 		textPanel.setBackground(new Color(222,184,135,95));
+		this.revalidate();
+		this.repaint();
 	}
 
 
 	public void showTextDialog(String text, ArrayList<TextOption> newoptions) {
+		System.out.println(text);
+		mapPanels.moveToBack(temporaryPanel);
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 		//grid.showTextDialog(text);
@@ -231,7 +278,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		textPanel.add(area);
 		area.setBackground(new Color(0,0,0,0));
 		area.setEditable(false);
-		textPanel.setSize(Math.max(mapPanels.getWidth()-400,400),350);
+		textPanel.setSize(Math.max(mapPanels.getWidth()-400,400),400);
 		textPanel.setLocation(200,10);
 		area.setSize(mapPanels.getWidth()-80,300);
 		textPanel.setBackground(new Color(222,184,135,95));
@@ -250,9 +297,10 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					// TODO Auto-generated method stub
+					closeText();
 					option.trigger();
 					option.perform();
-					closeText();
+					
 				}
 
 			
@@ -260,6 +308,11 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 			});
 			buttonpanel.add(optionbutton);
 		}
+		textPanel.revalidate();
+		textPanel.repaint();
+		this.revalidate();
+		this.repaint();
+		textPanel.requestFocus();
 	}
 	
 	public void closeText() {
@@ -338,10 +391,11 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				closeText();
 				UserInputController control=UserInputController.getController();
 				control.performCommand(new ContinueCommand(stop));
 				
-				closeText();
+				
 			}
 
 		
@@ -393,6 +447,14 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		monsterPanel.removeMonster(toremove);
 		grid.removeGameMonster(toremove);
 	}
+
+
+	public void removeMapMonster(GameMonster toremove) {
+		// TODO Auto-generated method stub
+		grid.removeGameMonster(toremove);
+	}
+	
+	
 
 
 

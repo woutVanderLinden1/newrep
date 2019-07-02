@@ -9,6 +9,7 @@ import java.util.Stack;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
+import controller.BaseEventController;
 import controller.commands.ICommand;
 import frame.MainFrame;
 import misc.ActivateAble;
@@ -63,6 +64,7 @@ public class ViewManager implements IView {
 	private MenuManager menu;
 	private QuestCreator quester;
 	private QuestGame game;
+	
 	
 	@Override
 	public IDrawWindow getActiveWindow() {
@@ -416,9 +418,9 @@ public class ViewManager implements IView {
 	}
 
 	@Override
-	public void addGameMonster(ViewMonster toplace) {
+	public GameMonster addGameMonster(ViewMonster toplace) {
 		// TODO Auto-generated method stub
-		game.addGameMonster(toplace);
+		return game.addGameMonster(toplace);
 	}
 
 
@@ -501,6 +503,18 @@ public class ViewManager implements IView {
 	public void removeActivationFromActivateAble(Activation activation, ActivateAble active) {
 		// TODO Auto-generated method stub
 		quester.removeActivationFromActivateAble(activation,active);
+	}
+
+	@Override
+	public void initialiseBaseEvents(BaseEventController baseEventController) {
+		// TODO Auto-generated method stub
+		quester.initialiseBaseEvents(baseEventController);
+	}
+
+	@Override
+	public void removeMapMonster(GameMonster toremove) {
+		// TODO Auto-generated method stub
+		game.removeMapMonster(toremove);
 	}
 
 

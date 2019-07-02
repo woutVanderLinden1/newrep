@@ -32,15 +32,26 @@ public class GameMonster extends ViewMonster implements ActivateAble ,TurnHolder
 	private ArrayList<EndTurnListener> endTurnListeners=new ArrayList<EndTurnListener>();
 	private ArrayList<GameMonster> mapmonsters=new ArrayList<GameMonster>();
 	
-	
+	/*
 	public GameMonster(MonsterItem image, ViewSquare square, int i, int j) {
 		super(image, square, i, j);
 		activationList.add(new DefeatMonsterActivation(this));
 		// TODO Auto-generated constructor stub
 	}
+	*/
 
+	
+	public GameMonster(ViewMonster toplace,Boolean bool) {
+		super((MonsterItem) toplace.getImageItem(),toplace.getBaseSquare(),0,0);
+		theViewMonster=toplace;
+		setTriggers(toplace);
+		
+	}
+	
 	public GameMonster(ViewMonster toplace) {
 		super((MonsterItem) toplace.getImageItem(),toplace.getBaseSquare(),0,0);
+		activations.clear();
+		System.out.println("activationsize "+this.getActivations().size());
 		theViewMonster=toplace;
 		this.setAsPlaceMentSquares(toplace.getPlaceMonsterSquares());
 		
@@ -49,13 +60,30 @@ public class GameMonster extends ViewMonster implements ActivateAble ,TurnHolder
 		ArrayList<SingleMovement> single=new ArrayList<SingleMovement>();
 		single.add(sample);
 		movement=new MonsterMovement(single);
+		this.setTriggers(toplace);
 		initiateMonsterActivations(toplace.getMonsterActivations());
+		activations=toplace.getActivations();
+		
+		super.activationList=toplace.getMonsterActivations();
+		//monsterActivations
+		//this.setRemoveMonsterEvent(toplace.getRemoveMonsterEvent());
+		//this.getRemoveMonsterEvent().setGameMonster(this);
+	
+		
+		System.out.println("toremove monster is "+toplace.getRemoveMonsterEvent().getGameMonster());
 		
 	}
 
 	
 
 
+
+	private void setTriggers(ViewMonster toplace) {
+		this.setDefeatTrigger(toplace.getDefeatTrigger());
+		toplace.getRemoveMonsterEvent().setGameMonster(this);
+		this.setRemoveMonsterEvent(toplace.getRemoveMonsterEvent());
+	
+	}
 
 	private void initiateMonsterActivations(ArrayList<MonsterActivation> monsterActivations) {
 		setMonsterActivations(monsterActivations);
@@ -72,7 +100,7 @@ public class GameMonster extends ViewMonster implements ActivateAble ,TurnHolder
 
 	public GameMonster copy() {
 		// TODO Auto-generated method stub
-		return new GameMonster(theViewMonster);
+		return new GameMonster(theViewMonster,false);
 	}
 
 	@Override
@@ -147,8 +175,9 @@ public class GameMonster extends ViewMonster implements ActivateAble ,TurnHolder
 
 	@Override
 	public ArrayList<Activation> getActivations() {
+		System.out.println("activations got");
 		ArrayList<Activation> acts=new ArrayList<Activation>();
-		acts.addAll(this.getActivations());
+		acts.addAll(super.getActivations());
 		return acts;
 	}
 

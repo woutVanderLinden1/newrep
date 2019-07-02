@@ -41,6 +41,7 @@ public  class ItemController {
 
 	public void setPeril(CustomInteger peril) {
 		this.peril = peril;
+		this.triggerValueChangeListeners();
 	}
 
 
@@ -51,6 +52,7 @@ public  class ItemController {
 
 	public void setFame(CustomInteger fame) {
 		this.fame = fame;
+		this.triggerValueChangeListeners();
 	}
 
 
@@ -61,6 +63,7 @@ public  class ItemController {
 
 	public void setGold(CustomInteger gold) {
 		this.gold = gold;
+		this.triggerValueChangeListeners();
 	}
 
 
@@ -71,6 +74,7 @@ public  class ItemController {
 
 	public void setDespair(CustomInteger despair) {
 		this.despair = despair;
+		this.triggerValueChangeListeners();
 	}
 
 
@@ -374,6 +378,26 @@ public  class ItemController {
 	public void setHope(CustomInteger hope) {
 		// TODO Auto-generated method stub
 		this.hope=hope;
+		this.triggerValueChangeListeners();
 	}
-    
+    public void addGold(int value) {
+    	this.gold.addValue(value);
+    	this.triggerValueChangeListeners();
+    }
+
+
+	public void setHopeValue(int i) {
+		hope.setTheInteger(i);
+		this.triggerValueChangeListeners();
+		
+		
+	}
+
+
+	public void addPeril(int i) {
+		
+		peril.addValue(i);
+		this.triggerValueChangeListeners();
+	}
+	
 }

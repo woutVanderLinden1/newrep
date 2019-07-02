@@ -27,6 +27,7 @@ public class StartEditorCommand extends BasicCommand implements ICommand {
 		model.addStartingValues(hope);
 		view.addStartTriggers(hope);
 		mainStack.addStackElement(new MapEditStackElement());
+		control.startEditor();
 	}
 
 }

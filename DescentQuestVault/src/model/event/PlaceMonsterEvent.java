@@ -1,17 +1,22 @@
 package model.event;
 
+import java.util.ArrayList;
+
 import controller.commands.ICommand;
 import controller.commands.Game.PlaceGameDoorCommand;
 import controller.commands.Game.PlaceGameMonsterCommand;
+import controller.commands.Game.ShowTextCommand;
+import model.event.extraevents.TextStop;
 import view.Items.Map.ViewDoor;
 import view.Items.Map.ViewMonster;
+import view.events.RemoveMapMonsterEvent;
 import view.menu.QuestCreator;
 import view.viewItems.NameChangeListener;
 
 public class PlaceMonsterEvent extends Event implements NameChangeListener {
 	
 	private ViewMonster viewmonster;
-	private ICommand command;
+	private PlaceGameMonsterCommand command;
 	private boolean namebased=true;
 	
 	
@@ -37,7 +42,7 @@ public class PlaceMonsterEvent extends Event implements NameChangeListener {
 		return command;
 	}
 
-	public void setCommand(ICommand command) {
+	public void setCommand(PlaceGameMonsterCommand command) {
 		this.command = command;
 	}
 
@@ -59,6 +64,21 @@ public class PlaceMonsterEvent extends Event implements NameChangeListener {
 	}
 
 
+	@Override
+	public void trigger() {
+		
+		//commands.add(new ShowTextCommand("Place "+ viewmonster.getIDName()+ " on the map as indicated"));
+		TextStop stop=new TextStop("Place "+ viewmonster.getIDName()+ " on the map as indicated");
+		
+		super.trigger();
+		stop.trigger();
+		//addmapmonsterremoval to triggerstack
+		EventTriggerStack stack=EventTriggerStack.getTriggerStack();
+		ArrayList<Univent> tinylist=new ArrayList<Univent>();
+		tinylist.add(new RemoveMapMonsterEvent(command.getPlacedMonster()));
+		stack.addNewEvents(tinylist);
+		
+	}
 	
 	@Override
 	public void initialise(QuestCreator questCreator) {
@@ -89,5 +109,9 @@ public class PlaceMonsterEvent extends Event implements NameChangeListener {
 	public Univent copy() {
 		// TODO Auto-generated method stub
 		return new PlaceMonsterEvent(viewmonster);
+	}
+	@Override
+	public boolean isStopEvent() {
+		return true;
 	}
 }

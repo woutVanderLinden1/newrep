@@ -2,6 +2,7 @@ package activation;
 
 import model.Activation;
 import model.event.Trigger;
+import view.Items.Map.ViewToken;
 import view.game.GameDoor;
 import view.game.GameToken;
 
@@ -9,8 +10,8 @@ public class SearchTokenActivation extends Activation {
 	private Trigger trigger;
 	
 	
-	public SearchTokenActivation(GameToken token) {
-		trigger=token.getSearchTokenTrigger();
+	public SearchTokenActivation(ViewToken viewToken) {
+		trigger=viewToken.getSearchTokenTrigger();
 	}
 
 	public void trigger() {

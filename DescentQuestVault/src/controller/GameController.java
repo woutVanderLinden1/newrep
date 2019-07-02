@@ -10,6 +10,7 @@ import controller.turns.TurnKind;
 import misc.BaseFile;
 import view.game.GameMonster;
 import view.hero.GameHero;
+import view.menu.QuestGame;
 
 public class GameController implements IGameController, AddGameHeroListener,AddGameMonsterListener{
 
@@ -24,6 +25,7 @@ public class GameController implements IGameController, AddGameHeroListener,AddG
 	private ArrayList<MonsterTurn> monsterTurnList=new ArrayList<MonsterTurn>();;
 	private ArrayList<HeroTurn> heroturns=new ArrayList<HeroTurn>();
 	private Random rand=new Random();
+	private QuestGame game;
 	
 	
 	public GameController() {
@@ -141,6 +143,7 @@ public class GameController implements IGameController, AddGameHeroListener,AddG
 		for(EndRoundListener listen:endRoundListeners) {
 			listen.endRound(rounds);
 		}
+		
 		// TODO Auto-generated method stub
 		
 	}
@@ -166,6 +169,18 @@ public class GameController implements IGameController, AddGameHeroListener,AddG
 			}
 		
 		}
+	}
+
+
+	public void addEndRoundListener(QuestGame questGame) {
+		// TODO Auto-generated method stub
+		endRoundListeners.add(questGame);
+	}
+
+
+	public void setGame(QuestGame questGame) {
+		// TODO Auto-generated method stub
+		game=questGame;
 	}
 	
 	

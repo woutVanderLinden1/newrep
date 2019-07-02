@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import model.Activation;
 import model.CustomActivation;
+import view.viewItems.ItemBox.ItemInfoContainer;
 
 public interface ActivateAble {
 
@@ -12,5 +13,6 @@ public interface ActivateAble {
 	void addActivation(Activation act);
 	String getName();
 	void removeActivation(Activation activation);
+	void InitialiseActivation(ItemInfoContainer itemInfoText);
 
 }

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
+import controller.BaseEventController;
 import controller.UserInputController;
 import frame.SubContainer;
 import frame.TemporaryAble;
@@ -21,6 +22,7 @@ import misc.listeners.RemoveTileListener;
 import misc.listeners.TilePlaceListener;
 import misc.listeners.TriggerFieldListener;
 import misc.save.WorldSaveFile;
+import model.event.EndTurnTrigger;
 import model.event.Event;
 import model.event.GameLoseEvent;
 import model.event.GameWonEvent;
@@ -29,9 +31,12 @@ import model.event.MonsterTurnTrigger;
 import model.event.StartUpTrigger;
 import model.event.Trigger;
 import model.event.Univent;
+import model.event.advancedevents.PerilEvent;
+import model.event.advancedevents.PerilTiming;
 import model.event.extraevents.TestOption;
 import model.event.extraevents.TextStop;
 import model.event.extraevents.TextTrigger;
+import model.event.trigger.EndPhaseTrigger;
 import model.values.CustomInteger;
 import model.values.IntegerValueItem;
 import view.Items.Map.MapItem;
@@ -185,7 +190,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 	private void addTokenEvents(ViewToken door) {
 		this.addEvent(door.getPlaceSearchTokenEvent(),baseTriggerField);
 		TriggerField trig=this.addTrigger(door.getSearchTokenTrigger());
-
+		this.addEvent(door.getEffect(),trig);
 		this.addEvent(door.getRemoveSearchTokenEvent(), trig);
 	}
 
@@ -194,6 +199,10 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		TriggerField trig=this.addTrigger(door.getOpenDoorTrigger());
 
 		this.addEvent(door.getRemoveDoorEvent(), trig);
+		if(door.isClosed()) {
+			this.addEvent(door.getUnlockDoorEvent());
+		}
+		
 		
 	}
 
@@ -548,7 +557,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		UserInputController control=UserInputController.getController();
 		basetrigger=baseTrigger2;
 		//baseTriggerField=this.addTrigger(baseTrigger2);
-		control.addStartGameListener((StartUpTrigger) baseTrigger2);
+		//control.addStartGameListener((StartUpTrigger) baseTrigger2);
 	}
 
 	public TriggerField getFieldAt(int x, int y) {
@@ -639,7 +648,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		for(BaseField field:fields) {
 			file.addUnivent(field.getUnivent());
 		}
-		file.setBaseTrigger((StartUpTrigger)basetrigger);
+		//file.setBaseTrigger((StartUpTrigger)basetrigger);
 		
 	}
 
@@ -649,13 +658,13 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		for(BaseField field:fields) {
 			file.addUnivent(field.getUnivent());
 		}
-		file.setBaseTrigger((StartUpTrigger)basetrigger);
+		//file.setBaseTrigger((StartUpTrigger)basetrigger);
 		return file;
 		//save the events to the file
 	}
 
 	public void addBaseTriggers(CustomInteger hope) {
-		addBaseTrigger();
+		//addBaseTrigger();
 		addLoseEvent(hope);
 		addWinEvent();
 		
@@ -686,14 +695,27 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		
 	}
 
-	private void addBaseTrigger() {
+	private void addBaseTrigger(StartUpTrigger trig) {
 		UserInputController control=UserInputController.getController();
-		basetrigger=new StartUpTrigger();
+		basetrigger=trig;
 		
 		baseTriggerField=this.addTrigger(basetrigger);
 		//baseTriggerField.addTrigger(new TestOption(),false);
 		
-		control.addStartGameListener((StartUpTrigger) basetrigger);
+	//	control.addStartGameListener((StartUpTrigger) basetrigger);
+		
+		//addendturntrigger
+		//addperiltrigger
+		//EndPhaseTrigger trig=new EndPhaseTrigger();
+		//PerilEvent peril=new PerilEvent(PerilTiming.TEST);
+		//control.addEndPhaseListener(trig);
+		
+	}
+
+	public void setBaseTriggers(BaseEventController baseEventController) {
+		System.out.println("bas triggers added");
+		this.addTrigger(baseEventController.getEndtrigger());
+		this.addBaseTrigger(baseEventController.getStartuptrigger());
 		
 	}
 

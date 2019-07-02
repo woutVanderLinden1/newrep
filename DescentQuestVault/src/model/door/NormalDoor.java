@@ -62,6 +62,12 @@ public class NormalDoor extends Door {
 		super.availabilityDecreased();
 		availability--;
 	}
+
+	@Override
+	public boolean isClosedDoor() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 
 }

@@ -72,6 +72,7 @@ public class TextTrigger extends Trigger implements Serializable,StopAble{
 			try {
 				System.out.println("here");
 				Thread.sleep(500);
+				stopped=false;
 				//TimeUnit.SECONDS.sleep((long) .5);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block

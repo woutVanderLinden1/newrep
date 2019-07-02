@@ -8,6 +8,7 @@ import view.game.GameMonster;
 public class PlaceGameMonsterCommand extends BasicCommand {
 
 	private ViewMonster toplace;
+	private GameMonster placedmonster;
 	
 	public PlaceGameMonsterCommand(ViewMonster monster) {
 		toplace=monster;
@@ -16,8 +17,13 @@ public class PlaceGameMonsterCommand extends BasicCommand {
 	
 	@Override
 	public void perform() {
-		view.addGameMonster(toplace);
+		placedmonster=view.addGameMonster(toplace);
 
+	}
+
+	public GameMonster getPlacedMonster() {
+		// TODO Auto-generated method stub
+		return placedmonster;
 	}
 
 }

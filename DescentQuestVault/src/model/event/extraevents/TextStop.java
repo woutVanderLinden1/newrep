@@ -52,18 +52,21 @@ public class TextStop extends Event implements StopAble {
 		stopped=true;
 		
 		UserInputController control=UserInputController.getController();
-		control.performCommand(new HoldToContinueCommand(this));
+		//control.performCommand(new HoldToContinueCommand(this));
 		control.performCommand(new ShowTextCommand(thetext,options));
+		/*
 		while(stopped) {
 			try {
 				System.out.println("here");
 				Thread.sleep(500);
+				//stopped=false;
 				//TimeUnit.SECONDS.sleep((long) .5);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		*/
 		
 	
 		//stop the triggers for a while

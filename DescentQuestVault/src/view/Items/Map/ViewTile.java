@@ -1,30 +1,49 @@
 package view.Items.Map;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
+import controller.UserInputController;
+import controller.command.AddActivationToMapItemCommand;
+import controller.command.RemoveActivationFromMapItemCommand;
+import controller.commands.AddTriggerToTriggerFieldCommand;
 import frame.SubContainer;
+import misc.ActivateAble;
 import misc.Tools;
 import model.Activation;
 import model.event.Event;
 import model.event.PlaceTileEvent;
 import model.event.RemoveTileEvent;
 import model.event.Univent;
+import view.game.MonsterActivation;
 import view.viewItems.GridPanel;
 import view.viewItems.TileItem;
 import view.viewItems.ItemBox.ImageItem;
+import view.viewItems.ItemBox.ItemInfoContainer;
 import view.viewItems.ItemBox.ItemOptions;
 import view.viewItems.ItemBox.SelectAble;
 import view.viewItems.ItemBox.SelectKind;
@@ -33,6 +52,9 @@ import view.viewItems.ItemBox.ViewTileExit;
 public class ViewTile extends MapItem implements SelectAble {
 
 	private static int scalefactor=275;
+	
+	protected ArrayList<MonsterActivation> activationList=new ArrayList<MonsterActivation>();
+	
 	
 	private ArrayList<ViewTile> connectedTiles=new ArrayList<ViewTile>();
 	private ArrayList<ViewTileExit> exits;
@@ -288,9 +310,167 @@ public class ViewTile extends MapItem implements SelectAble {
 	@Override
 	public void removeActivation(Activation activation) {
 		// TODO Auto-generated method stub
+		activationList.remove(activation);
+	}
+
+
+	
+	@Override
+	public void InitialiseActivation( ItemInfoContainer itemInfoText) {
+		addNewActivationCreator(itemInfoText);
+		addActivationsShower(itemInfoText);
+	}
+	
+
+	private void addActivationsShower(ItemInfoContainer itemInfoText) {
+		for(Activation act:activationList) {
+				//add text for activatione
+			//add removebutton
+			//when added add nes trigger.
+			addActivationTextChanger(act,itemInfoText);
+			addActivationAddTriggerToField(act,itemInfoText);
+			addActivationRemoveButton(act,itemInfoText);
+		}
 		
 	}
 
+	private void addActivationAddTriggerToField(Activation act, ItemInfoContainer itemInfoText) {
+		JButton button=new JButton("add");
+		ActivateAble hold=this;
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				UserInputController control=UserInputController.getController();
+				control.performCommand(new  AddTriggerToTriggerFieldCommand(act.getTrigger(),null));
+			
+			}
+			
+		});
+		 JLabel field = new JLabel();
+		 field.setText("Add trigger");
+		
+		 field.setEnabled(false);
+		 field.setBackground(Color.yellow);
+		
+       // itemInfoText.add(lab);
+       // itemInfoText.add(field);
+        int w=itemInfoText.getWidth();
+        field.setSize(new Dimension(w/2-20,25));
+        button.setSize(new Dimension(w/2,25));
+        button.setPreferredSize(new Dimension((int)(w/2-20),25));
+        field.setPreferredSize(new Dimension(w/2,25));
+        button.setHorizontalAlignment(SwingConstants.RIGHT);
+		itemInfoText.addPreButton(field,button);
+		
+	}
+
+	private void addActivationRemoveButton(Activation act, ItemInfoContainer itemInfoText) {
+		JButton button=new JButton("add");
+		ActivateAble hold=this;
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				UserInputController control=UserInputController.getController();
+				control.performCommand(new  RemoveActivationFromMapItemCommand(hold,act));
+			
+			}
+			
+		});
+		 JLabel field = new JLabel();
+		 field.setText("New Activation");
+		
+		 field.setEnabled(false);
+		 field.setBackground(Color.yellow);
+		
+       // itemInfoText.add(lab);
+       // itemInfoText.add(field);
+        int w=itemInfoText.getWidth();
+        field.setSize(new Dimension(w/2-20,25));
+        button.setSize(new Dimension(w/2,25));
+        button.setPreferredSize(new Dimension((int)(w/2-20),25));
+        field.setPreferredSize(new Dimension(w/2,25));
+        button.setHorizontalAlignment(SwingConstants.RIGHT);
+		itemInfoText.addPreButton(field,button);
+	}
+
+	private void addActivationTextChanger(Activation act, ItemInfoContainer itemInfoText) {
+		// TODO Auto-generated method stub
+		JLabel lab=new JLabel("name: ");
+		 JTextField field = new JFormattedTextField();
+		 
+		 field.setName(act.getName());
+		 field.setColumns(10);
+		 field.setText(act.getName());
+		 field.getDocument().addDocumentListener(new DocumentListener() {
+			  public void changedUpdate(DocumentEvent e) {
+			    warn();
+			  }
+			  public void removeUpdate(DocumentEvent e) {
+			    warn();
+			  }
+			  public void insertUpdate(DocumentEvent e) {
+			    warn();
+			  }
+
+			  public void warn() {
+				  System.out.println("changedname "+field.getText());
+					act.changeName((String)field.getText());
+			  }
+			});
+		 field.addPropertyChangeListener("name",new PropertyChangeListener() {
+
+				@Override
+				public void propertyChange(PropertyChangeEvent arg0) {
+					System.out.println(field.getText());
+					act.changeName((String)field.getText());
+					
+				}
+	        	
+	        });
+		
+     // itemInfoText.add(lab);
+     // itemInfoText.add(field);
+      int w=itemInfoText.getWidth();
+      lab.setSize(new Dimension(w/2-20,25));
+      field.setSize(new Dimension(w/2,25));
+      lab.setPreferredSize(new Dimension((int)(w/2-20),25));
+      field.setPreferredSize(new Dimension(w/2,25));
+      lab.setHorizontalAlignment(SwingConstants.RIGHT);
+      
+      itemInfoText.addPreText(lab,field);
+	}
+
+	private void addNewActivationCreator(ItemInfoContainer itemInfoText) {
+		JButton button=new JButton("add");
+		ActivateAble hold=this;
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				UserInputController control=UserInputController.getController();
+				control.performCommand(new  AddActivationToMapItemCommand(hold));
+			
+			}
+			
+		});
+		 JLabel field = new JLabel();
+		 field.setText("New Activation");
+		
+		 field.setEnabled(false);
+		 field.setBackground(Color.yellow);
+		
+       // itemInfoText.add(lab);
+       // itemInfoText.add(field);
+        int w=itemInfoText.getWidth();
+        field.setSize(new Dimension(w/2-20,25));
+        button.setSize(new Dimension(w/2,25));
+        button.setPreferredSize(new Dimension((int)(w/2-20),25));
+        field.setPreferredSize(new Dimension(w/2,25));
+        button.setHorizontalAlignment(SwingConstants.RIGHT);
+		itemInfoText.addPreButton(field,button);
+	}
 	
 
 

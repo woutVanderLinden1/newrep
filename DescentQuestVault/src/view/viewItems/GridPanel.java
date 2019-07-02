@@ -798,17 +798,18 @@ public class GridPanel  extends SubContainer implements Serializable{
 				for(Point point:avexit.getNexts()) {
 					if(selected.containsPoint(point,x,y)) {
 						if(!connected1) {
-							if(selected.getPointValue(point,x,y)==3||selected.getPointValue(point,x,y)==2) {
+							if(selected.getPointValue(point,x,y)==4||selected.getPointValue(point,x,y)==3||selected.getPointValue(point,x,y)==2) {
 								connected1=true;
 								
 							}
 							else {
-								
+								System.out.println(selected.getPointValue(point, x, y));
+								System.out.println(point);
 								return false;
 							}
 						}
 						else {
-							if(selected.getPointValue(point,x,y)==3||selected.getPointValue(point,x,y)==2) {
+							if(selected.getPointValue(point,x,y)==4||selected.getPointValue(point,x,y)==3||selected.getPointValue(point,x,y)==2) {
 								//do nothing they are connected
 								connected1=false;
 							}

@@ -19,7 +19,10 @@ public class GameDoor extends ViewDoor implements ActivateAble {
 		super((DoorItem)toplace.getImageItem(),square,0,0);
 		this.setTriggers(toplace);
 		doorbasic=toplace;
-		activationList.add(new OpenDoorActivation(this));
+		activationList=toplace.getActivations();
+		this.setOpenact(toplace.getOpenact());
+
+		
 	}
 
 	
@@ -30,6 +33,8 @@ public class GameDoor extends ViewDoor implements ActivateAble {
 		this.setPlaceDoorEvent(toplace.getPlaceDoorEvent());
 		toplace.getRemoveDoorEvent().setGameDoor(this);
 		this.setRemoveDoorEvent(toplace.getRemoveDoorEvent());
+		toplace.getUnlockDoorEvent().setDoor(this);
+		this.setUnlockDoorEvent(toplace.getUnlockDoorEvent());
 		
 	}
 	@Override
@@ -37,6 +42,13 @@ public class GameDoor extends ViewDoor implements ActivateAble {
 		return true;
 	}
 
+	@Override
+	public void UnlockDoor() {
+		//openact=new OpenDoorActivation(this);
+		super.UnlockDoor();
+		activationList.add(openact);
+		
+	}
 	@Override
 	public ArrayList<Activation> getActivations() {
 		// TODO Auto-generated method stub

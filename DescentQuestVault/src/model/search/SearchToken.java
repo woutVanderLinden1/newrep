@@ -2,6 +2,11 @@ package model.search;
 
 public class SearchToken extends BasicToken{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	protected static int availability=8;
 	public SearchToken() {
 		super("search", availability);

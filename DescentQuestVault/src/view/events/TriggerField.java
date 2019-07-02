@@ -37,6 +37,8 @@ import model.event.Event;
 import model.event.SingleMovementEvent;
 import model.event.Trigger;
 import model.event.Univent;
+import model.event.advancedevents.PerilEvent;
+import model.event.advancedevents.peril.Peril;
 import model.event.modifier.Modifier;
 import view.viewItems.NameChangeListener;
 import view.viewItems.ItemBox.ImageItem;
@@ -112,6 +114,9 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 			case TRIGGER:
 				this.addTrigger((Trigger) ev,true);
 				break;
+			case PERIL:
+				this.addPeril((PerilEvent)ev);
+				break;
 	
 			default:
 				break;
@@ -123,6 +128,12 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 	}
 
 	
+
+	private void addPeril(PerilEvent ev) {
+		// TODO Auto-generated method stub
+		PerilField field=new PerilField(ev,this.getWidth()-40,300);
+		this.addTriggerField(field);
+	}
 
 	protected void initialiseMouseListener() {
 		listen=new TriggerFieldListener(this);

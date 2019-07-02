@@ -143,6 +143,10 @@ public class EventItem extends UniventItem {
 		ev.addEventSpecifics(itemInfoText);
 	}
 
+	@Override
+	public boolean isAvailable() {
+		return true;
+	}
 
 	
 	

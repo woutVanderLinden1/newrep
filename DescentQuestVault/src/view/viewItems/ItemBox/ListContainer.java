@@ -31,6 +31,7 @@ import controller.commands.select.SelectCommand;
 import frame.SubContainer;
 import model.Item;
 import model.ItemController;
+import model.Resources;
 import model.Monster.Monster;
 import model.Monster.Zombie;
 import model.Tile.tilesets.*;
@@ -68,6 +69,7 @@ import model.Tile.tilesets.coreset.Tile8B;
 import model.Tile.tilesets.coreset.Tile9B;
 import model.door.Door;
 import model.door.NormalDoor;
+import model.event.Event;
 import model.generators.Generator;
 import model.search.BasicToken;
 import model.search.SearchToken;
@@ -75,6 +77,7 @@ import model.values.CustomBoolean;
 import model.values.CustomValue;
 import model.values.ValueItem;
 import view.Items.Map.ItemFactory;
+import view.events.EventItem;
 import view.viewItems.DoorItem;
 import view.viewItems.MonsterItem;
 import view.viewItems.TileItem;
@@ -85,9 +88,12 @@ public class ListContainer extends SubContainer  implements Serializable,Availab
 	private ArrayList <ImageItem> itemList=new ArrayList<ImageItem>();
 	private int defaultSize= 100;
 	private JComboBox box;
-	private static ArrayList<Item> availableDoors=new ArrayList<Item>(Arrays.asList(new NormalDoor()));
-	private static ArrayList<Item> availableTokens=new ArrayList<Item>(Arrays.asList(new SearchToken()));
-	private static ArrayList<Item> availableMonsters=new ArrayList<Item>(Arrays.asList(new Zombie()));
+	private static ArrayList<Item> availableDoors=Resources.getAvailableDoors();
+	private static ArrayList<Item> availableTokens=Resources.getAvailableTokens();
+	private static ArrayList<Item> availableMonsters=Resources.getAvailableMonsters();
+	private static ArrayList<Event> availableEvents=Resources.getAvailableEvents();
+	
+	
 	private ItemController itemcontrol=ItemController.getItemController();
 	private ArrayList<ItemButton> currentbuttons=new ArrayList<ItemButton>();
 	private HashMap<ItemOptions,ItemButton> buttonmap=new HashMap<ItemOptions,ItemButton>();
@@ -144,6 +150,7 @@ public class ListContainer extends SubContainer  implements Serializable,Availab
 			//addButtons("Images/Door");
 		
 		case Event:
+			addEventButtons(availableEvents);
 			//addButtons("Images/Event");
 			break;
 		case Monster:
@@ -192,8 +199,17 @@ public class ListContainer extends SubContainer  implements Serializable,Availab
 		currentbuttons.clear();
 	}
 
+	private void addEventButtons(ArrayList<Event> available) {
+		
+		itemList.clear();
+		for(Event ev:available) {
+			itemList.add(new EventItem(ev));
+		}
+		addButtonsFromItemList(itemList);
+		
+	}
 	private void addButtons(ArrayList<Item> available) {
-		System.out.println("files added");
+	
 		itemList.clear();
 		//ArrayList<String> nameList=new ArrayList<String>();
 		/*
@@ -241,6 +257,9 @@ public class ListContainer extends SubContainer  implements Serializable,Availab
 					itemList.add(item);
 				}
 			}
+			addButtonsFromItemList(itemList);
+	}
+	public void addButtonsFromItemList(ArrayList<ImageItem> itemList) {
 		//add buttons to the panel
 		 this.setLayout(new GridLayout(1,itemList.size()));
 		 this.setPreferredSize(new Dimension(defaultSize*itemList.size(),this.getHeight()));
@@ -315,6 +334,7 @@ public class ListContainer extends SubContainer  implements Serializable,Availab
 					case MONSTER:
 						 com=new SelectCommand(item.clone());
 					case EVENT:
+						com=new SelectCommand(item.clone());
 						break;
 					case TILEITEM:
 						 com=new SelectCommand(item.clone());

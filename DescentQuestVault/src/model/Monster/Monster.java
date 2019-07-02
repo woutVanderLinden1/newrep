@@ -49,6 +49,9 @@ public abstract class Monster extends Item {
 		return defaultMovement;
 		
 	}
+
+
+	public abstract int getMonsterLimit();
 	
 
 	

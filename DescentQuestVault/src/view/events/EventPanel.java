@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
+import controller.BaseEventController;
 import frame.SubContainer;
 import misc.save.WorldSaveFile;
 import model.SelectedArea;
@@ -130,6 +131,11 @@ public class EventPanel extends SubContainer implements Serializable {
 	public void removeTrigger(Trigger trigger) {
 		// TODO Auto-generated method stub
 		eventBox.removeTrigger(trigger);
+	}
+
+	public void setBaseTriggers(BaseEventController baseEventController) {
+		// TODO Auto-generated method stub
+		eventBox.setBaseTriggers(baseEventController);
 	}
 
 	

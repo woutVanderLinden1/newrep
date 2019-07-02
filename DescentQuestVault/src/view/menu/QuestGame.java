@@ -4,14 +4,18 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import controller.EndPhaseListener;
+import controller.EndRoundListener;
 import controller.GameController;
 import frame.SubContainer;
 import misc.ActivateAble;
 import misc.BaseFile;
 import misc.SampleFile;
 import model.event.MovementString;
+import model.event.StartGameListener;
 import model.event.extraevents.StopAble;
 import model.event.extraevents.TextOption;
+import model.event.trigger.EndPhaseTrigger;
 import view.Items.Map.MapItem;
 import view.Items.Map.ViewDoor;
 import view.Items.Map.ViewMonster;
@@ -19,24 +23,54 @@ import view.Items.Map.ViewSquare;
 import view.Items.Map.ViewTile;
 import view.Items.Map.ViewToken;
 import view.game.GameDoor;
-import view.game.GameMapPanel;
 import view.game.GameMonster;
 import view.game.MonsterKind;
+import view.game.mappanel.GameMapPanel;
 import view.viewItems.DoorItem;
 import view.viewItems.MonsterItem;
 
-public class QuestGame extends SubContainer {
+public class QuestGame extends SubContainer implements EndRoundListener {
 
 	private GameMapPanel gamemap;
 	private BaseFile basefile;
+	private ArrayList<StartGameListener> gamestartlisteners=new ArrayList<StartGameListener>();
+	private ArrayList<EndPhaseListener> endphaselisteners=new ArrayList<EndPhaseListener>();
+	private GameController control;
+	
+	public void addGameStartListener(StartGameListener listen) {
+		gamestartlisteners.add(listen);
+	}
+	
+	public void notifyGameStartListeners() {
+		
+		for(StartGameListener listen:gamestartlisteners) {
+			 
+			listen.gameStarted();
+				 
+		
+			
+		}
+	}
+	
+	public void notifyEndPhaseListeners() {
+		
+		for(EndPhaseListener listen:endphaselisteners) {
+			listen.trigger();
+		}
+	}
 	
 	public QuestGame(Dimension defaultSize) {
 		super(defaultSize);
 		//basefile=sampleFile;
 		gamemap=new GameMapPanel(defaultSize);
 		this.add(gamemap);
+		
 	}
 
+	public void setGameController(GameController control) {
+		control.addEndRoundListener(this);
+		control.setGame(this);
+	}
 
 
 	public void addGameTile(ViewTile toplace) {
@@ -93,9 +127,9 @@ public class QuestGame extends SubContainer {
 
 
 
-	public void addGameMonster(ViewMonster toplace) {
+	public GameMonster addGameMonster(ViewMonster toplace) {
 		// TODO Auto-generated method stub
-		gamemap.addGameMonster(toplace);
+		return gamemap.addGameMonster(toplace);
 	}
 
 
@@ -131,6 +165,28 @@ public class QuestGame extends SubContainer {
 	public void removeGameMonster(GameMonster toremove) {
 		// TODO Auto-generated method stub
 		gamemap.removeGameMonster(toremove);
+	}
+
+	public void startGame() {
+		// TODO Auto-generated method stub
+		this.notifyGameStartListeners();
+	}
+
+	public void addEndPhaseListener(EndPhaseTrigger endtrigger) {
+		// TODO Auto-generated method stub
+		endphaselisteners.add(endtrigger);
+		
+	}
+
+	@Override
+	public void endRound(int rounds) {
+		// TODO Auto-generated method stub
+		this.notifyEndPhaseListeners();
+	}
+
+	public void removeMapMonster(GameMonster toremove) {
+		// TODO Auto-generated method stub
+		gamemap.removeMapMonster(toremove);
 	}
 
 

@@ -19,10 +19,15 @@ public class DefeatMonsterActivation extends MonsterActivation {
 	public void setMonster(GameMonster monster) {
 		this.monster = monster;
 		trigger=monster.getDefeatTrigger();
+		//trigger
 	}
 
 	public DefeatMonsterActivation() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public DefeatMonsterActivation(DefeatMonsterTrigger defeatTrigger) {
+		trigger=defeatTrigger;
 	}
 
 	@Override

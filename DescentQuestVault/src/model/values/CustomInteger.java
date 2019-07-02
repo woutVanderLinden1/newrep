@@ -59,4 +59,9 @@ public class CustomInteger extends CustomValue<Integer> {
 		// TODO Auto-generated method stub
 		valuechangelisteners.add(ifIntegerTrigger);
 	}
+
+	public void addValue(int value) {
+		
+		setTheInteger(theInteger+value);
+	}
 }

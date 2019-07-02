@@ -72,5 +72,10 @@ public class DoorItem extends ShapeItem {
 		return ItemOptions.Token;
 	}
 
+	public boolean isClosedDoor() {
+		// TODO Auto-generated method stub
+		return ((Door) item).isClosedDoor();
+	}
+
 
 }
