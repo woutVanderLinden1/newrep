@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import model.Monster.Barghest;
+import model.Monster.Spider;
 import model.Monster.Zombie;
 import model.door.ClosedDoor;
 import model.door.NormalDoor;
@@ -37,7 +38,8 @@ public class Resources {
 	
 	public static ArrayList<Item> AvailableMonsters=new ArrayList<Item>(Arrays.asList(
 			new Zombie(),
-			new Barghest()
+			new Barghest(),
+			new Spider()
 			
 			));
 	
