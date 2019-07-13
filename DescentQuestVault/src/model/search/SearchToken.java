@@ -1,5 +1,9 @@
 package model.search;
 
+import view.Items.Map.MapItem;
+import view.Items.Map.ViewSearchToken;
+import view.Items.Map.ViewToken;
+
 public class SearchToken extends BasicToken{
 
 	/**
@@ -47,5 +51,14 @@ public class SearchToken extends BasicToken{
 	public int getTopOff() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	@Override
+	public MapItem createItem() {
+		return new ViewSearchToken(this);
+	}
+	@Override
+	public boolean isSearch() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 }

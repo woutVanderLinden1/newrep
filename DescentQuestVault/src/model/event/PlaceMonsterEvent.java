@@ -76,6 +76,10 @@ public class PlaceMonsterEvent extends Event implements NameChangeListener {
 		EventTriggerStack stack=EventTriggerStack.getTriggerStack();
 		ArrayList<Univent> tinylist=new ArrayList<Univent>();
 		tinylist.add(new RemoveMapMonsterEvent(command.getPlacedMonster()));
+		if(viewmonster.hasInfo()) {
+			tinylist.add(viewmonster.getMonsterInfoEvent());
+		}
+		
 		stack.addNewEvents(tinylist);
 		
 	}

@@ -1,6 +1,9 @@
 package model.search;
 
 import model.Item;
+import view.Items.Map.MapItem;
+import view.Items.Map.ViewToken;
+import view.viewItems.TokenItem;
 import view.viewItems.ItemBox.ItemOptions;
 //name should become path and token separately
 public class BasicToken  extends Item{
@@ -26,7 +29,7 @@ public class BasicToken  extends Item{
 	@Override
 	public int getLeftOff() {
 		// TODO Auto-generated method stub
-		return 0;
+		return -33;
 	}
 
 	@Override
@@ -56,16 +59,25 @@ public class BasicToken  extends Item{
 	@Override
 	public double getScaleWidth() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 0.24;
 	}
 
 	@Override
 	public double getScaleHeight() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 0.24;
 	}
 
 	
 
+	@Override
+	public MapItem createItem() {
+		return new ViewToken(this);
+	}
+
+	public boolean isSearch() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }

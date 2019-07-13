@@ -24,6 +24,7 @@ import controller.stack.SideStackManager;
 import controller.stack.StackManager;
 import controller.stack.StackElements.ChangedColorStackElement;
 import controller.stack.StackElements.IStackElement;
+import controller.turns.GameController;
 import frame.MainFrame;
 import frame.SubContainer;
 import misc.SampleFile;

@@ -32,6 +32,7 @@ public class Elemental extends Monster {
 		map.put(4,new MonsterSet(1,1));
 		shape=mat;
 		defaultMovement=new DefaultZombieMoveTrigger(this);
+		
 		// TODO Auto-generated constructor stub
 	}
 

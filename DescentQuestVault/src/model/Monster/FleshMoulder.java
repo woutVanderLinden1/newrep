@@ -14,7 +14,8 @@
 	import controller.UserInputController;
 	import controller.command.OpenMonsterEditorCommand;
 	import controller.commands.CreateNewOptionCommand;
-	import model.event.MonsterTurnTrigger;
+import model.event.MonsterSpecial;
+import model.event.MonsterTurnTrigger;
 	import model.event.Trigger;
 	import model.event.extraevents.TextOption;
 	import model.event.extraevents.TextTrigger;
@@ -32,7 +33,10 @@
 			map.put(3,new MonsterSet(1,2));
 			map.put(4,new MonsterSet(1,3));
 			shape=mat;
+			this.addMonsterSpecial(new MonsterSpecial("mend"));
+			this.addMonsterSpecial(new MonsterSpecial("damage"));
 			defaultMovement=new DefaultZombieMoveTrigger(this);
+			
 			// TODO Auto-generated constructor stub
 		}
 

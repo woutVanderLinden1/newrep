@@ -163,6 +163,8 @@ public abstract class ImageItem <P> implements SelectAble,Serializable{
 		IDName=token.getName();
 		path="Images/token/"+IDName+".png";
 		item=token;
+		this.setName(token.getName());
+		this.setIDName(token.getName());
 		this.reinitialise();
 	}
 
@@ -340,6 +342,24 @@ public abstract class ImageItem <P> implements SelectAble,Serializable{
 	}
 
 
+	public Image getPreciseImage(int i,int j) {
+		if(lastImage==null) {
+			reinitialise();
+		}
+		Image newimg =null;
+		switch (angle) {
+		case 0:
+		case 180:
+		 newimg = lastImage.getScaledInstance( (int)(i),(int) (j),  java.awt.Image.SCALE_SMOOTH ) ;
+		 break;
+		case 90:
+		case 270:
+		 newimg = lastImage.getScaledInstance( (int)(i),(int) (j),  java.awt.Image.SCALE_SMOOTH ) ;
+		 break;	
+		}
+		// TODO Auto-generated method stub
+		return newimg;
+	}
 
 	public Image getScaleImage(int i) {
 		if(lastImage==null) {
@@ -372,7 +392,7 @@ public abstract class ImageItem <P> implements SelectAble,Serializable{
 	public void reinitialise() {
 		
 		try {
-		
+			System.out.println(path);
 			setImage(ImageIO.read(new File(path)));
 			if(image==null) {
 				System.out.println("thepath " +path);

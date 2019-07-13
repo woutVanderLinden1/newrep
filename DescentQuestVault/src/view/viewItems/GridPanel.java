@@ -1745,7 +1745,8 @@ private ArrayList<ViewTileExit> getConnected(int x, int y,ViewSquare square,Tile
 			monsters.add((ViewMonster)mapit);
 			break;
 		case TOKEN:
-			mapit=new ViewToken((TokenItem)token,baseSquare,square.getLocation().x-xval*squareWidth,square.getLocation().y-yval*squareWidth);
+			mapit=token.createViewItem();
+			mapit.setBaseSquare(baseSquare,square.getLocation().x-xval*squareWidth,square.getLocation().y-yval*squareWidth);
 			
 			
 			tokens.add((ViewToken)mapit);

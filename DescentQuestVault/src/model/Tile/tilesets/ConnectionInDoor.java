@@ -32,7 +32,7 @@ public class ConnectionInDoor extends InDoorTile {
 		@Override
 		public double getScaleHeight() {
 			// TODO Auto-generated method stub
-			return 0.25;
+			return 0.35;
 		}
 
 		public int getRightOff() {

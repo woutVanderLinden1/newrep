@@ -41,6 +41,7 @@ import model.event.MonsterTurnTrigger;
 import model.event.PlaceMonsterEvent;
 import model.event.Trigger;
 import model.event.Univent;
+import model.event.advancedevents.MonsterInfoEvent;
 import model.values.Comparison;
 import monstercreator.MonsterMovement;
 import view.events.RemoveMonsterEvent;
@@ -62,7 +63,18 @@ public class ViewMonster extends MapItem implements ActivateAble{
 	private MonsterMovement set; 
 	private MonsterTurnTrigger turnTrigger;
 	protected ArrayList<MonsterActivation> activationList=new ArrayList<MonsterActivation>();
+	protected MonsterActivation monsterinfoActivation;
+	protected MonsterActivation forceMonsterActivation;
+	protected Event monsterInfoEvent;
 	
+	public Event getMonsterInfoEvent() {
+		return monsterInfoEvent;
+	}
+
+	public void setMonsterInfoEvent(Event monsterInfoEvent) {
+		this.monsterInfoEvent = monsterInfoEvent;
+	}
+
 	public ViewMonster(MonsterItem image, ViewSquare square, int i, int j)  {
 		super(image, square, i, j);
 		
@@ -77,6 +89,13 @@ public class ViewMonster extends MapItem implements ActivateAble{
 		activationList.add(act);
 		activations.add(act);
 		defeatTrigger.addEvent(removeMonsterEvent);
+		forceMonsterActivation=new ForceMonsterActivation(turnTrigger);
+		monsterInfoEvent=new MonsterInfoEvent(this);
+		monsterinfoActivation=new MonsterinfoActivation(monsterInfoEvent);
+		activations.add(monsterinfoActivation);
+		activations.add(forceMonsterActivation);
+		activationList.add(monsterinfoActivation);
+		activationList.add(forceMonsterActivation);;
 		//setIDName(image.getIDName());
 		// TODO Auto-generated constructor stub
 	}
@@ -471,6 +490,29 @@ public class ViewMonster extends MapItem implements ActivateAble{
 	public int getMonsterLimit() {
 		// TODO Auto-generated method stub
 		return ((MonsterItem) item).getMonsterLimit();
+	}
+
+	public MonsterTurnTrigger getMonsterMovementTrigger() {
+		// TODO Auto-generated method stub
+		return turnTrigger;
+	}
+
+	public boolean hasInfo() {
+		if(turnTrigger.getMonsterInfo()!=null&&turnTrigger.getMonsterInfo()!="") {
+			return true;
+		}
+		
+		return false;
+	}
+
+	public void setTurnTrigger(MonsterTurnTrigger trig) {
+		// TODO Auto-generated method stub
+		turnTrigger=trig;
+	}
+
+	public Image getPreciseImage(int i, int j) {
+		// TODO Auto-generated method stub
+		return item.getPreciseImage(i, j);
 	}
 
 

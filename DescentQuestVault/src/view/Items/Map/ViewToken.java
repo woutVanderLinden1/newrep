@@ -21,10 +21,12 @@ import activation.SearchTokenActivation;
 import controller.UserInputController;
 import controller.command.AddActivationToMapItemCommand;
 import controller.command.RemoveActivationFromMapItemCommand;
+import controller.commands.AddEventToTriggerFieldCommand;
 import controller.commands.AddTriggerToTriggerFieldCommand;
 import frame.SubContainer;
 import misc.ActivateAble;
 import model.Activation;
+import model.Monster.TokenMonster;
 import model.event.Event;
 import model.event.PlaceMonsterEvent;
 import model.event.PlaceSearchTokenEvent;
@@ -32,7 +34,9 @@ import model.event.RemoveSearchTokenEvent;
 import model.event.SearchTokenTrigger;
 import model.event.Trigger;
 import model.event.Univent;
+import model.event.advancedevents.PlaceSpecialMonsterEvent;
 import model.event.advancedevents.SearchEffectEvent;
+import model.search.BasicToken;
 import view.game.MonsterActivation;
 import view.viewItems.TokenItem;
 import view.viewItems.ItemBox.ImageItem;
@@ -40,14 +44,28 @@ import view.viewItems.ItemBox.ItemInfoContainer;
 import view.viewItems.ItemBox.SelectKind;
 
 public class ViewToken extends MapItem {
-	private PlaceSearchTokenEvent placeevent;
-	private SearchTokenTrigger searchtrigger;
-	private SearchEffectEvent effect;
-	private RemoveSearchTokenEvent removeevent;
-	private static int tokennr=0;
+	protected PlaceSearchTokenEvent placeevent;
+	protected SearchTokenTrigger searchtrigger;
+
+	protected RemoveSearchTokenEvent removeevent;
+	protected static int tokennr=0;
 	protected ArrayList<Activation> activationList=new ArrayList<Activation>();
+	protected TokenMonster asmonster;
+	private TokenItem token;
+	protected PlaceSpecialMonsterEvent placeMonsterEv;
+	protected boolean isMonster=false;
 	
 	
+	public TokenMonster getAsmonster() {
+		return asmonster;
+	}
+
+
+	public void setAsmonster(TokenMonster asmonster) {
+		this.asmonster = asmonster;
+	}
+
+
 	private static String giveTokenName() {
 		tokennr++;
 		return "token"+tokennr;
@@ -56,24 +74,38 @@ public class ViewToken extends MapItem {
 
 	public ViewToken(TokenItem image, ViewSquare square, int i, int j) {
 		super(image, square, i, j);
+		token=image;
 		this.setName(giveTokenName());
 		placeevent=new PlaceSearchTokenEvent(this);
 		removeevent=new RemoveSearchTokenEvent(this);
 		searchtrigger=new SearchTokenTrigger(this);
-		effect=new SearchEffectEvent();
+		
+
 		activations.add(new SearchTokenActivation(this));
 		
 		// TODO Auto-generated constructor stub
 	}
-
-	public SearchEffectEvent getEffect() {
-		return effect;
+	
+	public void addTokenMonster() {
+		TokenMonster tokenmon=new TokenMonster(token.getName());
+		this.setAsmonster(tokenmon);
+		//add tokenmonster to view
+		//PlaceSpecialMonsterEvent ev:new
 	}
 
+	public ViewToken(BasicToken basicToken) {
+		super(basicToken);
+		token=new TokenItem(basicToken);
+		this.setName(giveTokenName());
+		placeevent=new PlaceSearchTokenEvent(this);
+		removeevent=new RemoveSearchTokenEvent(this);
+		searchtrigger=new SearchTokenTrigger(this);
+		
 
-	public void setEffect(SearchEffectEvent effect) {
-		this.effect = effect;
+		activations.add(new SearchTokenActivation(this));
+		// TODO Auto-generated constructor stub
 	}
+
 
 
 	@Override
@@ -104,7 +136,7 @@ public class ViewToken extends MapItem {
 		this.setOpenSearchTokenTrigger(toplace.getSearchTokenTrigger());
 		this.setPlaceSearchTokenEvent(toplace.getPlaceSearchTokenEvent());
 		this.setRemoveSearchTokenEvent(toplace.getRemoveSearchTokenEvent());
-		this.setEffect(toplace.getEffect());
+	
 		
 	}
 
@@ -136,7 +168,7 @@ public class ViewToken extends MapItem {
 		toreturn.add(placeevent);
 		toreturn.add(removeevent);
 		toreturn.add(this.searchtrigger);
-		toreturn.add(effect);
+		//toreturn.add(effect);
 		return toreturn; 
 	}
 
@@ -305,4 +337,58 @@ public class ViewToken extends MapItem {
         button.setHorizontalAlignment(SwingConstants.RIGHT);
 		itemInfoText.addPreButton(field,button);
 	}
+
+
+	public boolean isSearch() {
+		// TODO Auto-generated method stub
+		return ((TokenItem)item).isSearch();
+	}
+	
+	public void generateAsMonster() {
+		asmonster=new TokenMonster(token.getName());
+		placeMonsterEv= new PlaceSpecialMonsterEvent(asmonster,token);
+		
+		AddEventToTriggerFieldCommand comm =new AddEventToTriggerFieldCommand(placeMonsterEv,null);
+		UserInputController controller=UserInputController.getController();
+		controller.performCommand(comm);
+		//add eventbox
+		//set
+		
+		
+	}
+
+
+	public void addTokenSpecifics(ItemInfoContainer itemInfoText) {
+		
+		JButton button=new JButton("add");
+		ActivateAble hold=this;
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				generateAsMonster();
+			
+			}
+			
+		});
+		 JLabel field = new JLabel();
+		 field.setText("MonsterActivation");
+		
+		 field.setEnabled(false);
+		 field.setBackground(Color.yellow);
+		
+       // itemInfoText.add(lab);
+       // itemInfoText.add(field);
+        int w=itemInfoText.getWidth();
+        field.setSize(new Dimension(w/2-20,25));
+        button.setSize(new Dimension(w/2,25));
+        button.setPreferredSize(new Dimension((int)(w/2-20),25));
+        field.setPreferredSize(new Dimension(w/2,25));
+        button.setHorizontalAlignment(SwingConstants.RIGHT);
+		itemInfoText.addPreButton(field,button);
+		
+	}
+
+
+	
 }

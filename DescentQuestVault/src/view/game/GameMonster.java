@@ -82,6 +82,7 @@ public class GameMonster extends ViewMonster implements ActivateAble ,TurnHolder
 		this.setDefeatTrigger(toplace.getDefeatTrigger());
 		toplace.getRemoveMonsterEvent().setGameMonster(this);
 		this.setRemoveMonsterEvent(toplace.getRemoveMonsterEvent());
+		this.setMonsterInfoEvent(toplace.getMonsterInfoEvent());
 	
 	}
 
@@ -179,6 +180,11 @@ public class GameMonster extends ViewMonster implements ActivateAble ,TurnHolder
 		ArrayList<Activation> acts=new ArrayList<Activation>();
 		acts.addAll(super.getActivations());
 		return acts;
+	}
+
+	public Image getPreciseImage(int i, int j) {
+		// TODO Auto-generated method stub
+		return theViewMonster.getPreciseImage(i,j);
 	}
 
 	

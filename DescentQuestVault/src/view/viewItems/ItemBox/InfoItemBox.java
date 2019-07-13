@@ -240,6 +240,7 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 			case VIEWTOKEN:
 				ViewToken viewtoken=((ViewToken) holded);
 				angle=viewtoken.getAngle();
+				showTokenSpecifics(viewtoken);
 				showEvents(viewtoken);
 				addActivations(viewtoken);
 				break;
@@ -307,6 +308,13 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 
 
 	
+
+	private void showTokenSpecifics(ViewToken viewtoken) {
+		// TODO Auto-generated method stub
+		viewtoken.addTokenSpecifics(itemInfoText);
+		this.repaint();
+		this.revalidate();
+	}
 
 	private void addActivations(ActivateAble viewdoor) {
 		// TODO Auto-generated method stub

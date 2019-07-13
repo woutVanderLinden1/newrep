@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 
 import controller.UserInputController;
 import controller.command.OpenMonsterEditorCommand;
+import model.event.MonsterSpecial;
 import model.event.monster.DefaultZombieMoveTrigger;
 import view.viewItems.ItemBox.ItemInfoContainer;
 
@@ -26,7 +27,10 @@ public class Belthir extends Monster {
 		map.put(3,new MonsterSet(0,1));
 		map.put(4,new MonsterSet(0,1));
 		shape=mat;
+		this.addMonsterSpecial(new MonsterSpecial("poison"));
 		defaultMovement=new DefaultZombieMoveTrigger(this);
+		
+		
 		// TODO Auto-generated constructor stub
 	}
 

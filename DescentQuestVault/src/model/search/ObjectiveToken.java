@@ -2,9 +2,9 @@ package model.search;
 
 public class ObjectiveToken extends BasicToken {
 
-	public static int availability=4;
+	public static int availability=20;
 	public ObjectiveToken() {
-		super("ObjectiveToken",availability);
+		super("objective",availability);
 		// TODO Auto-generated constructor stub
 	}
 

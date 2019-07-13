@@ -3,9 +3,9 @@ package monsterEditor;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 
-import controller.GameController;
 import controller.UserInputController;
 import controller.commands.ICommand;
+import controller.turns.GameController;
 import frame.MainFrame;
 import model.IModel;
 import model.Monster.Monster;

@@ -42,6 +42,7 @@ import model.values.IntegerValueItem;
 import view.Items.Map.MapItem;
 import view.Items.Map.ViewDoor;
 import view.Items.Map.ViewMonster;
+import view.Items.Map.ViewSearchToken;
 import view.Items.Map.ViewTile;
 import view.Items.Map.ViewToken;
 import view.viewItems.ItemBox.SelectAble;
@@ -187,11 +188,16 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		this.addEvent(door.getPlaceMonsterEvent(),baseTriggerField);
 	}
 
+	
 	private void addTokenEvents(ViewToken door) {
 		this.addEvent(door.getPlaceSearchTokenEvent(),baseTriggerField);
 		TriggerField trig=this.addTrigger(door.getSearchTokenTrigger());
-		this.addEvent(door.getEffect(),trig);
+		if(door.isSearch()) {
+			this.addEvent(((ViewSearchToken)door).getEffect(),trig);
+		}
+		//
 		this.addEvent(door.getRemoveSearchTokenEvent(), trig);
+		
 	}
 
 	private void addDoorEvents(ViewDoor door) {

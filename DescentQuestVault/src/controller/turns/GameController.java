@@ -1,12 +1,12 @@
-package controller;
+package controller.turns;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import controller.turns.HeroTurn;
-import controller.turns.MonsterTurn;
-import controller.turns.Turn;
-import controller.turns.TurnKind;
+import controller.AddGameHeroListener;
+import controller.AddGameMonsterListener;
+import controller.EndRoundListener;
+import controller.IGameController;
 import misc.BaseFile;
 import view.game.GameMonster;
 import view.hero.GameHero;
@@ -39,6 +39,10 @@ public class GameController implements IGameController, AddGameHeroListener,AddG
 		MonsterTurn turn =new MonsterTurn(monster);
 		monsterTurnList.add(turn);
 		basemonsterturns.add(turn);
+	}
+	
+	public void addSpecialTurn() {
+		
 	}
 
 

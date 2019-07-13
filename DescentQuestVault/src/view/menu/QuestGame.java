@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import controller.EndPhaseListener;
 import controller.EndRoundListener;
-import controller.GameController;
+import controller.turns.GameController;
 import frame.SubContainer;
 import misc.ActivateAble;
 import misc.BaseFile;

@@ -13,6 +13,7 @@ import controller.IController;
 import controller.UserInputController;
 import controller.command.OpenMonsterEditorCommand;
 import controller.commands.CreateNewOptionCommand;
+import model.event.MonsterSpecial;
 import model.event.MonsterTurnTrigger;
 import model.event.Trigger;
 import model.event.extraevents.TextOption;
@@ -31,7 +32,10 @@ public class Merroid extends Monster {
 		map.put(3,new MonsterSet(1,0));
 		map.put(4,new MonsterSet(1,1));
 		shape=mat;
+		this.addMonsterSpecial(new MonsterSpecial("immobilize"));
+		this.addMonsterSpecial(new MonsterSpecial("damage"));
 		defaultMovement=new DefaultZombieMoveTrigger(this);
+		
 		// TODO Auto-generated constructor stub
 	}
 

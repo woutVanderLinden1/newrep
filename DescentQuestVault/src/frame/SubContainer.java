@@ -71,8 +71,12 @@ public class SubContainer extends JPanel implements ReleasAble,IResizeListeners,
 		}
 	    Point mousePos = MouseInfo.getPointerInfo().getLocation();
 	    Rectangle bounds = c.getBounds();
-	    bounds.setLocation(c.getLocationOnScreen());
-	    return bounds.contains(mousePos);
+	    if(c.isDisplayable()) {
+	    	bounds.setLocation(c.getLocationOnScreen());
+		    return bounds.contains(mousePos);
+	    }
+	    return false;
+	    
 	}
 
 	public void released(MouseEvent e) {

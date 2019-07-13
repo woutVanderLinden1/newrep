@@ -27,10 +27,10 @@ import javax.swing.text.StyleConstants;
 
 import controller.AddGameHeroListener;
 import controller.AddGameMonsterListener;
-import controller.GameController;
 import controller.UserInputController;
 import controller.commands.ContinueCommand;
 import controller.commands.Game.GoBackToEditorCommand;
+import controller.turns.GameController;
 import frame.SubContainer;
 import misc.ActivateAble;
 import misc.BaseFile;

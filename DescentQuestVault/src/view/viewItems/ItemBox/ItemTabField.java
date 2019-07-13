@@ -33,7 +33,7 @@ public class ItemTabField  extends SubContainer implements Serializable{
 		label.setLocation(width/2-40, height/2-20);
 		this.add(label);
 		initialiseBox();
-			list=new ListContainer(this.getWidth()-10,100);
+		list=new ListContainer(this.getWidth()-10,100);
 		list.addItems(box);
 		//list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		//list.setLayoutOrientation(JList.VERTICAL);

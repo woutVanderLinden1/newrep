@@ -8,6 +8,7 @@ import model.Monster.Monster;
 import model.Tile.tilesets.OrginalTile;
 import model.door.Door;
 import model.search.BasicToken;
+import view.Items.Map.MapItem;
 import view.Items.Map.ViewSquare;
 import view.viewItems.ItemBox.ImageItem;
 
@@ -119,6 +120,11 @@ public abstract class ShapeItem extends  ImageItem{
 	public boolean isMapItem() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	public MapItem createViewItem() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

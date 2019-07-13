@@ -37,7 +37,7 @@ public class MonsterPanel extends JPanel {
 		Image im;
 		if(monster.isTurnended()) {
 			System.out.println("displaying darkened image");
-			im=monster.getScaleImage(400);
+			im=monster.getPreciseImage(100,100);
 			BufferedImage touse=new BufferedImage(100, 100,BufferedImage.TYPE_INT_ARGB);
 			BufferedImage touse2=new BufferedImage(100, 100,BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g2 = touse2.createGraphics();
@@ -55,7 +55,7 @@ public class MonsterPanel extends JPanel {
 		    im=touse;
 		}
 		else {
-			im=monster.getScaleImage(400);
+			im=monster.getPreciseImage(100,100);
 		}
 		JLabel picLabel = new JLabel(new ImageIcon(im));
 		add(picLabel);

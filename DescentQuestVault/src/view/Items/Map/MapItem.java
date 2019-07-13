@@ -14,9 +14,11 @@ import frame.SubContainer;
 import misc.ActivateAble;
 import model.Activation;
 import model.event.Univent;
+import model.search.BasicToken;
 import view.viewItems.GridPanel;
 import view.viewItems.NameChangeListener;
 import view.viewItems.ShapeItem;
+import view.viewItems.TokenItem;
 import view.viewItems.ItemBox.ImageItem;
 import view.viewItems.ItemBox.SelectAble;
 import view.viewItems.ItemBox.SelectKind;
@@ -51,6 +53,13 @@ public abstract class MapItem implements SelectAble, Serializable, EventHolder,A
 		occupyingSquares=new ArrayList<ViewSquare>();
 	}
 	
+	public MapItem(BasicToken basicToken) {
+		item =new TokenItem(basicToken);
+		widthheight=new Point((int)(scalefactor*item.getScaleWidth()),(int)( scalefactor*item.getScaleHeight()));
+		occupyingSquares=new ArrayList<ViewSquare>();
+		// TODO Auto-generated constructor stub
+	}
+
 	public ArrayList<Activation> getActivations(){
 		return activations;
 	}

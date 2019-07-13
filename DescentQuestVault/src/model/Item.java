@@ -8,6 +8,7 @@ import controller.IController;
 import controller.UserInputController;
 import controller.command.RemoveItemFromListsCommand;
 import controller.commands.RenewItemListsCommand;
+import view.Items.Map.MapItem;
 import view.viewItems.ItemBox.AvailabilityChangeListener;
 import view.viewItems.ItemBox.ItemInfoContainer;
 import view.viewItems.ItemBox.ItemOptions;
@@ -152,6 +153,11 @@ public abstract class Item implements Serializable {
 			availabilityChangeListeners=new ArrayList<AvailabilityChangeListener>();
 		}
 		availabilityChangeListeners.add(listContainer);
+	}
+
+	public MapItem createItem() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

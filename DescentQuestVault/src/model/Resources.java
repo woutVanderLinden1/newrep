@@ -17,6 +17,7 @@ import model.event.advancedevents.peril.PerilDamageEvent;
 import model.event.extraevents.TextOption;
 import model.event.extraevents.TextStop;
 import model.event.extraevents.TextTrigger;
+import model.search.ObjectiveToken;
 import model.search.SearchToken;
 import view.events.EventItem;
 
@@ -58,7 +59,8 @@ public class Resources {
 			
 			));
 	public static ArrayList<Item> AvailableTokens=new ArrayList<Item>(Arrays.asList(
-			new SearchToken()
+			new SearchToken(),
+			new ObjectiveToken()
 			));
 	public static ArrayList<Item> AvailableDoors=new ArrayList<Item>(Arrays.asList(
 			new NormalDoor(), 
