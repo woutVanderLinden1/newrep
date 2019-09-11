@@ -55,8 +55,8 @@ public class SubContainer extends JPanel implements ReleasAble,IResizeListeners,
 	
 	}
 	protected void addMouseListener() {
-		this.addMouseListener(GlobalMouseListener.getMouseListener());
-		this.addMouseMotionListener((MouseMotionListener) GlobalMouseListener.getMouseListener());
+		//this.addMouseListener(GlobalMouseListener.getMouseListener());
+		//this.addMouseMotionListener((MouseMotionListener) GlobalMouseListener.getMouseListener());
 	}
 
 	public void sendEvent(MouseEvent e,Point point, SelectAble selectAble) {
@@ -93,5 +93,6 @@ public class SubContainer extends JPanel implements ReleasAble,IResizeListeners,
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
 
 }

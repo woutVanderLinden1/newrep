@@ -38,6 +38,7 @@ public class FamePanel extends JTextPane implements ValueChangeListener {
 	private void refreshGoldValue(int theInteger) {
 		this.setText("Fame: "+theInteger);
 		this.setName("Fame: "+theInteger);
-		
+		this.revalidate();
+		this.repaint();
 	}
 }

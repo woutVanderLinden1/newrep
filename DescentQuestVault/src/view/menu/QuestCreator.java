@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import StoryEditor.DraggAblePanel;
 import controller.BaseEventController;
 import controller.UserInputController;
 import controller.commands.ICommand;
@@ -346,7 +347,7 @@ public class QuestCreator extends SubContainer implements Serializable{
 	}
 
 
-	public void endDragEvent(BaseField todrag) {
+	public void endDragEvent(DraggAblePanel todrag) {
 		// TODO Auto-generated method stub
 		eventPanel.endDragEvent(todrag);
 	}
@@ -389,9 +390,9 @@ public class QuestCreator extends SubContainer implements Serializable{
 	}
 
 
-	public void addStartTriggers(CustomInteger hope) {
+	public void addStartTriggers() {
 		// TODO Auto-generated method stub
-		eventPanel.addStartTriggers(hope);
+		eventPanel.addStartTriggers();
 	}
 
 

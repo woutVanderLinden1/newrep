@@ -1,5 +1,6 @@
 package monsterEditor;
 
+import StoryEditor.DraggAblePanel;
 import controller.commands.ICommand;
 import frame.MainFrame;
 import model.event.MonsterTurnTrigger;
@@ -69,7 +70,7 @@ public class MonsterEditorView extends ViewManager {
 	}
 
 	@Override
-	public void endDragEvent(BaseField todrag) {
+	public void endDragEvent(DraggAblePanel todrag) {
 		events.endDragEvent(todrag);
 	//	super.endDragEvent(todrag);
 		

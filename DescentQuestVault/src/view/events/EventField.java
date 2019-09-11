@@ -35,9 +35,10 @@ public class EventField extends BaseField implements SelectAble, NameChangeListe
 	private boolean selected;
 	private EventItem selectedItem;
 	private JLabel picLabel;
-	private MouseListener listen;
+	private SelectEventListener listen;
 	private Color currentColor;
-	private JTextField textLabel;
+	//private JTextField textLabel;
+	
 
 	public Event getEvent() {
 		return (Event) event;
@@ -48,7 +49,7 @@ public class EventField extends BaseField implements SelectAble, NameChangeListe
 	}
 
 	public EventField(Event placeTileEvent, int w) {
-
+		super(placeTileEvent.getName());
 		this.setPreferredSize(new Dimension(w,50));
 		this.setSize(new Dimension(w,50));
 		selectedItem=new EventItem(placeTileEvent);
@@ -78,12 +79,12 @@ public class EventField extends BaseField implements SelectAble, NameChangeListe
 		this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		
 		*/
-		textLabel=new JTextField(selectedItem.getName());
+		//textLabel=new JTextField(selectedItem.getName());
 		this.initialiseImage(new Color(0,230,0));
 	//	reAddImage();
 		listen=new SelectEventListener(this);
 		this.addMouseListener(listen);
-		textLabel.addMouseListener(listen);
+		//textLabel.addMouseListener(listen);
 		placeTileEvent.addNameChangeListener(this);
 		
 	}
@@ -133,11 +134,17 @@ public class EventField extends BaseField implements SelectAble, NameChangeListe
 
 
 	private void setColors(Color color) {
+		if(!invisilocked) {
+			return;
+		}
 		this.setBackground(color);
 		textLabel.setBackground(color);
 	}
 
-	protected void initialiseImage(Color color) {
+	public void initialiseImage(Color color) {
+		if (!invisilocked) {
+			return;
+		}
 		currentColor=color;
 		System.out.println("image made");
 		//textLabel=new JTextField(selectedItem.getName());
@@ -195,18 +202,22 @@ public class EventField extends BaseField implements SelectAble, NameChangeListe
 		//this.initialiseImage(new Color(0,230,0));
 	}
 
+	/*
 	@Override
-	protected void sendEvent(MouseEvent e, Point point, SelectAble selectAble) {
+	public void sendEvent(MouseEvent e, Point point, SelectAble selectAble) {
+		System.out.println("from sendevent");
 		MouseEvent convertMouseEvent = SwingUtilities.convertMouseEvent(e.getComponent(), e, this);
 		
 		this.dispatchEvent(convertMouseEvent);
 		
 	}
+	*/
 
 	@Override
 	public void nameChanged(String newname) {
 		// TODO Auto-generated method stub
 		textLabel.setText(newname);
+		super.setText(newname);
 	}
 
 	
@@ -246,6 +257,36 @@ public class EventField extends BaseField implements SelectAble, NameChangeListe
 		this.addMouseMotionListener((MouseMotionListener) listen);
 	}
 
+	public Univent getEv() {
+		// TODO Auto-generated method stub
+		return selectedItem.getEv();
+	}
+	public void removeListeners() {
+		
+		this.removeMouseListener(listen);
+		textLabel.removeMouseListener(listen);
+		
+	}
+	public void deactivateTextLabelMouselistener() {
+		listen.setOff();
+	}
+	public void activateTextLabelMouselistener() {
+		listen.setOn();
+	}
+
+	
+
+	/*
+	public void giveMouseMotionListener(MouseMotionListener mouseMotionListener) {
+		//textLabel.addMouseMotionListener(mouseMotionListener);
+		super.giveMouseMotionListener(mouseMotionListener);
+	}
+
+	public void giveMouseListener(MouseListener mouseListener) {
+		//textLabel.addMouseListener(mouseListener);
+		super.giveMouseListener(mouseListener);
+	}
+	*/
 
 
 }

@@ -461,5 +461,8 @@ public abstract class ImageItem <P> implements SelectAble,Serializable{
 
 
 
+	public void setVisible() {
+		
+	}
 
 }

@@ -23,6 +23,7 @@ public class SelectEventListener implements MouseListener, MouseMotionListener,S
 	 */
 	private static final long serialVersionUID = 1L;
 	private BaseField field;
+	private boolean activated=true;
 	
 	public SelectEventListener(EventField eventField) {
 		field=eventField;
@@ -68,18 +69,23 @@ public class SelectEventListener implements MouseListener, MouseMotionListener,S
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		System.out.println("pressed accepted");
-		UserInputController control=UserInputController.getController();
-	
-		ICommand command=null;
-		try {
-			command=control.generateSelectFieldCommand(arg0,field);
-			control.performCommand(command);
-		} catch (Exception e) {
-		// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(!activated) {
+			return;
 		}
-		//field.requestFocus();
+		if(arg0.getButton() == MouseEvent.BUTTON1) {
+			System.out.println("pressed accepted");
+			UserInputController control=UserInputController.getController();
+		
+			ICommand command=null;
+			try {
+				command=control.generateSelectFieldCommand(arg0,field);
+				control.performCommand(command);
+			} catch (Exception e) {
+			// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//field.requestFocus();
+		}
 	}
 
 	@Override
@@ -87,6 +93,16 @@ public class SelectEventListener implements MouseListener, MouseMotionListener,S
 		// TODO Auto-generated method stub
 		
 		field.released(arg0);
+	}
+
+	public void setOff() {
+		// TODO Auto-generated method stub
+		activated=false;
+	}
+
+	public void setOn() {
+		// TODO Auto-generated method stub
+		activated=true;
 	}
 
 

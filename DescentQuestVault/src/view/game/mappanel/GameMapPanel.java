@@ -36,6 +36,7 @@ import misc.ActivateAble;
 import misc.BaseFile;
 import misc.SampleFile;
 import model.Activation;
+import model.ItemController;
 import model.Hero.Hero;
 import model.event.MovementString;
 import model.event.extraevents.StopAble;
@@ -325,7 +326,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 	}
 
 
-	public void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect, MonsterKind kind, StopAble stop) {
+	public void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect, MonsterKind kind) {
 		// TODO Auto-generated method stub
 		textPanel.removeAll();
 		// TODO Auto-generated method stub
@@ -335,7 +336,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		textPanel.setLayout(null);
 	
 		textPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		JLabel picLabel = new JLabel(new ImageIcon(monster.getImageItem().getScaleImage(280)));
+		JLabel picLabel = new JLabel(new ImageIcon(monster.getImageItem().getPreciseImage(70,70)));
 		textPanel.add(picLabel);
 		textPanel.setSize(Math.max(mapPanels.getWidth()-400,400),350);
 		textPanel.setLocation(200,10);
@@ -343,8 +344,8 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		picLabel.setLocation(textPanel.getWidth()/2-25, 5);
 		JTextArea area=new JTextArea();
 		area.setText(kind.toString()+" "+monster.getName() +"'s movement");
-		Font g1=new Font("Haettenschweiler", Font.PLAIN, 40);
-		Font g2=new Font("Haettenschweiler", Font.PLAIN, 26);
+		Font g1=new Font("descentquestbuilderfont", Font.PLAIN, 40);
+		Font g2=new Font("descentquestbuilderfont", Font.PLAIN, 26);
 		AffineTransform affinetransform = new AffineTransform(); 
 		FontRenderContext frc = new FontRenderContext(affinetransform,true,true);   
 		int textwidth1 = (int)(g2.getStringBounds(area.getText(), frc).getWidth());
@@ -393,7 +394,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 			public void actionPerformed(ActionEvent arg0) {
 				closeText();
 				UserInputController control=UserInputController.getController();
-				control.performCommand(new ContinueCommand(stop));
+				control.performCommand(new ContinueCommand());
 				
 				
 			}
@@ -436,6 +437,9 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 
 	public void initialiseGame(BaseFile sampleFile) {
 		// TODO Auto-generated method stub
+		ItemController itcontrol=ItemController.getItemController();
+		itcontrol.resetMap();
+		itcontrol.loadMap(sampleFile.getConstantMap());
 		basefile=sampleFile;
 		addHeroes(basefile.getHeroes());
 		grid.initialise(sampleFile);

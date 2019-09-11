@@ -1,10 +1,14 @@
 package model.Hero;
 
+import java.util.ArrayList;
+
 import model.Item;
 import view.viewItems.ItemBox.ItemOptions;
 
 public class Hero extends Item{
 	
+	private ArrayList<Skill> skills=new ArrayList<Skill>();
+	private ArrayList<Skill> availableSkills=new ArrayList<Skill>();
 	public Hero(String name) {
 		super(name);
 		// TODO Auto-generated constructor stub

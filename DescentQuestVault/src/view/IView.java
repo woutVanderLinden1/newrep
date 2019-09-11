@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import StoryEditor.DraggAblePanel;
 import controller.BaseEventController;
 import controller.commands.ICommand;
 import misc.ActivateAble;
@@ -132,7 +133,7 @@ public interface IView {
 
 
 
-	void endDragEvent(BaseField todrag);
+	void endDragEvent(DraggAblePanel select);
 
 	void addGameDoor(ViewDoor toplace);
 
@@ -165,7 +166,7 @@ public interface IView {
 
 	
 
-	void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect, MonsterKind kind, StopAble stop);
+	void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect, MonsterKind kind);
 
 	void makeInvisible(SelectAble mapit);
 
@@ -187,7 +188,7 @@ public interface IView {
 
 
 
-	void addStartTriggers(CustomInteger hope);
+	void addStartTriggers();
 
 	void defeatHero(GameHero hero);
 
@@ -200,6 +201,8 @@ public interface IView {
 	void initialiseBaseEvents(BaseEventController baseEventController);
 
 	void removeMapMonster(GameMonster toremove);
+
+	void startDragDragPanel(DraggAblePanel todrag);
 
 	
 	

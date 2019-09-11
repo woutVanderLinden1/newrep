@@ -46,4 +46,6 @@ public interface SelectAble extends NameHolder {
 
 	public void makeInvisible();
 
+	public void setVisible();
+
 }

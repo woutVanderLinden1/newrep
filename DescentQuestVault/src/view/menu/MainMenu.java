@@ -1,6 +1,7 @@
 package view.menu;
 
 import controller.command.OpenMonsterEditorCommand;
+import controller.command.storyeditor.*;
 import controller.commands.ExitCommand;
 import controller.commands.GoToMenuCommand;
 
@@ -19,6 +20,7 @@ public class MainMenu extends Menu {
 		addQuestEditorButton();
 		addCampaingEditorButton();
 		addMonsterEditorButton();
+		addStoryEditorButton();
 		addItemEditorButton();
 		addHeroEditorButton();
 		addCityEditorButton();
@@ -26,6 +28,12 @@ public class MainMenu extends Menu {
 		addCreditsButton();
 		addExitButton();
 		
+		
+	}
+
+
+	private void addStoryEditorButton() {
+		itemBox.addButton(new CommandButton("StoryEditor",new OpenStoryEditorCommand()));
 		
 	}
 

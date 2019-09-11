@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import controller.UserInputController;
 import controller.commands.ICommand;
+import view.events.EventItem;
 import view.viewItems.ItemBox.ImageItem;
 import view.viewItems.ItemBox.ItemInfoContainer;
 import view.viewItems.ItemBox.SelectAble;
@@ -29,6 +30,11 @@ public abstract class Event extends Univent implements EventBase {
 		return SelectKind.EVENT;
 	}
 
+	@Override
+	public ImageItem getImageItem() {
+		// TODO Auto-generated method stub
+		return new EventItem(this);
+	}
 	
 
 	public void trigger() {

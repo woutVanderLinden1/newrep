@@ -2,8 +2,12 @@ package misc;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import model.Hero.Hero;
+import model.values.CustomInteger;
+import model.values.CustomValue;
 
 /**
  * contains base information for starting a game.
@@ -16,8 +20,20 @@ public class BaseFile implements Serializable {
 	private int money;
 	private int fame;
 	private int despair;
+	private int hope;
 	
+	public int getHope() {
+		return hope;
+	}
+
+	public void setHope(int hope) {
+		this.hope = hope;
+	}
+
 	private String teamName;
+	
+	private HashMap<String,CustomValue> values=new HashMap<String,CustomValue>();
+	private ArrayList<Equipment> equipment;
 	
 	
 	private ArrayList<Hero> heroes=new ArrayList<Hero>();
@@ -30,8 +46,13 @@ public class BaseFile implements Serializable {
 		this.fame = fame;
 		this.despair = despair;
 		this.teamName = teamName;
+		this.hope=2;
 		heroes.add(hero1);
 		heroes.add(hero2);
+		values.put("money",new CustomInteger("money",money));
+		values.put("fame",new CustomInteger("fame",fame));
+		values.put("despair",new CustomInteger("despair",despair));
+		values.put("hope",new CustomInteger("hope",hope));
 	}
 	
 	public int getNrHeroes() {
@@ -69,6 +90,11 @@ public class BaseFile implements Serializable {
 	public ArrayList<Hero> getHeroes() {
 		// TODO Auto-generated method stub
 		return heroes;
+	}
+
+	public HashMap getConstantMap() {
+		// TODO Auto-generated method stub
+		return values;
 	}
 	
 	

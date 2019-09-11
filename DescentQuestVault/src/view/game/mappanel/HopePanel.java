@@ -39,7 +39,8 @@ public class HopePanel  extends JTextPane implements ValueChangeListener {
 	private void refreshHopeValue(int theInteger) {
 		this.setText("Hope: "+theInteger);
 		this.setName("Hope: "+theInteger);
-		
+		this.revalidate();
+		this.repaint();
 	}
 	
 }

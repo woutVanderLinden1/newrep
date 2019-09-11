@@ -11,6 +11,7 @@ import frame.SubContainer;
 import misc.ActivateAble;
 import misc.BaseFile;
 import misc.SampleFile;
+import model.ItemController;
 import model.event.MovementString;
 import model.event.StartGameListener;
 import model.event.extraevents.StopAble;
@@ -134,15 +135,17 @@ public class QuestGame extends SubContainer implements EndRoundListener {
 
 
 
-	public void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect,MonsterKind kind, StopAble stop) {
+	public void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect,MonsterKind kind) {
 		// TODO Auto-generated method stub
-		gamemap.showMonsterMovement(monster,movement,continousEffect, kind,stop);
+		gamemap.showMonsterMovement(monster,movement,continousEffect, kind);
 	}
 
 
 
 	public void initialiseGame(BaseFile sampleFile) {
 		// TODO Auto-generated method stub
+		ItemController control=ItemController.getItemController();
+		control.initialiseFile(sampleFile);
 		gamemap.initialiseGame(sampleFile);
 	}
 

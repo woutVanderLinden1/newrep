@@ -3,13 +3,20 @@ package controller.analyzer;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+import StoryEditor.AddEventToStoryElementPanelCommand;
+import StoryEditor.DragPanel;
+import StoryEditor.DraggAblePanel;
+import StoryEditor.SubDragPanel;
+import StoryEditor.ViewArrow;
 import controller.KeyAction;
 import controller.MouseAction;
 import controller.ResetTileColorCommand;
 import controller.UserInputController;
 import controller.analyzer.states.IAnalyzerState;
 import controller.command.game.ShowActivationsInGameCommand;
+import controller.commands.BasicCommand;
 import controller.commands.CancelTileMoveCommand;
 import controller.commands.ChangeTileColorCommand;
 import controller.commands.ICommand;
@@ -339,7 +346,7 @@ public class Analyzer {
 		if(view.hasSelected()) {
 			switch(selected.getKind()) {
 			case EVENT:
-				Event event=(Event) ((EventItem) selected).getEv().copy();
+				Event event=(Event) ((EventField) selected).getEv().copy();
 				BaseField field=new EventField(event,100);
 				return new StartDragEventCommand(field,ev.getX(),ev.getY(),ev.getXOnScreen(),ev.getYOnScreen());
 				
@@ -354,6 +361,9 @@ public class Analyzer {
 			case TOKEN:
 			case MONSTER:
 				return new StartDragCommand(selected,x,y);
+			case STORYELEMENT:
+				DraggAblePanel panel=(DraggAblePanel) selected;
+				return new StartDragPanelCommand(panel,ev.getX(),ev.getY(),ev.getXOnScreen(),ev.getYOnScreen());
 			
 				
 			default:
@@ -498,9 +508,9 @@ public class Analyzer {
 		return null;
 	}
 
-	public ICommand generateSelectFieldCommand(MouseEvent arg0, BaseField field) {
-		// TODO Auto-generated method stub
-		return new StartDragEventCommand(field,arg0.getX(),arg0.getY(),arg0.getXOnScreen(),arg0.getYOnScreen());
+	public ICommand generateSelectFieldCommand(MouseEvent arg0, BaseField pan) {
+		System.out.println("started dragging by the fieldlistener");
+		return new StartDragEventCommand(pan,arg0.getX(),arg0.getY(),arg0.getXOnScreen(),arg0.getYOnScreen());
 	}
 
 	public ICommand makeGameGridCommand(int x, int y, MouseEvent e, int mouseClicked, GameSquare square, IView view,
@@ -517,5 +527,79 @@ public class Analyzer {
 				
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public ICommand generateSelectDragPanelCommand(MouseEvent arg0, DraggAblePanel pan) {
+		// TODO Auto-generated method stub
+		return new SelectCommand(pan);
+		
+	}
+
+	public BasicCommand makeEventToStoryElementPanelCommand(int x, int y, MouseEvent arg0,
+			int mouseReleased, SubDragPanel panel, SelectAble selectAble, boolean dragging, DragPanel parent) {
+		// TODO Auto-generated method stub
+		if(parent.isArrowDragging()) {
+			if(parent.isMouseInComponent(arg0)) {
+				DraggAblePanel hovered=parent.getHovered(arg0);
+				return new addArrowToStoryElementPanelCommand(hovered,parent);
+			}
+			else {
+				return new DeactivateGlassPaneCommand(parent);
+			}
+		}
+		if(dragging) {
+			return new AddEventToStoryElementPanelCommand(panel,new Point(x,y),(DraggAblePanel) selectAble);
+		}
+		
+		return null;
+		
+		
+	}
+
+	public BasicCommand generateDragPanelCommand(MouseEvent arg0, DraggAblePanel pan) {
+		// TODO hier was ik mee bezig
+		SelectAble selected=pan;
+		Point point=arg0.getPoint();
+		
+			switch(selected.getKind()) {
+			case EVENT:
+				Event event=(Event) ((EventField) selected).getEv().copy();
+				BaseField field=new EventField(event,100);
+				System.out.println("started dragging from analyzer");
+				return new StartDragEventCommand(field,point.x,point.y,arg0.getXOnScreen(),arg0.getYOnScreen());
+				
+			
+			case TILEITEM:
+				return new StartDragCommand(selected,point.x,point.y);
+			
+			case VIEWTILE:
+				ViewTile tile=(ViewTile) selected;
+				return new StartTileDragCommand(tile,point.x,point.y,arg0.getXOnScreen(),arg0.getYOnScreen());
+			case DOOR:
+			case TOKEN:
+			case MONSTER:
+				return new StartDragCommand(selected,point.x,point.y);
+			case STORYELEMENT:
+				DraggAblePanel panel=(DraggAblePanel) selected;
+				return new StartDragPanelCommand(panel,point.x,point.y,arg0.getXOnScreen(),arg0.getYOnScreen());
+			
+				
+			default:
+				break;
+			
+			}
+			
+		
+		return null;
+	}
+
+	public BasicCommand generateSelectArrowCommand(int x, int y, MouseEvent arg0, int mousePressed, ViewArrow arrow,
+			SubDragPanel panel, DragPanel parent) {
+		// TODO Auto-generated method stub
+		if(mousePressed==MouseEvent.MOUSE_PRESSED) {
+			return new SelectCommand(arrow);
+		}
+		return null;
+		
 	}
 }

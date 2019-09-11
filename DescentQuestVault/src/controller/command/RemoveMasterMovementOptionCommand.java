@@ -8,7 +8,7 @@ public class RemoveMasterMovementOptionCommand extends BasicCommand implements I
 
 	private SingleMovement ment;
 	public RemoveMasterMovementOptionCommand(SingleMovement ment2) {
-		this.ment=ment;
+		this.ment=ment2;
 	}
 	@Override
 	public void perform() {

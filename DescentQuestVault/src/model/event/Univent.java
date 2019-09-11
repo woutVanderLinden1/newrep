@@ -17,28 +17,12 @@ public abstract class Univent implements EventBase,Serializable {
 	private String IDName;
 	private String name;
 	
-	@Override
 	public abstract SelectKind getKind();
 
-	@Override
-	public void select() {
-		// TODO Auto-generated method stub
+	
 
-	}
 
-	@Override
-	public void deselect() {
-		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public boolean isSelected() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public ImageItem getImageItem() {
 		// TODO Auto-generated method stub
 		return null;
@@ -54,11 +38,6 @@ public abstract class Univent implements EventBase,Serializable {
 	public String getIDName() {
 		// TODO Auto-generated method stub
 		return IDName;
-	}
-	@Override
-	public boolean isMapItem() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	
 	public abstract void trigger();
@@ -101,4 +80,22 @@ public abstract class Univent implements EventBase,Serializable {
 	}
 
 	public abstract Univent copy();
+
+
+
+
+
+	public void select() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+
+
+	public void deselect() {
+		// TODO Auto-generated method stub
+		
+	}
 }

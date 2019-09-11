@@ -3,9 +3,11 @@ package model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-
-
+import misc.BaseFile;
+import misc.CampaignFile;
 import misc.save.WorldSaveFile;
 import model.Tile.tilesets.ConnectionInDoor;
 import model.Tile.tilesets.ConnectionOutDoor;
@@ -29,64 +31,71 @@ import view.events.BaseField;
 import view.viewItems.ItemBox.ListContainer;
 import view.viewItems.ItemBox.ValueChangeListener;
 
-public  class ItemController {
+public  class ItemController implements ValueChangeListener{
 
     private HashMap<String, Item> biMap = new HashMap<String, Item>();
+    //private HashMap<String, CustomValue> values=new HashMap<String,CustomValue>();
 
-    private CustomInteger hope=new CustomInteger("Hope",0);
+    
 	public CustomInteger getPeril() {
-		return peril;
+		return (CustomInteger) customvalues.get("peril");
+	}
+	
+	
+	public void resetMap() {
+		customvalues=new HashMap<String,CustomValue>();
+	}
+	public void loadMap(HashMap toload) {
+		customvalues.putAll(toload);
 	}
 
 
 	public void setPeril(CustomInteger peril) {
-		this.peril = peril;
+		this.getPeril().setTheInteger(peril.getTheInteger());
+		
 		this.triggerValueChangeListeners();
 	}
 
 
 	public CustomInteger getFame() {
-		return fame;
+		return (CustomInteger) customvalues.get("fame");
 	}
 
 
 	public void setFame(CustomInteger fame) {
-		this.fame = fame;
+		this.getFame().setTheInteger(fame.getTheInteger());
 		this.triggerValueChangeListeners();
 	}
 
 
 	public CustomInteger getGold() {
-		return gold;
+		return (CustomInteger) customvalues.get("gold");
 	}
 
 
 	public void setGold(CustomInteger gold) {
-		this.gold = gold;
+		this.getGold().setTheInteger(gold.getTheInteger());
 		this.triggerValueChangeListeners();
 	}
 
 
 	public CustomInteger getDespair() {
-		return despair;
+		return (CustomInteger) customvalues.get("despair");
 	}
 
 
 	public void setDespair(CustomInteger despair) {
-		this.despair = despair;
+		this.getDespair().setTheInteger(despair.getTheInteger());;
 		this.triggerValueChangeListeners();
 	}
 
 
 	public CustomInteger getHope() {
-		return hope;
+		return (CustomInteger) customvalues.get("hope");
 	}
 
 
-	private CustomInteger peril=new CustomInteger("peril",0);
-	private CustomInteger fame=new CustomInteger("fame",0);
-	private CustomInteger gold=new CustomInteger("gold",0);
-	private CustomInteger despair=new CustomInteger("despair",0);
+	
     private ArrayList<ValueChangeListener> valuelisteners=new ArrayList<ValueChangeListener>();
     private static ArrayList<Item> coresetOutDoorTiles=new ArrayList<Item>(Arrays.asList(
 			new Tile1A(),
@@ -165,14 +174,7 @@ public  class ItemController {
 			
 			));
 	
-    private ArrayList<Item> customvalues=new ArrayList<Item>(
-    		Arrays.asList(
-    				hope,
-    				peril,
-    				despair,
-    				fame,
-    				gold
-    		));
+    private HashMap<String,CustomValue> customvalues=new HashMap<String,CustomValue>();
 	private ArrayList<Item> generators=new ArrayList<Item>(
 			Arrays.asList(
 			new ModifierGenerator()	,
@@ -254,6 +256,7 @@ public  class ItemController {
         biMap.put("30B",coresetOutDoorTiles.get(29));
         
         
+        
     	
     }
 
@@ -307,14 +310,14 @@ public  class ItemController {
 	}
 
 
-	public void addValue(Item customBoolean) {
+	public void addValue(CustomValue customBoolean) {
 		// TODO Auto-generated method stub
-		customvalues.add(customBoolean);
+		customvalues.put(customBoolean.getName().toLowerCase(),customBoolean);
 		
 	}
 
 
-	public ArrayList<Item> getValues() {
+	public HashMap<String,CustomValue> getValues() {
 		// TODO Auto-generated method stub
 		return customvalues;
 	}
@@ -329,9 +332,7 @@ public  class ItemController {
 	public void saveThis(WorldSaveFile file) {
 
 			// TODO Auto-generated method stub
-			for(Item value:customvalues) {
-				file.addCustomValue((CustomValue) value);
-			}
+			file.saveCustomValues(customvalues);
 			//file.setBaseTrigger((StartUpTrigger)basetrigger);
 			
 		
@@ -340,10 +341,10 @@ public  class ItemController {
 
 	public void readValues(WorldSaveFile g) {
 		System.out.println("values are read");
-		for(CustomValue v:g.getCustomValues()) {
-			System.out.println(v);
-		}
-		customvalues.addAll(g.getCustomValues());
+		HashMap m=g.getCustomValues();
+		Iterator it = m.entrySet().iterator();
+	    
+		customvalues.putAll(g.getCustomValues());
 		triggerValueChangeListeners();
 		
 	}
@@ -370,24 +371,24 @@ public  class ItemController {
 	}
 
 
-	public void addAllValues(CustomInteger[] hope) {
-		customvalues.addAll(Arrays.asList(hope));
+	public void addAllValues(HashMap<String,CustomValue> hope) {
+		customvalues.putAll(hope);
 	}
 
 
 	public void setHope(CustomInteger hope) {
 		// TODO Auto-generated method stub
-		this.hope=hope;
+		this.getHope().setTheInteger(hope.getTheInteger());
 		this.triggerValueChangeListeners();
 	}
     public void addGold(int value) {
-    	this.gold.addValue(value);
+    	this.getGold().addValue(value);
     	this.triggerValueChangeListeners();
     }
 
 
 	public void setHopeValue(int i) {
-		hope.setTheInteger(i);
+		this.getHope().setTheInteger(i);
 		this.triggerValueChangeListeners();
 		
 		
@@ -396,8 +397,63 @@ public  class ItemController {
 
 	public void addPeril(int i) {
 		
-		peril.addValue(i);
+		this.getPeril().addValue(i);
 		this.triggerValueChangeListeners();
+	}
+
+
+	@Override
+	public void trigger() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void valueChanged(int theInteger) {
+		// TODO Auto-generated method stub
+		triggerValueChangeListeners();
+	}
+
+
+	public void addStartingValues(CampaignFile file) {
+		customvalues.putAll(file.getValues());
+		this.getGold().addValueChangeListener(this);
+        this.getPeril().addValueChangeListener(this);
+        this.getDespair().addValueChangeListener(this);
+        this.getFame().addValueChangeListener(this);
+        this.getHope().addValueChangeListener(this);
+		
+	}
+
+
+	public ArrayList<Item> getValuesAsList() {
+		ArrayList<Item> theitems=new ArrayList<Item>();
+		HashMap<String,CustomValue> mp=control.getValues();
+		Iterator it = mp.entrySet().iterator();
+	    while (it.hasNext()) {
+	    		Map.Entry<String,CustomValue> pair = (Map.Entry<String,CustomValue>)it.next();
+	    		theitems.add(pair.getValue());
+	    }
+		return theitems;
+	}
+
+
+	public void initialiseFile(BaseFile sampleFile) {
+		//set each customvalue to the values of the basefile
+		HashMap<String,CustomValue> map=sampleFile.getConstantMap();
+		Iterator it = map.entrySet().iterator();
+		
+		while (it.hasNext()) {
+			Map.Entry<String,CustomValue> pair = (Map.Entry<String,CustomValue>)it.next();
+    		if(customvalues.containsKey(pair.getKey())){
+    			CustomValue val=customvalues.get(pair.getKey());
+    			val.setTo(pair.getValue());
+    			//customvalues.put(pair.getKey(),);
+    		}
+		}
+		
+		
 	}
 	
 }

@@ -38,6 +38,7 @@ import javax.swing.text.DefaultCaret;
 import javax.swing.text.Document;
 import javax.swing.text.JTextComponent;
 
+import StoryEditor.ViewArrow;
 import controller.IController;
 import controller.UserInputController;
 import controller.command.ClearEventBoxCommand;
@@ -251,6 +252,9 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 				showMonsterSpecifics((ViewMonster) holded);
 				showEvents((ViewMonster) holded);
 				break;
+			case ARROW:
+				showArrowSpecifics((ViewArrow) holded);
+				break;
 			default:
 				needsrescale=false;
 				//return;
@@ -308,6 +312,15 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 
 
 	
+
+	private void showArrowSpecifics(ViewArrow holded) {
+		System.out.println("showing arrow specifics");
+		holded.addArrowSpecifics(itemInfoText);
+		//itemInfoText.addPreButton(field,button);
+		this.revalidate();
+		this.repaint();
+		
+	}
 
 	private void showTokenSpecifics(ViewToken viewtoken) {
 		// TODO Auto-generated method stub

@@ -8,8 +8,8 @@ public class ContinueCommand extends BasicCommand {
 
 	public StopAble stop;
 	
-	public ContinueCommand(StopAble textStop) {
-		stop=textStop;
+	public ContinueCommand() {
+		//stop=textStop;
 		// TODO Auto-generated constructor stub
 	}
 

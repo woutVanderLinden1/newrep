@@ -7,6 +7,7 @@ import model.Monster.*;
 import model.door.ClosedDoor;
 import model.door.NormalDoor;
 import model.event.Event;
+import model.event.*;
 import model.event.Trigger;
 import model.event.advancedevents.PlaceSpecialMonsterEvent;
 import model.event.advancedevents.SearchEffectEvent;
@@ -19,6 +20,7 @@ import model.event.extraevents.TextStop;
 import model.event.extraevents.TextTrigger;
 import model.search.ObjectiveToken;
 import model.search.SearchToken;
+import model.values.Modification;
 import view.events.EventItem;
 
 public class Resources {
@@ -55,7 +57,13 @@ public class Resources {
 			new MajorMonsterPerilEvent(),
 			new DamageMajorPerilEvent(8),
 			new ConditionEffect(Condition.Poison),
-			new SearchEffectEvent()
+			new SearchEffectEvent(),
+			new ModifyGoldEvent(Modification.PLUS),
+			new ModifyFameEvent(Modification.PLUS),
+			new ModifyHopeEvent(Modification.PLUS),
+			new ModifyPerilEvent(Modification.PLUS),
+			new ModifyDespairEvent(Modification.PLUS)
+			
 			
 			));
 	public static ArrayList<Item> AvailableTokens=new ArrayList<Item>(Arrays.asList(

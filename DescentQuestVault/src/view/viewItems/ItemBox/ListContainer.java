@@ -77,6 +77,7 @@ import model.values.CustomBoolean;
 import model.values.CustomValue;
 import model.values.ValueItem;
 import view.Items.Map.ItemFactory;
+import view.events.EventField;
 import view.events.EventItem;
 import view.viewItems.DoorItem;
 import view.viewItems.MonsterItem;
@@ -85,8 +86,8 @@ import view.viewItems.TokenItem;
 
 public class ListContainer extends SubContainer  implements Serializable,AvailabilityChangeListener,ValueChangeListener{
 
-	private ArrayList <ImageItem> itemList=new ArrayList<ImageItem>();
-	private int defaultSize= 100;
+	protected ArrayList <ImageItem> itemList=new ArrayList<ImageItem>();
+	protected int defaultSize= 100;
 	private JComboBox box;
 	private static ArrayList<Item> availableDoors=Resources.getAvailableDoors();
 	private static ArrayList<Item> availableTokens=Resources.getAvailableTokens();
@@ -180,7 +181,7 @@ public class ListContainer extends SubContainer  implements Serializable,Availab
 			//addButtons("Images/Token");
 			break;
 		case Value:
-			addButtons(itemcontrol.getValues());
+			addButtons(itemcontrol.getValuesAsList());
 			//addButtons("Images/Token");
 			break;
 		case Generator:
@@ -334,7 +335,9 @@ public class ListContainer extends SubContainer  implements Serializable,Availab
 					case MONSTER:
 						 com=new SelectCommand(item.clone());
 					case EVENT:
-						com=new SelectCommand(item.clone());
+						EventItem eventit=(EventItem) item;
+						EventField field=new EventField(eventit.getEv(),100);
+						com=new SelectCommand(field);
 						break;
 					case TILEITEM:
 						 com=new SelectCommand(item.clone());
@@ -434,7 +437,7 @@ public class ListContainer extends SubContainer  implements Serializable,Availab
 	public void trigger() {
 		if(box!=null) {
 			if(box.getSelectedItem()==ItemOptions.Value) {
-				addButtons(itemcontrol.getValues());
+				addButtons(itemcontrol.getValuesAsList());
 			}
 		}
 		
@@ -446,6 +449,10 @@ public class ListContainer extends SubContainer  implements Serializable,Availab
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
+
 
 
 }

@@ -83,7 +83,8 @@ public class ModifyIntegerValueEvent extends Event implements NameChangeListener
 		// TODO Auto-generated method stub
 
 	}
-	public void Trigger() {
+	@Override
+	public void trigger() {
 		UserInputController control=UserInputController.getController();
 		control.performCommand(new ModifyIntegerValueCommand(modvalue,mod,(CustomInteger) theitem.getItem()));
 	}
@@ -116,7 +117,7 @@ public class ModifyIntegerValueEvent extends Event implements NameChangeListener
 		JComboBox<Modification> button=new JComboBox<Modification>(comboOptions);
 		
 		
-		
+		button.setSelectedItem(mod);
 		button.addActionListener(new ActionListener() {
 			
 			@Override

@@ -12,6 +12,7 @@ public enum ItemOptions {
 	CoreSetIndoor,
 	Essentials, 
 	Value,
-	Generator
+	Generator, 
+	Hero
 
 }

@@ -13,14 +13,17 @@ public class SelectCommand extends BasicCommand {
 
 	private SelectAble item;
 	
-	public SelectCommand(ImageItem item) {
+	/*
+	public SelectCommand( item) {
 		//mainStack.addStackElement(new SelectstackElement(item));
 		this.item=item;
 	}
+	*/
 
 	public SelectCommand(SelectAble containingTile) {
 		item=containingTile;
 	}
+	
 
 	public SelectCommand(MapItem topItem) {
 		item=topItem;

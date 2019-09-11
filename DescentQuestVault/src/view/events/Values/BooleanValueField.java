@@ -96,13 +96,13 @@ public class BooleanValueField extends ValueField {
 	}
 
 	@Override
-	protected void sendEvent(MouseEvent e, Point point, SelectAble selectAble) {
+	public void sendEvent(MouseEvent e, Point point, SelectAble selectAble) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	
-	protected void initialiseImage(Color color) {
+	public void initialiseImage(Color color) {
 		currentColor=color;
 		System.out.println("image made");
 		//textLabel=new JTextField(selectedItem.getName());

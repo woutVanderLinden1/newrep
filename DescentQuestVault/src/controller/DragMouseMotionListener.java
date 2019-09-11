@@ -29,7 +29,7 @@ public class DragMouseMotionListener implements MouseListener,MouseMotionListene
 			// TODO Auto-generated method stub
 			//paintselected on top
 		
-			System.out.println("event happened dragged");
+			
 			UserInputController control=UserInputController.getController();
 			//e.getXOnScreen()
 			control.dragMouseEvent(e.getXOnScreen(),e.getYOnScreen());
@@ -48,7 +48,7 @@ public class DragMouseMotionListener implements MouseListener,MouseMotionListene
 			return;
 		}
 		// TODO Auto-generated method stub
-		System.out.println("event happened moved");
+		
 		UserInputController control=UserInputController.getController();
 		control.dragMouseEvent(e.getXOnScreen(),e.getYOnScreen());
 		control.deactivateAWTEventListeners();
@@ -60,16 +60,22 @@ public class DragMouseMotionListener implements MouseListener,MouseMotionListene
 	@Override
 	public void eventDispatched(AWTEvent arg0) {
 		
-		if(!on) {
 		
+		
+		if(!on) {
+			
+			//System.out.println("global listener off");
 		//	System.out.println((MouseEvent) arg0);
 			return;
 		}
+		
+		
 		
 		// TODO Auto-generated method stub
 		//System.out.println("event happened dispatch "+arg0.getID());
 		//System.out.println(MouseEvent.MOUSE_RELEASED);
 		
+		System.out.println(arg0.getID());
 		switch(arg0.getID()) {
 			case MouseEvent.MOUSE_RELEASED:
 				//System.out.println("it works");
@@ -127,11 +133,11 @@ public class DragMouseMotionListener implements MouseListener,MouseMotionListene
 	public void mouseReleased(MouseEvent e) {
 		
 		// TODO Auto-generated method stub
-			System.out.println("event happened released");
+		
 			UserInputController control=UserInputController.getController();
 			control.releaseDragEvent(e.getX(),e.getY());
 			control.deactivateAWTEventListeners();
-			control.sendDragListenerEvent(e);
+			control.sendDragListenerEvent(e);																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																										
 			//control.activateAWTEventListeners();
 			control.stopDragging();
 			control.cancelMoves();

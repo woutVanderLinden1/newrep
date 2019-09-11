@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
+import StoryEditor.DraggAblePanel;
 import controller.BaseEventController;
 import frame.SubContainer;
 import misc.save.WorldSaveFile;
@@ -71,7 +72,7 @@ public class EventPanel extends SubContainer implements Serializable {
 		eventBox.deleteSelected(selected);
 	}
 
-	public void endDragEvent(BaseField todrag) {
+	public void endDragEvent(DraggAblePanel todrag) {
 		// TODO Auto-generated method stub
 		eventBox.endDragEvent(todrag);
 	}
@@ -98,9 +99,9 @@ public class EventPanel extends SubContainer implements Serializable {
 		eventBox.addUniventToTriggerField(vent, trigger,b);
 	}
 
-	public void addStartTriggers(CustomInteger hope) {
+	public void addStartTriggers() {
 		// TODO Auto-generated method stub
-		eventBox.addBaseTriggers(hope);
+		eventBox.addBaseTriggers();
 	}
 
 	public void setBaseTrigger(StartUpTrigger baseTrigger) {

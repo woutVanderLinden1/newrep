@@ -39,6 +39,7 @@ public class Goldpanel extends JTextPane implements ValueChangeListener {
 	private void refreshGoldValue(int theInteger) {
 		this.setText("Gold: "+theInteger);
 		this.setName("Gold: "+theInteger);
-		
+		this.revalidate();
+		this.repaint();
 	}
 }

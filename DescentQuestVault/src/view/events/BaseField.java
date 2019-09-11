@@ -2,11 +2,14 @@ package view.events;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import StoryEditor.DraggAblePanel;
 import frame.TemporaryAble;
 import model.event.Event;
 import model.event.Trigger;
@@ -16,11 +19,34 @@ import view.viewItems.ItemBox.ImageItem;
 import view.viewItems.ItemBox.SelectAble;
 import view.viewItems.ItemBox.SelectKind;
 
-public abstract class BaseField extends JPanel implements SelectAble,Serializable,ReleasAble,TemporaryAble{
+public abstract class BaseField extends DraggAblePanel implements SelectAble,Serializable,ReleasAble,TemporaryAble{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	
+
+
+	private boolean placed=false;
+
+	public boolean isPlaced() {
+		return placed;
+	}
+	public void setPlaced(boolean placed) {
+		this.placed = placed;
+	}
+
+
 
 	protected Univent event;
 	protected boolean temporary;
 
+	public BaseField(String text) {
+		super(text);
+		
+	}
 	@Override
 	public String getIDName() {
 		// TODO Auto-generated method stub
@@ -83,7 +109,7 @@ public abstract class BaseField extends JPanel implements SelectAble,Serializabl
 	}
 
 
-	public void removeField(BaseField todrag) {
+	public void removeField(DraggAblePanel todrag) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -108,8 +134,7 @@ public abstract class BaseField extends JPanel implements SelectAble,Serializabl
 
 
 
-	protected abstract void sendEvent(MouseEvent e, Point point, SelectAble selectAble);
-
+	
 
 	public void setName(String newname) {
 		event.setName(newname);
@@ -176,6 +201,14 @@ public abstract class BaseField extends JPanel implements SelectAble,Serializabl
 	public boolean canNotContain(SelectAble selected2) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public void activateTextLabelMouselistener() {
+		
+	}
+	public void deactivateTextLabelMouselistener() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

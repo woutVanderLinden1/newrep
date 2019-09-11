@@ -2,6 +2,7 @@ package misc.save;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import controller.BaseEventController;
 import model.event.StartUpTrigger;
@@ -18,17 +19,18 @@ public class WorldSaveFile implements Serializable {
 	private static final long serialVersionUID = 1L;
 //	private ArrayList<CustomInteger> customIntegers;
 //	private ArrayList<CustomBoolean> customBooleans;
-	private ArrayList<CustomValue> customValues=new ArrayList<CustomValue>();
+	private HashMap<String,CustomValue> customValues=new HashMap<String,CustomValue>();
 	private BaseEventController control;
+	
 
 	private ArrayList<Univent> univentList=new ArrayList<Univent>();
 	
 	
-	public ArrayList<CustomValue> getCustomValues() {
+	public HashMap<String,CustomValue> getCustomValues() {
 		return customValues;
 	}
 
-	public void setCustomValues(ArrayList<CustomValue> customValues) {
+	public void setCustomValues(HashMap<String,CustomValue> customValues) {
 		this.customValues = customValues;
 	}
 
@@ -55,12 +57,17 @@ public class WorldSaveFile implements Serializable {
 	}
 
 	public void addCustomValue(CustomValue value) {
-		customValues.add(value);
+		customValues.put(value.getName().toLowerCase(),value);
 	}
 
 	public void setBaseEventControl(BaseEventController baseEventControl) {
 		// TODO Auto-generated method stub
 		control=baseEventControl;
+	}
+
+	public void saveCustomValues(HashMap<String, CustomValue> customvalues2) {
+		// TODO Auto-generated method stub
+		customvalues2.putAll(customvalues2);
 	}
 
 }

@@ -12,6 +12,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import StoryEditor.StoryElementOption;
 import frame.SubContainer;
 
 /**
@@ -23,7 +24,7 @@ import frame.SubContainer;
 public class ItemTabField  extends SubContainer implements Serializable{
 	
 	private JLabel label;
-	protected JComboBox<ItemOptions> box;
+	protected JComboBox box;
 	protected ListContainer list;
 
 	public ItemTabField(int width, int height) {

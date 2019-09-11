@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -145,7 +147,8 @@ public class CompareToOtherIntegerTrigger extends Trigger implements NameChangeL
 
 	private void addIntegerModifier(ItemInfoContainer itemInfoText) {
 		ItemController control=ItemController.getItemController();
-		ArrayList<Item> theitems=control.getValues();
+		ArrayList<Item> theitems=control.getValuesAsList();
+		//=control.getValues();
 		ArrayList<CustomInteger> vals=new ArrayList<CustomInteger>();
 		theitems.forEach(a->{
 			if(a.getItemKind()==ItemOptions.Value) {

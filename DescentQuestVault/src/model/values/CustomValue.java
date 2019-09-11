@@ -75,6 +75,10 @@ public abstract class CustomValue<P> extends Item {
 
 
 
+	public abstract void setTo(CustomValue value2);
+
+
+
 
 	
 

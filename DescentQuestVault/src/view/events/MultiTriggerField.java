@@ -241,7 +241,7 @@ public class MultiTriggerField extends TriggerField {
 	}
 	
 	@Override
-	protected void sendEvent(MouseEvent e, Point point, SelectAble selectAble) {
+	public void sendEvent(MouseEvent e, Point point, SelectAble selectAble) {
 		
 		
 		/*

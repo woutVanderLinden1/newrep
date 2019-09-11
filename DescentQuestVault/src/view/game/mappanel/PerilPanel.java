@@ -39,6 +39,7 @@ public class PerilPanel  extends JTextPane implements ValueChangeListener{
 	private void refreshPerilValue(int theInteger) {
 		this.setText("Peril: "+theInteger);
 		this.setName("Peril: "+theInteger);
-		
+		this.revalidate();
+		this.repaint();
 	}
 }

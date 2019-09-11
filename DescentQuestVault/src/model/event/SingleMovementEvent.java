@@ -79,53 +79,44 @@ public class SingleMovementEvent extends Event implements StopAble{
 	
 	@Override
 	public void trigger() {
+		
+		EventTriggerStack stack=EventTriggerStack.getTriggerStack();	
+		ArrayList <Univent> toexecute=new ArrayList<Univent>();
+		
 		if(ment.isMasterfirst()) {
-			showMasterMovement();
-			showMinionMovement();
+			toexecute.add(getMasterMovement());
+			toexecute.add(getMinionMovement());
 		}
 		else {
-			showMinionMovement();
-			showMasterMovement();
+			
+			toexecute.add(getMinionMovement());
+			toexecute.add(getMasterMovement());
 		}
-
+		stack.addNewEvents(toexecute);
+		stack.triggerNextStackEvent();
 		
 		
 	
 	}
-	private void showMinionMovement() {
-		UserInputController control=UserInputController.getController();
+	private Event getMinionMovement() {
 		if(ment.getMinionmovement()!=null) {
-			control.performCommand(new ShowMonsterMovementCommand(mon,ment.getMinionmovement(),ment.getContinousMinionEffect(),MonsterKind.MINION,this));
-			stopped=true;
-			while(stopped) {
-				try {
-					System.out.println("here");
-					Thread.sleep(500);
-					//TimeUnit.SECONDS.sleep((long) .5);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+			EventTriggerStack stack=EventTriggerStack.getTriggerStack();	
+			ShowMonsterMovementEvent ev=new ShowMonsterMovementEvent(mon,ment.getMinionmovement(),ment.getContinousMinionEffect(),MonsterKind.MINION);
+			return ev;
 		}
+		return null;
+		
 		
 	}
-	private void showMasterMovement() {
-		UserInputController control=UserInputController.getController();
-		if(ment.getMastermovement()!=null) {
-			control.performCommand(new ShowMonsterMovementCommand(mon,ment.getMastermovement(),ment.getContinousMasterEffect(),MonsterKind.MASTER,this));
-			stopped=true;
-			while(stopped) {
-				try {
-					System.out.println("here");
-					Thread.sleep(500);
-					//TimeUnit.SECONDS.sleep((long) .5);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+	private Event getMasterMovement() {
+		if(ment.getMinionmovement()!=null) {
+				
+			ShowMonsterMovementEvent ev=new ShowMonsterMovementEvent(mon,ment.getMastermovement(),ment.getContinousMasterEffect(),MonsterKind.MASTER);
+		
+			return ev;
 		}
+		
+		return null;
 		
 	}
 	@Override
@@ -321,6 +312,9 @@ public class SingleMovementEvent extends Event implements StopAble{
 	
 	private void addMasterFirst(ItemInfoContainer itemInfoText) {
 		JCheckBox button=new JCheckBox();
+		if(ment.isMasterfirst()) {
+			button.setSelected(ment.isMasterfirst());
+		}
 		button.addActionListener(new ActionListener() {
 			boolean ischeked=false;
 			@Override
@@ -361,4 +355,7 @@ public class SingleMovementEvent extends Event implements StopAble{
 		return new SingleMovementEvent(mon,ment);
 	}
 
+	public boolean isStopEvent() {
+		return true;
+	}
 }

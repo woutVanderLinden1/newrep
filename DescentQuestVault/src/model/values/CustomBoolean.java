@@ -48,6 +48,12 @@ public class CustomBoolean extends CustomValue<Boolean> {
 		return ValueKind.BOOLEAN;
 	}
 
+	@Override
+	public void setTo(CustomValue value2) {
+		value=((CustomBoolean) value2).isValue();
+		
+	}
+
 	
 	
 	

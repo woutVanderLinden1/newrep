@@ -36,7 +36,7 @@ public class TextStop extends Event implements StopAble {
 		this.setIDName("textStop");
 		this.setName(getNewName());
 		options=new ArrayList<TextOption>();
-		options.add(new TextOption("continue",new ContinueCommand(this)));
+		options.add(new TextOption("continue",new ContinueCommand()));
 	}
 	
 	public TextStop() {
@@ -44,7 +44,7 @@ public class TextStop extends Event implements StopAble {
 		this.setIDName("textStop");
 		this.setName(getNewName());
 		options=new ArrayList<TextOption>();
-		options.add(new TextOption("continue",new ContinueCommand(this)));
+		options.add(new TextOption("continue",new ContinueCommand()));
 	}
 	
 	public void trigger() {

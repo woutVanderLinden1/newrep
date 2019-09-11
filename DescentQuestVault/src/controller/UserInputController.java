@@ -5,12 +5,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import StoryEditor.AddEventToStoryElementPanelCommand;
+import StoryEditor.Arrow;
+import StoryEditor.DragPanel;
+import StoryEditor.DraggAblePanel;
+import StoryEditor.SubDragPanel;
+import StoryEditor.ViewArrow;
 import controller.analyzer.Analyzer;
 import controller.analyzer.DragAnalyzer;
 import controller.analyzer.MonsterPlaceAnalyzer;
 import controller.analyzer.states.IAnalyzerState;
 import controller.commands.AddDoorToViewSquareCommand;
 import controller.commands.AddEventToTriggerFieldCommand;
+import controller.commands.BasicCommand;
 import controller.commands.CancelTileMoveCommand;
 import controller.commands.ChangeTileColorCommand;
 import controller.commands.ICommand;
@@ -108,7 +115,7 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	private IView view;
 	private IModel mod;
 	private Map<IDrawWindow,StackManager> stackMap;
-	private MainFrame theFrame;
+	protected MainFrame theFrame;
 	private boolean dragging;
 	private boolean tileMoveing;
 	private OldTilePlace oldTile;
@@ -573,33 +580,36 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	}
 
 	private void cancelEventMove() {
+		
 		BaseField field=oldevent.getField();
-
-		
-		ICommand comm2=new AddSelectedToTriggerFieldCommand(/*oldevent.getField(),*/oldevent.getBaseTrigger());
-		performCommand(comm2);
-
-		//this.endEventMove(field);
-		
-		/*
-		switch(oldevent.getField().getKind()) {
-	
-		case EVENT:
-			ICommand comm=new AddEventToTriggerFieldCommand(oldevent.getField(),oldevent.getBaseTrigger());
-			performCommand(comm);
-			break;
-		
-		case TRIGGER:
-			ICommand comm2=new AddEventToTriggerFieldCommand(oldevent.getField(),oldevent.getBaseTrigger());
+		field.activateTextLabelMouselistener();
+		if(field.isPlaced()) {
+			
+			ICommand comm2=new AddSelectedToTriggerFieldCommand(/*oldevent.getField(),*/oldevent.getBaseTrigger());
 			performCommand(comm2);
-			break;
 	
-	
-		default:
-			break;
+			//this.endEventMove(field);
+			
+			/*
+			switch(oldevent.getField().getKind()) {
 		
+			case EVENT:
+				ICommand comm=new AddEventToTriggerFieldCommand(oldevent.getField(),oldevent.getBaseTrigger());
+				performCommand(comm);
+				break;
+			
+			case TRIGGER:
+				ICommand comm2=new AddEventToTriggerFieldCommand(oldevent.getField(),oldevent.getBaseTrigger());
+				performCommand(comm2);
+				break;
+		
+		
+			default:
+				break;
+			
+			}
+			*/
 		}
-		*/
 		
 	}
 
@@ -648,6 +658,12 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		// TODO Auto-generated method stub
 		return analyze.makeTriggerFieldCommand(x,y,view,arg0,mouseEntered,thefield,dragging);
 	}
+	public BasicCommand generateReleasedOnSubDragPanelCommand(int x, int y, MouseEvent arg0,
+			int mouseReleased, SubDragPanel panel, DragPanel parent) {
+		// TODO Auto-generated method stub
+		
+		return analyze.makeEventToStoryElementPanelCommand(x,y,arg0,mouseReleased,panel,view.getSelected(),dragging,parent);
+	}
 
 	public void cancelMoves() {
 		System.out.println("canceled "+tileMoving());
@@ -668,15 +684,16 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		}
 	}
 
-	public ICommand generateSelectFieldCommand(MouseEvent arg0,EventField field) {
+	
+	public ICommand generateSelectFieldCommand(MouseEvent arg0, BaseField pan) {
 		// TODO Auto-generated method stub
-		return analyze.generateSelectFieldCommand(arg0,field);
-	}
-	public ICommand generateSelectFieldCommand(MouseEvent arg0, BaseField field) {
-		// TODO Auto-generated method stub
-		return analyze.generateSelectFieldCommand(arg0,field);
+		return analyze.generateSelectFieldCommand(arg0,pan);
 	}
 
+	public ICommand generateSelectDragPanelCommand(MouseEvent e, DraggAblePanel pan) {
+		// TODO Auto-generated method stub
+		return analyze.generateSelectDragPanelCommand(e,pan);
+	}
 
 	public void endEventMove(BaseField field) {
 		// TODO Auto-generated method stub
@@ -785,6 +802,15 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	}
 
 	public void removeOldTemporary() {
+		if( oldevent!=null) {
+		
+			BaseField field=oldevent.getField();
+			field.setVisible();
+			
+			field.activateTextLabelMouselistener();
+			oldevent=null;
+		}
+		
 		view.removeShownInField(temporaryLocation);
 		
 	}
@@ -794,18 +820,25 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		temporaryLocation=whereshow;
 	}
 
-	public void endOldMove(BaseField field) {
-		// TODO Auto-generated method stub
-		view.endDragEvent(field);
+	public void endOldMove(DraggAblePanel select) {
+		
+		select.setVisible();
+		view.endDragEvent(select);
 	}
 
 	public void openMonsterEditor() {
 		theFrame.openMonsterEditor();
 		
 	}
+	
 
 	public void openMonsterEditor(Monster mon) {
 		theFrame.openMonsterEditor(mon);
+		
+	}
+	
+	public void openStoryEditor() {
+		theFrame.openStoryEditor();
 		
 	}
 
@@ -870,6 +903,23 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		// TODO Auto-generated method stub
 		
 	}
+
+	public BasicCommand generateDragPanelCommand(MouseEvent arg0, DraggAblePanel pan) {
+		// TODO Auto-generated method stub
+		return analyze.generateDragPanelCommand(arg0,pan);
+	}
+
+	public BasicCommand generateSelectArrowCommand(int x, int y, MouseEvent arg0, int mousePressed, ViewArrow arrow,
+			SubDragPanel panel, DragPanel parent) {
+		
+		return analyze.generateSelectArrowCommand(x,y,arg0,mousePressed,arrow,panel,parent);
+	}
+
+	
+
+
+
+
 
 
 

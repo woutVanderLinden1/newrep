@@ -104,14 +104,14 @@ public class TextTrigger extends Trigger implements Serializable,StopAble{
 
 	private void initialiseOptions() {
 		for(TextOption opt:options) {
-			opt.setContinueCommand(new ContinueCommand(this));
+			opt.setContinueCommand(new ContinueCommand());
 		}
 		
 	}
 	public void addTextOption(TextOption textOption) {
 		// TODO Auto-generated method stub
 		nroptions++;
-		textOption.setContinueCommand(new ContinueCommand(this));
+		textOption.setContinueCommand(new ContinueCommand());
 		options.add(textOption);
 		triggerAddOptionListeners(textOption);
 	}

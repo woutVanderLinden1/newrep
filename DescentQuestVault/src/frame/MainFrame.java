@@ -24,6 +24,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import StoryEditor.StoryEditor;
 import controller.EndPhaseListener;
 import controller.UserInputController;
 import misc.listeners.IResizeListeners;
@@ -51,7 +52,7 @@ public class MainFrame extends JFrame{
 	private SubContainer currentMenu;
 	protected UserInputController userInput;
 	private Dimension defaultSize=new Dimension(1600,1000); 
-	private SubContainer glasspane;
+	protected SubContainer glasspane;
 	protected JLayeredPane lpane = new JLayeredPane();
 	private QuestGame currentGame;
 	
@@ -169,7 +170,7 @@ public class MainFrame extends JFrame{
 		//this.add(lpane);
 		revalidate();
 		repaint();
-	     this.requestFocus();
+	    this.requestFocus();
 	}
 
 	private JLayeredPane createNewPanel() {
@@ -230,7 +231,7 @@ public class MainFrame extends JFrame{
 	}
 
 	public UserInputController getUserInputController() {
-		// TODO Auto-generated method stub
+		
 		return userInput;
 	}
 
@@ -424,6 +425,13 @@ public class MainFrame extends JFrame{
 
 	public void addEndPhaseListener(EndPhaseListener trig) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	public void openStoryEditor() {
+		System.out.println("storyeditor opened");
+		StoryEditor edit=new StoryEditor();
+		edit.setVisible(true);
 		
 	}
 

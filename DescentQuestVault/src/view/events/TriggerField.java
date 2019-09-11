@@ -49,7 +49,7 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 	private SubContainer  subEvents;
 	protected TriggerItem trigitem;
 	protected Trigger trig;
-	protected ArrayList<BaseField> fields;
+	protected ArrayList<BaseField> fields=new ArrayList<BaseField>();
 	//private triggeritem;
 	protected BaseField temporaryfield;
 	protected JTextField textLabel;
@@ -76,6 +76,7 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 	}
 
 	public TriggerField(Trigger trig, int i, int j) {
+		super(trig.getName());
 		minimized=false;
 		subEvents=new SubContainer(this.getWidth()-25,80);
 		textLabel=new JTextField();
@@ -461,7 +462,7 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 		createImage(new Color(255,230,120));
 	}
 	@Override
-	protected void sendEvent(MouseEvent e, Point point, SelectAble selectAble) {
+	public void sendEvent(MouseEvent e, Point point, SelectAble selectAble) {
 		
 		
 		/*
@@ -581,7 +582,9 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 			subEvents.setSize(new Dimension(w-25,subEvents.getHeight()));
 		}
 		
-		
+		if(fields==null) {
+			fields=new ArrayList<BaseField>();
+		}
 		for(BaseField field:fields) {
 			field.setSize(w-40,field.getHeight());
 		}

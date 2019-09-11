@@ -18,21 +18,21 @@ public class ShowMonsterMovementCommand extends BasicCommand implements ICommand
 	private ArrayList<MovementString> movement;
 	private MovementString continousEffect;
 	private MonsterKind kind;
-	private StopAble stop;
+
 	
 	public ShowMonsterMovementCommand(MonsterItem mon, ArrayList<MovementString> arrayList,
-		MovementString movementString,MonsterKind monsterkind, SingleMovementEvent singleMovementEvent) {
+		MovementString movementString,MonsterKind monsterkind) {
 		monster=mon;
 		movement=arrayList;
 		continousEffect=movementString;
 		kind=monsterkind;
-		stop=singleMovementEvent;
+		
 	}
 
 	@Override
 	public void perform() {
 		
-		view.showMonsterMovement(monster,movement,continousEffect,kind,stop);
+		view.showMonsterMovement(monster,movement,continousEffect,kind);
 
 	}
 

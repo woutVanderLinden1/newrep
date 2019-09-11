@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 import model.event.Trigger;
 import model.event.extraevents.TextOption;
@@ -23,27 +24,31 @@ public class Tools {
 	private static Random random=new Random();
 
 	public static BufferedImage resize (int width, int height, BufferedImage toRescale){
-		BufferedImage myPicture=null;
-		try {
-			myPicture = ImageIO.read(new File("Images//texture.jpg"));
-			Image img= myPicture.getScaledInstance(width, height, 0);
-			 BufferedImage bimage = new BufferedImage(img.getWidth(null),img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+		BufferedImage myPicture=toRescale;
+		//myPicture = ImageIO.read(new File("Images//texture.jpg"));
+		Image img= myPicture.getScaledInstance(width, height, 0);
+		 BufferedImage bimage = new BufferedImage(img.getWidth(null),img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
-			    // Draw the image on to the buffered image
-			    Graphics2D bGr = bimage.createGraphics();
-			    bGr.drawImage(img, 0, 0, null);
-			    bGr.dispose();
-			    myPicture=bimage;
-		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		    // Draw the image on to the buffered image
+		    Graphics2D bGr = bimage.createGraphics();
+		    bGr.drawImage(img, 0, 0, null);
+		    bGr.dispose();
+		    myPicture=bimage;
 		return myPicture;
 	}
 	
 
 
+	public static BufferedImage createImage(JPanel panel) {
+
+	    int w = panel.getWidth();
+	    int h = panel.getHeight();
+	    BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+	    Graphics2D g = bi.createGraphics();
+	    panel.paint(g);
+	    g.dispose();
+	    return bi;
+	}
 	public static int getNonYEmpties(int[][] shape, int ystartoff) {
 		int p=0;
 		boolean val=false;

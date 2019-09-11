@@ -9,6 +9,7 @@ import java.util.Stack;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
+import StoryEditor.DraggAblePanel;
 import controller.BaseEventController;
 import controller.commands.ICommand;
 import frame.MainFrame;
@@ -70,7 +71,7 @@ public class ViewManager implements IView {
 	public IDrawWindow getActiveWindow() {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	} 
 
 	public ViewManager(MainFrame frame){
 		setFrame(frame);
@@ -193,7 +194,7 @@ public class ViewManager implements IView {
 
 	@Override
 	public SelectAble getSelected() {
-		// TODO Auto-generated method stub
+		
 		return quester.getSelected();
 	}
 
@@ -291,6 +292,8 @@ public class ViewManager implements IView {
 		quester.startDragTile(toselect);
 	}
 
+
+
 	@Override
 	public void startDragItem(BaseField todrag) {
 		
@@ -346,7 +349,7 @@ public class ViewManager implements IView {
 	}
 
 	@Override
-	public void endDragEvent(BaseField todrag) {
+	public void endDragEvent(DraggAblePanel todrag) {
 		quester.endDragEvent(todrag);
 		
 	}
@@ -365,8 +368,8 @@ public class ViewManager implements IView {
 	}
 
 	@Override
-	public void addStartTriggers(CustomInteger hope) {
-		quester.addStartTriggers(hope);
+	public void addStartTriggers() {
+		quester.addStartTriggers();
 	}
 
 	@Override
@@ -463,9 +466,9 @@ public class ViewManager implements IView {
 
 	@Override
 	public void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect,
-			MonsterKind kind,StopAble stop) {
+			MonsterKind kind) {
 		// TODO Auto-generated method stub
-		game.showMonsterMovement(monster,movement,continousEffect,kind,stop);
+		game.showMonsterMovement(monster,movement,continousEffect,kind);
 	}
 
 	@Override
@@ -515,6 +518,11 @@ public class ViewManager implements IView {
 	public void removeMapMonster(GameMonster toremove) {
 		// TODO Auto-generated method stub
 		game.removeMapMonster(toremove);
+	}
+
+	@Override
+	public void startDragDragPanel(DraggAblePanel todrag) {
+		
 	}
 
 

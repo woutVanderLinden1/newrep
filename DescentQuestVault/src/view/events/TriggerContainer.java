@@ -220,7 +220,7 @@ public class TriggerContainer extends TriggerField {
 		}
 	}
 	
-	protected void sendEvent(MouseEvent e, Point point, SelectAble selectAble) {
+	public void sendEvent(MouseEvent e, Point point, SelectAble selectAble) {
 		
 		
 		/*

@@ -341,4 +341,7 @@ public abstract class MapItem implements SelectAble, Serializable, EventHolder,A
 		item.reduceAvailability();
 	}
 	
+	public void setVisible() {
+		
+	}
 }

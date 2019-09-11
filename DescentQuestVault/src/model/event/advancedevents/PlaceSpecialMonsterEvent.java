@@ -81,12 +81,13 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 	@Override
 	public void trigger() {
 		ArrayList<TextOption> options=new ArrayList<TextOption>();
-		options.add(new TextOption("continue",new ContinueCommand(this)));
+		options.add(new TextOption("continue",new ContinueCommand()));
 		commands.add(new ShowTextCommand(text,options));
 		
 		super.trigger();
 		
 	}
+	@Override
 	public boolean isStopEvent() {
 		return true;
 	}

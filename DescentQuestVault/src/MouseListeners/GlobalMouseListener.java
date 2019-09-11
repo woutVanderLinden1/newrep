@@ -38,7 +38,7 @@ public class GlobalMouseListener implements MouseListener,MouseMotionListener {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		System.out.println("mouseclick");
+		System.out.println(arg0.getComponent());
 		UserInputController.getController().handleMouseEvent(arg0.getID(), arg0.getX(), arg0.getY(), arg0.getClickCount());
 
 	}

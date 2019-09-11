@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
+import StoryEditor.DraggAblePanel;
 import controller.BaseEventController;
 import controller.UserInputController;
 import frame.SubContainer;
@@ -22,6 +23,7 @@ import misc.listeners.RemoveTileListener;
 import misc.listeners.TilePlaceListener;
 import misc.listeners.TriggerFieldListener;
 import misc.save.WorldSaveFile;
+import model.ItemController;
 import model.event.EndTurnTrigger;
 import model.event.Event;
 import model.event.GameLoseEvent;
@@ -269,7 +271,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		
 	}
 
-	public void endDragEvent(BaseField todrag) {
+	public void endDragEvent(DraggAblePanel todrag) {
 		// TODO Auto-generated method stub
 		this.removeField(todrag);
 		
@@ -282,7 +284,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		
 	}
 
-	private void removeField(BaseField todrag) {
+	private void removeField(DraggAblePanel todrag) {
 		System.out.println("event removed");
 		// TODO Auto-generated method stub
 		for(int i=0;i<fields.size();i++) {
@@ -300,7 +302,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 	}
 
 	public void addEventToTriggerField(SelectAble selected, TriggerField field) {
-		
+		((BaseField) selected).setPlaced(true);
 		switch(selected.getKind()) {
 		case TRIGGER:
 			if(field==null) {
@@ -669,9 +671,9 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		//save the events to the file
 	}
 
-	public void addBaseTriggers(CustomInteger hope) {
+	public void addBaseTriggers() {
 		//addBaseTrigger();
-		addLoseEvent(hope);
+		addLoseEvent();
 		addWinEvent();
 		
 		
@@ -687,10 +689,10 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		
 	}
 
-	private void addLoseEvent(CustomInteger hope) {
+	private void addLoseEvent() {
 	
 		GameLoseEvent lose=new GameLoseEvent();
-		IntegerValueItem it=new IntegerValueItem(hope);
+		IntegerValueItem it=new IntegerValueItem(ItemController.getItemController().getHope());
 		
 		IfIntegerTrigger hopetrigger=(IfIntegerTrigger) it.getIftrigger().copy();
 		hopetrigger.addEvent(lose);

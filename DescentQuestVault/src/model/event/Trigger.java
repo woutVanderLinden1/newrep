@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import controller.UserInputController;
 import controller.commands.Game.HoldToContinueCommand;
+import view.events.EventItem;
+import view.events.TriggerItem;
 import view.game.GameDoor;
 import view.menu.QuestCreator;
 import view.viewItems.ItemBox.ImageItem;
@@ -85,6 +87,11 @@ public abstract class Trigger extends Univent implements EventBase {
 		}
 	
 		
+	}
+	@Override
+	public ImageItem getImageItem() {
+		// TODO Auto-generated method stub
+		return new TriggerItem(this);
 	}
 
 

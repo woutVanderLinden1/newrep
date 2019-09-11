@@ -10,10 +10,10 @@ public class SampleMovement extends SingleMovement implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	public SampleMovement() {
-		this.addToMinionMovement("move to the closest hero");
-		this.addToMinionMovement("attack the closest hero");
-		this.addToMasterMovement("move to the closest hero");
-		this.addToMasterMovement("attack to the closest hero");
+		this.addToMinionMovement("Beweeg naar de dichtsbijzijnde held");
+		this.addToMinionMovement("Val de dichtsbijzijnde held aan");
+		this.addToMasterMovement("Beweeg naar de dichtsbijzijnde held");
+		this.addToMasterMovement("Val de dichtsbijzijnde held aan");
 	
 	}
 }

@@ -7,7 +7,7 @@ import monstercreator.SingleMovement;
 public class RemoveMinionMovementOptionCommand extends BasicCommand implements ICommand {
 	private SingleMovement ment;
 	public RemoveMinionMovementOptionCommand(SingleMovement ment2) {
-		this.ment=ment;
+		this.ment=ment2;
 	}
 	@Override
 	public void perform() {
