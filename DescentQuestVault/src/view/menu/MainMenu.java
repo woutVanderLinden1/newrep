@@ -18,16 +18,23 @@ public class MainMenu extends Menu {
 		addCampaignButton();
 		addSpecificQuestButton();
 		addQuestEditorButton();
-		addCampaingEditorButton();
 		addMonsterEditorButton();
 		addStoryEditorButton();
 		addItemEditorButton();
+		addClassEditorButton();
+		//addSubQuestEditorButton();
 		addHeroEditorButton();
 		addCityEditorButton();
 		addOptionsButton();
 		addCreditsButton();
 		addExitButton();
 		
+		
+	}
+
+
+	private void addClassEditorButton() {
+		itemBox.addButton(new CommandButton("SkillEditor",new OpenSkillEditorCommand()));
 		
 	}
 
@@ -63,7 +70,7 @@ public class MainMenu extends Menu {
 		
 	}
 	private void addHeroEditorButton() {
-		itemBox.addButton(new CommandButton("HeroEditor",new ExitCommand()));
+		itemBox.addButton(new CommandButton("HeroEditor",new OpenHeroEditorCommand()));
 		
 	}
 
@@ -74,10 +81,7 @@ public class MainMenu extends Menu {
 	}
 
 
-	private void addCampaingEditorButton() {
-		itemBox.addButton(new CommandButton("CampaignEditor",new ExitCommand()));
-		
-	}
+
 
 
 	private void addQuestEditorButton() {
@@ -86,20 +90,20 @@ public class MainMenu extends Menu {
 	}
 
 	private void addItemEditorButton() {
-		itemBox.addButton(new CommandButton("ItemEditor",new GoToMenuCommand(Menus.QUESTEDITOR)));
+		itemBox.addButton(new CommandButton("ItemEditor",new OpenItemEditorCommand()));
 		
 	}
 
 
 
 	private void addSpecificQuestButton() {
-		itemBox.addButton(new CommandButton("Quest",new ExitCommand()));
+		itemBox.addButton(new CommandButton("Quest",new SelectAndStartCommand()));
 		
 	}
 
 
 	private void addCampaignButton() {
-		itemBox.addButton(new CommandButton("Campaign",new ExitCommand()));
+		itemBox.addButton(new CommandButton("Campaign",new GoToMenuCommand(Menus.CAMPAIGN)));
 		
 	}
 }

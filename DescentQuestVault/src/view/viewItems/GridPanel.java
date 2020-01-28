@@ -98,7 +98,7 @@ public class GridPanel  extends SubContainer implements Serializable{
 	    		    super.paintComponent(g);
 
 	    		    // Draw the background image.
-	    		    g.drawImage(backgroundImage, 0, 0, this);
+	    		    g.drawImage(backgroundImage, scrollPane.getViewport().getViewPosition().x, scrollPane.getViewport().getViewPosition().y, this);
 	    		    for(ViewTile tile:tiles){
 	    		    	
 	    		    	tile.draw(g,this);
@@ -151,7 +151,7 @@ public class GridPanel  extends SubContainer implements Serializable{
 	    
 		try {
 			backgroundImage = ImageIO.read(new File("Images/texture1.jpg"));
-			backgroundImage=Tools.resize(squareWidth*mapLength,squareWidth*mapLength,(BufferedImage) backgroundImage);
+			backgroundImage=Tools.resize(width,h,(BufferedImage) backgroundImage);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

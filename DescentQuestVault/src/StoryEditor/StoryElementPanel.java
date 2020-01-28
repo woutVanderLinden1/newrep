@@ -17,7 +17,9 @@ import javax.swing.SwingUtilities;
 
 import controller.UserInputController;
 import controller.commands.ICommand;
+import controller.commands.select.SelectCommand;
 import frame.SubContainer;
+import misc.CampaignFile;
 import model.event.Univent;
 import view.events.BaseField;
 import view.events.EventField;
@@ -31,13 +33,18 @@ public class StoryElementPanel extends DragPanel {
 
 	public StoryElementPanel(Dimension size) {
 		super(size);
+		this.setLayout(null);
 		initialise();
+		
 	}
 
 	private void initialise() {
 		//
 		startPanel=new StartElementPanel();
 		endPanel=new EndElementPanel();
+		
+		this.addStoryPanelToStoryElementPanel(new Point(this.getWidth()/2-50,50), startPanel);
+		this.addStoryPanelToStoryElementPanel(new Point(this.getWidth()/2-50,600), endPanel);
 	}
 
 	
@@ -100,7 +107,7 @@ public class StoryElementPanel extends DragPanel {
 		
 			
 		case STORYELEMENT:
-			addStoryPanelToStoryElementPanel(convertMouseEvent.getPoint(),(StoryProgressPanel) selectAble);
+			addStoryPanelToStoryElementPanel(convertMouseEvent.getPoint(),(StoryItemPanel) selectAble);
 			break;
 		
 		
@@ -109,7 +116,7 @@ public class StoryElementPanel extends DragPanel {
 		}
 	}
 
-	public void addStoryPanelToStoryElementPanel(Point point, StoryProgressPanel selectAble) {
+	public void addStoryPanelToStoryElementPanel(Point point, StoryItemPanel selectAble) {
 		this.addDraggAblePanel(selectAble, point.x, point.y);
 		
 	}
@@ -208,6 +215,8 @@ public class StoryElementPanel extends DragPanel {
 				ICommand command=null;
 				try {
 					
+					control.performCommand(new SelectCommand(pan));
+
 					
 					 
 					
@@ -235,6 +244,20 @@ public class StoryElementPanel extends DragPanel {
 					//System.out.println("arrow drawing started");
 					Point p=e.getLocationOnScreen();
 					startGlassPaneArrowDraw(pan,e);
+				}
+				if(e.getButton() == MouseEvent.BUTTON1) {
+					System.out.println("pressed accepted");
+					UserInputController control=UserInputController.getController();
+				
+					ICommand command=null;
+					try {
+						command=new StartDragStoryItemCommand(pan,e.getX(),e.getY(),e.getXOnScreen(),e.getYOnScreen());
+						control.performCommand(command);
+					} catch (Exception ex) {
+					// TODO Auto-generated catch block
+						ex.printStackTrace();
+					}
+					//field.requestFocus();
 				}
 				
 				
@@ -269,6 +292,21 @@ public class StoryElementPanel extends DragPanel {
 	public void deleteSelected(SelectAble selected) {
 		// TODO Auto-generated method stub
 		defaultpanel.deleteSelected(selected);
+	}
+
+	public void saveFile(CampaignFile saved) {
+		//save events from start and end
+		//save arrows
+		//saved.addStartEventPanel(startPanel.getI);
+	//	saved.addEndEventPanel(endPanel);
+		//startPanel
+		
+		
+	}
+
+	public void startDrag(DraggAblePanel todrag) {
+		// TODO Auto-generated method stub
+		defaultpanel.remove(todrag);
 	}
 
 }

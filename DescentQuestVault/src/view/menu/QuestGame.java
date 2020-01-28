@@ -1,11 +1,13 @@
 package view.menu;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.ArrayList;
 
 import controller.EndPhaseListener;
 import controller.EndRoundListener;
+import controller.UserInputController;
 import controller.turns.GameController;
 import frame.SubContainer;
 import misc.ActivateAble;
@@ -17,6 +19,7 @@ import model.event.StartGameListener;
 import model.event.extraevents.StopAble;
 import model.event.extraevents.TextOption;
 import model.event.trigger.EndPhaseTrigger;
+import model.values.CustomInteger;
 import view.Items.Map.MapItem;
 import view.Items.Map.ViewDoor;
 import view.Items.Map.ViewMonster;
@@ -29,6 +32,7 @@ import view.game.MonsterKind;
 import view.game.mappanel.GameMapPanel;
 import view.viewItems.DoorItem;
 import view.viewItems.MonsterItem;
+import view.viewItems.TitleBox;
 
 public class QuestGame extends SubContainer implements EndRoundListener {
 
@@ -60,12 +64,24 @@ public class QuestGame extends SubContainer implements EndRoundListener {
 		}
 	}
 	
-	public QuestGame(Dimension defaultSize) {
+	public QuestGame(Dimension defaultSize, SampleFile sampleFile) {
 		super(defaultSize);
+		this.initialiseGame(sampleFile);
 		//basefile=sampleFile;
 		gamemap=new GameMapPanel(defaultSize);
-		this.add(gamemap);
 		
+		this.add(gamemap);
+		this.setBackground(Color.BLACK);
+		
+	
+		
+	}
+
+	public QuestGame(int w, int h, UserInputController userInputController) {
+		super(w,h);
+		gamemap=new GameMapPanel(new Dimension(w,h));
+		this.add(gamemap);
+		this.setBackground(Color.BLACK);
 	}
 
 	public void setGameController(GameController control) {
@@ -146,7 +162,8 @@ public class QuestGame extends SubContainer implements EndRoundListener {
 		// TODO Auto-generated method stub
 		ItemController control=ItemController.getItemController();
 		control.initialiseFile(sampleFile);
-		gamemap.initialiseGame(sampleFile);
+		control.setPeril(new CustomInteger("Peril" ,0));
+	
 	}
 
 
@@ -190,6 +207,11 @@ public class QuestGame extends SubContainer implements EndRoundListener {
 	public void removeMapMonster(GameMonster toremove) {
 		// TODO Auto-generated method stub
 		gamemap.removeMapMonster(toremove);
+	}
+
+	public void initialiseGameMap(BaseFile sampleFile) {
+		// TODO Auto-generated method stub
+		gamemap.initialiseGame(sampleFile);
 	}
 
 

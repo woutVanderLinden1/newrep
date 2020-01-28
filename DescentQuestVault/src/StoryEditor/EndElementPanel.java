@@ -2,7 +2,7 @@ package StoryEditor;
 
 import view.viewItems.ItemBox.SelectKind;
 
-public class EndElementPanel extends DraggAblePanel {
+public class EndElementPanel extends StoryItemPanel {
 
 	public EndElementPanel() {
 		super("end");

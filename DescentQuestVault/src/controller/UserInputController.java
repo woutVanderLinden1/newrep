@@ -3,12 +3,30 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Stack;
 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import HeroPicker.HeroPicker;
+import ItemEditor.ActionTaker;
+import Shop.ItemShop.ItemShop;
+import Shop.SkillShop.SkillShop;
 import StoryEditor.AddEventToStoryElementPanelCommand;
 import StoryEditor.Arrow;
+import StoryEditor.CampaignSaveFile;
 import StoryEditor.DragPanel;
 import StoryEditor.DraggAblePanel;
+import StoryEditor.FreeTimeEndListener;
+import StoryEditor.MiniEventListener;
+import StoryEditor.ProgressStatus;
+import StoryEditor.StoryProgressController;
 import StoryEditor.SubDragPanel;
 import StoryEditor.ViewArrow;
 import controller.analyzer.Analyzer;
@@ -34,7 +52,11 @@ import controller.stack.StackElements.IStackElement;
 import controller.turns.GameController;
 import frame.MainFrame;
 import frame.SubContainer;
+import misc.BaseFile;
+import misc.CampaignFile;
+import misc.DefaultCampaingFile;
 import misc.SampleFile;
+import misc.Tools;
 import misc.listeners.ButtonPressedListener;
 import misc.save.WorldSaveFile;
 import model.IModel;
@@ -46,12 +68,17 @@ import model.event.Trigger;
 import model.event.Univent;
 import model.event.advancedevents.PerilEvent;
 import model.event.extraevents.StopAble;
+import model.event.extraevents.TextOption;
 import model.event.extraevents.TextStop;
 import model.event.trigger.EndPhaseTrigger;
 import model.values.CustomInteger;
 import monsterEditor.MonsterEditorView;
 import view.IDrawWindow;
 import view.IView;
+import view.LoadNewCampaignGameCommand;
+import view.Items.Map.MapFrame;
+import view.Items.Map.MapLocation;
+import view.Items.Map.SubQuestFile;
 import view.Items.Map.ViewDoor;
 import view.Items.Map.ViewMonster;
 import view.Items.Map.ViewSquare;
@@ -67,6 +94,7 @@ import view.hero.GameHero;
 import view.menu.CommandButton;
 import view.menu.MainMenu;
 import view.menu.Menu;
+import view.menu.QuestCreator;
 import view.menu.QuestGame;
 import view.viewItems.ShapeItem;
 import view.viewItems.TileItem;
@@ -77,6 +105,11 @@ import view.viewItems.ItemBox.ViewTileExit;
 
 import java.awt.AWTEvent;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
@@ -87,19 +120,26 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 
 
 
 public class UserInputController implements MouseListener,KeyListener, ButtonPressedListener, IController {
 
-
+	private MapFrame mapFrame;
+	public boolean miniEventMode;
 	private static UserInputController control;
 	private ContinueElement toContinue;
 	private GameController gamecontrol;
-	
-	
-	private static UserInputController getUserInputController() {
+	private ArrayList<NextTextListeners> nexttextlistener=new ArrayList<NextTextListeners>();
+	private ArrayList<FreeTimeEndListener> freetimeendlisteners=new ArrayList<FreeTimeEndListener>();
+	private ArrayList<MiniEventListener> miniEventListeners=new ArrayList<MiniEventListener>();
+	private boolean freeTimeMode;
+	public static UserInputController getUserInputController() {
 		return control;
 	}
 	private Stack<ChangedColorStackElement> colorStack =new Stack<ChangedColorStackElement>();
@@ -108,7 +148,7 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	private DragStack draggingStack;
 	
 	private DragMouseMotionListener listen=new DragMouseMotionListener();
-	
+	private MainFrame testBox;
 	
 	private Analyzer analyze;
 	protected StackManager stack;
@@ -120,7 +160,18 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	private boolean tileMoveing;
 	private OldTilePlace oldTile;
 	private CustomInteger hope;
+	private boolean textstarted;
+	private QuestText currentText;
+	private ArrayList<EndGameListener> engamelisteners=new ArrayList<EndGameListener>();
+	private ArrayList<EndHeroPickListener> endHeroPickListener=new ArrayList<EndHeroPickListener>();
 	
+	public QuestText getCurrentText() {
+		return currentText;
+	}
+
+	public void setCurrentText(QuestText currentText) {
+		this.currentText = currentText;
+	}
 	private BaseEventController baseEventControl;
 
 
@@ -130,6 +181,9 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	private OldEventPlace oldevent;
 	
 	private TriggerField temporaryLocation;
+	private CityMenu men;
+
+
 	
 	public UserInputController(IView newview, IModel newmod, MainFrame theFrame){
 		this.theFrame=theFrame;
@@ -630,17 +684,151 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		
 	}
 	*/
-
-	public void startGame() {
-		gamecontrol=new GameController();
-		QuestGame game=new QuestGame(theFrame.getSize());
+	public void beginStoryText() {
+		nexttextlistener.clear();
+		gamecontrol=null;
+		//theFrame.removeAll();
+		//first remove everything
+		//now start a text interface
+		if(testBox==null) {
+			testBox=new MainFrame();
+		}
 		
+		  testBox.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		textstarted=true;
+		QuestText text=new QuestText(theFrame.getWidth(),theFrame.getHeight(),theFrame.getUserInputController());
+		this.setCurrentText(text);
+		testBox.startQuestText(text);
+		testBox.setVisible(true);
+		testBox.revalidate();
+		testBox.refresh();
+	}
+	public void StartHeroPicker(BaseFile generateBaseFile) {
+		HeroPicker picker=new HeroPicker(generateBaseFile);
+		picker.setVisible(true);
+		
+	}
+
+
+	public void endStoryText() {
+		textstarted=false;
+		
+		// TODO Auto-generated method stub
+		
+	}
+	public void startGame(WorldSaveFile g) {
+		nexttextlistener.clear();
+		gamecontrol=new GameController();
+		if(testBox==null) {
+			testBox=new MainFrame();
+		}
+		initialiseBaseEventController(g.getControl());
+		//addGameStartListener(g.getControl().getStartuptrigger());
+		//addEndPhaseListener(g.getControl().getEndtrigger());
+		//ItemController controller=ItemController.getItemController();
+		ItemController control=ItemController.getItemController();
+		control.addStartingValues(new DefaultCampaingFile());
+		QuestGame game=new QuestGame(theFrame.getWidth(),theFrame.getHeight(),theFrame.getUserInputController());
+		view.setGame(game);
 		game.addGameStartListener(baseEventControl.getStartuptrigger());
 		game.addEndPhaseListener(baseEventControl.getEndtrigger());
 		game.addMonsterPlaceListener(gamecontrol);
 		game.addHeroPlaceListener(gamecontrol);
 		game.setGameController(gamecontrol);
-		game.initialiseGame(new SampleFile());
+		game.initialiseGameMap(new SampleFile());
+		testBox.startQuestGame(game);	
+		testBox.setVisible(true);
+		
+	}
+	public void startGame(WorldSaveFile g,CampaignFile file) {
+		UserInputController control=UserInputController.getController();
+		int added=0;
+		ArrayList<CampaignSaveFile> possibleevents=new ArrayList<CampaignSaveFile>();
+		String directoryPath= System.getProperty("user.dir")+"//TravelEvent";
+		File dir = new File(directoryPath);
+		  File[] directoryListing = dir.listFiles();
+		  if (directoryListing != null) {
+		    for (File child : directoryListing) {
+		     Optional<String> answer=this.getExtensionByStringHandling(child.getName());
+		      System.out.println();
+		      if(answer.get().equals("ser")){
+		    	  added++;
+		    	  CampaignSaveFile i=null;
+					 FileInputStream fileIn;
+					try {
+						fileIn = new FileInputStream(child);
+						ObjectInputStream in = new ObjectInputStream(fileIn);
+						i = (CampaignSaveFile) in.readObject();
+					    in.close();
+					    fileIn.close();
+					    System.out.println("the read file is " +i);
+					    possibleevents.add(i);
+					    	
+					    
+					
+					} catch (IOException | ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+		      }
+		    }
+		  }
+		int p=Tools.getRandomInt(possibleevents.size());
+		CampaignSaveFile tohappen=possibleevents.get(p);
+		
+		
+		
+		control.performTravelEvent(tohappen, new EndTravelEventListener() {
+
+			@Override
+			public void travelEnded() {
+				control.startFullGame(g,file);
+			}
+			
+		});
+	
+	}
+		
+		
+		
+		
+	public void startFullGame(WorldSaveFile g,CampaignFile file) {
+		nexttextlistener.clear();
+		gamecontrol=new GameController();
+		if(testBox==null) {
+			testBox=new MainFrame();
+		}
+		initialiseBaseEventController(g.getControl());
+		//addGameStartListener(g.getControl().getStartuptrigger());
+		//addEndPhaseListener(g.getControl().getEndtrigger());
+		//ItemController controller=ItemController.getItemController();
+		ItemController control=ItemController.getItemController();
+		control.addStartingValues(new DefaultCampaingFile());
+		QuestGame game=new QuestGame(theFrame.getWidth(),theFrame.getHeight(),theFrame.getUserInputController());
+		view.setGame(game);
+		game.addGameStartListener(baseEventControl.getStartuptrigger());
+		game.addEndPhaseListener(baseEventControl.getEndtrigger());
+		game.addMonsterPlaceListener(gamecontrol);
+		game.addHeroPlaceListener(gamecontrol);
+		game.setGameController(gamecontrol);
+		game.initialiseGameMap(file.getBaseFile());
+		testBox.startQuestGame(game);	
+		testBox.setVisible(true);
+		
+	}
+
+	public void startGame() {
+		nexttextlistener.clear();
+		gamecontrol=new GameController();
+		QuestGame game=new QuestGame(theFrame.getSize(),new SampleFile());
+		view.setGame(game);
+		game.addGameStartListener(baseEventControl.getStartuptrigger());
+		game.addEndPhaseListener(baseEventControl.getEndtrigger());
+		game.addMonsterPlaceListener(gamecontrol);
+		game.addHeroPlaceListener(gamecontrol);
+		game.setGameController(gamecontrol);
+		game.initialiseGameMap(new SampleFile());
 		theFrame.startTestGame(game);
 		
 		
@@ -648,10 +836,41 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		
 	}
 	public void endGame() {
+		
 		// TODO Auto-generated method stub
-		theFrame.endTestGame();
+			theFrame.endTestGame();
+			if(testBox!=null) {
+				testBox.endTestGame();
+			}
+			
+			textstarted=false;
+			triggerEndGameListeners();
+		
+		
 	}
+	
 
+
+
+	private void triggerEndGameListeners() {
+		if(this.miniEventMode) {
+			System.out.println("minieventlisteners warned");
+			StoryProgressController control2=StoryProgressController.getController();
+			control2.StoryMiniEventEnded();
+		}
+		else {
+			if(this.freeTimeMode) {
+				for(FreeTimeEndListener listen:freetimeendlisteners) {
+					listen.FreeTimeEnded();
+				}
+			}
+			else {
+				StoryProgressController control2=StoryProgressController.getController();
+				control2.StoryEventEnded();
+			}
+		}
+		
+	}
 
 	public ICommand generateTriggerFieldCommand(int x, int y, MouseEvent arg0, int mouseEntered,
 			TriggerField thefield) {
@@ -830,6 +1049,20 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		theFrame.openMonsterEditor();
 		
 	}
+	public void openItemEditor() {
+		// TODO Auto-generated method stub
+		theFrame.openItemEditor();
+	}
+	public void openHeroEditor() {
+		// TODO Auto-generated method stub
+		theFrame.openHeroEditor();
+	}
+
+	public void openSkillEditor() {
+		// TODO Auto-generated method stub
+		theFrame.openSkillEditor();
+	}
+
 	
 
 	public void openMonsterEditor(Monster mon) {
@@ -914,6 +1147,342 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		
 		return analyze.generateSelectArrowCommand(x,y,arg0,mousePressed,arrow,panel,parent);
 	}
+
+	public Component getMainFrame() {
+		// TODO Auto-generated method stub
+		return theFrame;
+	}
+
+	public void showNextText() {
+	
+		if(textstarted) {
+			for(int i=0;i<nexttextlistener.size();i++) {
+				NextTextListeners listener = nexttextlistener.get(i);
+				listener.nextText();
+			}
+		}
+		
+	}
+
+	public void addNextTextListener(NextTextListeners listener) {
+		nexttextlistener.add(listener);
+	}
+
+	public void showTextDialog(String text, ArrayList<TextOption> newoptions) {
+		currentText.showTextDialog(text, newoptions);
+		currentText.revalidate();
+		currentText.repaint();
+	}
+
+	public void endCampaign() {
+		if(testBox==null) {
+			testBox=new MainFrame();
+		}
+	
+
+		if(miniEventMode) {
+			System.out.println("ended minievent");
+			notifyMiniEventModeListeners();
+		}
+		else {
+			testBox.removeAll();
+			nexttextlistener.clear();
+			testBox.setVisible(false);
+			// TODO Auto-generated method stub
+		}
+		
+		
+	}
+	private void notifyMiniEventModeListeners() {
+		while(!miniEventListeners.isEmpty()) {
+			MiniEventListener listent = miniEventListeners.get(0);
+			listent.miniEventEnded();
+		}
+		
+	}
+
+	public void loadConstantfile(WorldSaveFile g) {
+		ItemController control=ItemController.getItemController();
+		control.addAllValues(g.getCustomValues());
+		
+	}
+
+	public void loadAndStartGame(String currentAdventure, CampaignFile file) {
+		//first do travel event
+		
+		//then start it for real
+		ItemController control=ItemController.getItemController();
+		control.setCampaignFile(file);
+		File workingDirectory = new File(System.getProperty("user.dir")+"/SavedWorlds");
+		
+		File f=new File(currentAdventure);
+		if(f!=null) {
+			
+			WorldSaveFile g=null;
+			 FileInputStream fileIn;
+			try {
+				fileIn = new FileInputStream(f);
+				ObjectInputStream in = new ObjectInputStream(fileIn);
+				g = (WorldSaveFile) in.readObject();
+			    in.close();
+			    fileIn.close();
+			    System.out.println("the read file is " +g);
+			} catch (IOException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//view.startQuestEditor();
+			//view.loadGame(g);
+			this.startGame(g,file);
+		}
+	}
+
+	public static void renew() {
+		// TODO Auto-generated method stub
+		control=control.createUserInputController(null, control.getTheView(), control.theFrame);
+	}
+
+	public void endHeroPicking() {
+		//testBox.setVisible(false);
+		// TODO Auto-generated method stub
+		
+		for(int i=0;i<endHeroPickListener.size();i++) {
+			endHeroPickListener.get(i).HeroesPicked();
+			i--;
+		}
+	}
+
+
+	public void addEndHeroPickerListener(EndHeroPickListener loadNewCampaignGameCommand) {
+		// TODO Auto-generated method stub
+		endHeroPickListener.add(loadNewCampaignGameCommand);
+	}
+
+	public void removeEndHeroPickerListener(EndHeroPickListener loadNewCampaignGameCommand) {
+		// TODO Auto-generated method stub
+		endHeroPickListener.remove(loadNewCampaignGameCommand);
+	}
+
+	public void startSkillShop(GameHero hero) {
+		SkillShop shop=new SkillShop(testBox.getSize(), testBox, hero.getHero());
+		shop.setVisible(true);
+		
+	}
+
+	public void startCityShop() {
+		// TODO Auto-generated method stub
+		ItemController control=ItemController.getItemController();
+		ItemShop shop=new ItemShop(testBox.getSize(), testBox);
+		shop.setVisible(true);
+	}
+	
+
+	public void addNextFreeTimeListener(FreeTimeEndListener freeTimeEndListener) {
+		
+		freetimeendlisteners.add(freeTimeEndListener);
+	}
+
+	public void beginFreeTimeEvent() {
+		// TODO Auto-generated method stub
+		freeTimeMode=true;
+	}
+
+	public void endFreeTimeEvent() {
+		// TODO Auto-generated method stub
+		freeTimeMode=false;
+		freetimeendlisteners.clear();
+	}
+
+	public void nextFreeTime(int currentamount) {
+		// TODO Auto-generated method stub
+		ArrayList<SubQuestFile> availableSubQuests=new ArrayList<SubQuestFile>();
+		String directoryPath= System.getProperty("user.dir")+"/SubQuests";
+		File dir = new File(directoryPath);
+		  File[] directoryListing = dir.listFiles();
+		  if (directoryListing != null) {
+		    for (File child : directoryListing) {
+		      Optional<String> answer=this.getExtensionByStringHandling(child.getName());
+		      System.out.println();
+		      if(answer.get().equals("ser")){
+		    	  
+		    	 SubQuestFile i=null;
+					 FileInputStream fileIn;
+					try {
+						fileIn = new FileInputStream(child);
+						ObjectInputStream in = new ObjectInputStream(fileIn);
+						i = (SubQuestFile) in.readObject();
+					    in.close();
+					    fileIn.close();
+					    System.out.println("the read file is " +i);
+					    availableSubQuests.add(i);
+					} catch (IOException | ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+		      }
+		    }
+		  }
+		  ItemController itcontrol=ItemController.getItemController();
+		  CampaignFile file=itcontrol.getCampaignFile();
+		  availableSubQuests.removeAll(file.getDoneSubQuests());
+		  HashMap<MapLocation,SubQuestFile> currentSubQuests=new HashMap<MapLocation,SubQuestFile>();
+		  while (currentSubQuests.size()<3&&availableSubQuests.size()!=0) {
+			 int p= Tools.getRandomInt(availableSubQuests.size());
+			 SubQuestFile fil=availableSubQuests.get(p);
+			
+			 MapLocation l=fil.getLoc();
+			 currentSubQuests.put(l,fil);
+			 for(int i=0; i<availableSubQuests.size();i++) {
+				if(l==availableSubQuests.get(i).getLoc()) {
+					availableSubQuests.remove(i);
+					i--;
+				}
+			 }
+			 
+		  }
+		  boolean tonext=false;
+		  
+		
+		  mapFrame=new MapFrame(currentamount,currentSubQuests.keySet(),new ActionTaker<MapLocation>() {
+
+			@Override
+			public void perform(MapLocation value) {
+				if(value!=MapLocation.CITY) {
+					ItemController control=ItemController.getItemController();
+					SubQuestFile file=currentSubQuests.get(value);
+					boolean bool=SubQuestInfoDialog(mapFrame,file);
+					if(bool) {
+						closeMapFrame();
+						
+						startGame(file.getFile(),control.getCampaignFile());
+					}
+				}
+				else {
+					closeMapFrame();
+					startCityMenu();
+					
+				}
+			
+				
+			}
+		  }
+		  );
+		  mapFrame.setVisible(true);
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+		  
+	}
+	public void showCityMenu() {
+		testBox.setTitle("City menu");
+		testBox.initialiseMenu(men);
+		testBox.bringToFront(men);
+		testBox.setVisible(true);
+		
+	}
+	
+	public void startCityMenu() {
+		
+		//testBox.
+		men=new CityMenu(testBox.getWidth(),testBox.getHeight());
+		testBox.initialiseMenu(men);
+		testBox.setVisible(true);
+	}
+	
+	public static boolean SubQuestInfoDialog(Object obj,SubQuestFile file) {
+	  
+	    System.out.println("subquest name"+file.getName());
+	    JPanel textPanel=new JPanel();
+	    textPanel.setFont(new Font("Arial", Font.BOLD, 20)); 
+	    textPanel.setLayout(new GridBagLayout());
+	    JLabel name=new JLabel(file.getName());
+	    name.setText(file.getName());
+	    name.setMinimumSize(new Dimension(100,25));
+	    name.setPreferredSize(new Dimension(100,25));
+	   
+	    JTextArea textArea = new JTextArea(file.getDescription());
+	    textArea.setEditable(false);
+	    textArea.setColumns(30);
+	    textArea.setRows(10);
+	    textArea.setLineWrap(true);
+	    textArea.setWrapStyleWord(true);
+	    textArea.setSize(textArea.getPreferredSize().width, textArea.getPreferredSize().height);
+	    JScrollPane pane=new JScrollPane(textArea);
+	    
+
+        GridBagConstraints c = new GridBagConstraints();
+
+        c.gridx = 0;
+        c.gridy = 0;
+	    textPanel.add(name,c);
+	    c.gridx = 0;
+        c.gridy = 1;
+	    textPanel.add(textArea,c);
+	
+	    textPanel.add(pane,c);
+	   
+	    int ret = JOptionPane.showConfirmDialog((Component) obj, textPanel, "SubQuest Info", JOptionPane.OK_OPTION);
+	    if (ret == 0) {
+	    
+	        return	true;
+	    } else {
+	       // MyDialogs.Toast("Canceled by user\nChanges not saved", "Your choise");
+	    }
+	    return false;
+	} 
+	public void closeMapFrame() {
+		mapFrame.dispose();
+	}
+	public Optional<String> getExtensionByStringHandling(String filename) {
+	    return Optional.ofNullable(filename)
+	      .filter(f -> f.contains("."))
+	      .map(f -> f.substring(filename.lastIndexOf(".") + 1));
+	}
+
+	public void startRest() {
+		ItemController control=ItemController.getItemController();
+		control.setHopeValue(Math.max(control.getHope().getTheInteger(), 2));
+		this.endGame();
+		
+	}
+
+	public void startMiniEvent() {
+		// TODO Auto-generated method stub
+		this.miniEventMode=true;
+	}
+	public void endMiniEvent() {
+		// TODO Auto-generated method stub
+		this.miniEventMode=false;
+		miniEventListeners.clear();
+	}
+
+	public void addEndMiniEventListener(MiniEventListener miniEventListener) {
+		// TODO Auto-generated method stub
+		miniEventListeners.add(miniEventListener);
+	}
+
+	public void performTravelEvent(CampaignSaveFile g,EndTravelEventListener listen) {
+		UnNamedActionTaker take=new UnNamedActionTaker(g,listen);
+		take.perform(null);
+	}
+
+
+
+	
+
+
+
+
+	
+
+
+
+
 
 	
 

@@ -44,7 +44,14 @@ public class HeroPanel extends JPanel implements DefeatChangeListener,EndTurnLis
 		Image im=null;
 		if(viewher.isTurnended()) {
 			System.out.println("displaying darkened image");
-			im=viewher.getScaleImage(50);
+			try {
+				System.out.println(System.getProperty("user.dir")+"/Items//"+viewher.getImageString());
+				im=ImageIO.read(new File(viewher.getImageString()));
+				im= im.getScaledInstance(100,100,  java.awt.Image.SCALE_SMOOTH ) ;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			BufferedImage touse=new BufferedImage(100, 100,BufferedImage.TYPE_INT_ARGB);
 			BufferedImage touse2=new BufferedImage(100, 100,BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g2 = touse2.createGraphics();
@@ -62,7 +69,14 @@ public class HeroPanel extends JPanel implements DefeatChangeListener,EndTurnLis
 		    im=touse;
 		}
 		else {
-			im=viewher.getScaleImage(50);
+			try {
+				System.out.println(viewher.getImageString());
+				im=ImageIO.read(new File(viewher.getImageString()));
+				im= im.getScaledInstance(100,100,  java.awt.Image.SCALE_SMOOTH ) ;
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		if(viewher.isdefeated()) {

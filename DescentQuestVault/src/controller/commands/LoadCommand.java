@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
+import controller.UserInputController;
 import controller.stack.StackElements.MapEditStackElement;
 import misc.save.WorldSaveFile;
 import test.Employee;
@@ -28,6 +29,7 @@ public class LoadCommand extends BasicCommand implements ICommand {
 
 	@Override
 	public void perform() {
+		UserInputController.renew();
 		final JFileChooser fc = new JFileChooser();
 		fc.setAcceptAllFileFilterUsed(false);
 		fc.addChoosableFileFilter(new FileFilter() {

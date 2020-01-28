@@ -1,5 +1,6 @@
 package controller.commands;
 
+import controller.UserInputController;
 import model.event.EventTriggerStack;
 import model.event.extraevents.StopAble;
 import model.event.extraevents.TextStop;
@@ -17,6 +18,8 @@ public class ContinueCommand extends BasicCommand {
 	public void perform() {
 		//stop.continueStop();
 		// TODO Auto-generated method stub
+		UserInputController control=UserInputController.getController();
+		control.showNextText();
 		EventTriggerStack stack=EventTriggerStack.getTriggerStack();
 		stack.triggerNextStackEvent();
 	}

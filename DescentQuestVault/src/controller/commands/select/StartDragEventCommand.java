@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import StoryEditor.DraggAblePanel;
+import StoryEditor.StoryItemPanel;
 import controller.commands.BasicCommand;
 import controller.stack.StackElements.ChangedColorStackElement;
 import view.Items.Map.ViewSquare;
@@ -31,6 +32,12 @@ public class StartDragEventCommand extends BasicCommand {
 	
 	
 	
+
+
+	
+
+
+
 
 
 	public void perform() {

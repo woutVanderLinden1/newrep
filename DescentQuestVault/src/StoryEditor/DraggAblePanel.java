@@ -34,7 +34,7 @@ public abstract class DraggAblePanel extends SubContainer implements SelectAble,
 	private String text;
 	private Color currentColor;
 	protected JTempTextField textLabel;
-	private Image image;
+	protected Image image;
 	protected boolean invisilocked=true;
 	
 	
@@ -247,6 +247,7 @@ public abstract class DraggAblePanel extends SubContainer implements SelectAble,
 	private void setImage(BufferedImage createImage) {
 		
 		image=createImage;
+		//lastimage=createImage;
 	}
 
 	public Image getImage() {

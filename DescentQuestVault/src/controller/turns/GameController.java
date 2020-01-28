@@ -112,6 +112,9 @@ public class GameController implements IGameController, AddGameHeroListener,AddG
 	private void processMonsterTurn() {
 		// TODO Auto-generated method stub
 		int t=monsterTurnList.size();
+		if(t<1) {
+			return;
+		}
 		int i=rand.nextInt(t);
 		currentTurn=monsterTurnList.get(i);
 		lastturnkind=currentTurn.getTurnKind();

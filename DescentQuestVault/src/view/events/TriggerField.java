@@ -463,79 +463,83 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 	}
 	@Override
 	public void sendEvent(MouseEvent e, Point point, SelectAble selectAble) {
-		
-		
-		/*
-		if(this.contains(point)) {
-			this.dispatchEvent(e);
+		System.out.println("sendinhere "+this.minimized);
+		if(this.minimized) {
+			super.sendEvent(e, point, selectAble);
 		}
-		*/
-		if(selectAble==this) {
-			System.out.println("issame");
-			//
-		
-			switch(e.getID()) {
-			case MouseEvent.MOUSE_RELEASED:
-				((SubContainer) this.getParent()).released(e);
-				break;
-			}
-		
-			return;
-		}
-		if(SubContainer.isMouseWithinComponent(this)) {
+		else {
 			
-			boolean found=false;
-			switch(selectAble.getKind()) {
 			
-			case EVENT:
-				break;
-			case MODIFIER:
-				System.out.println("modifierexited");
-			case TRIGGER:
-				break;
-		
-			default:
-				return;
-	
+			/*
+			if(this.contains(point)) {
+				this.dispatchEvent(e);
+			}
+			*/
+			if(selectAble==this) {
+				System.out.println("issame");
+				//
 			
-			}
-			if(((BaseField)selectAble).isAncestorOf(subEvents)) {
-				return;
-			}
-			if(!minimized) {
-				for(int i=0;i<fields.size();i++) {
-					if(i>fields.size()) {
-						break;
-					}
-					BaseField field=fields.get(i);
-					
-				
-					if(SubContainer.isMouseWithinComponent(field)) {
-						System.out.println("insubarea");
-						field.sendEvent(e, point, selectAble);
-						 found=true;
-					}
-				
-					
+				switch(e.getID()) {
+				case MouseEvent.MOUSE_RELEASED:
+					((SubContainer) this.getParent()).released(e);
+					break;
 				}
+			
+				return;
 			}
+			if(SubContainer.isMouseWithinComponent(this)) {
+				
+				boolean found=false;
+				switch(selectAble.getKind()) {
+				
+				case EVENT:
+					break;
+				case MODIFIER:
+					System.out.println("modifierexited");
+				case TRIGGER:
+					break;
 			
-			if(!found) {
-				System.out.println("given through");
-				MouseEvent convertMouseEvent = SwingUtilities.convertMouseEvent(e.getComponent(), e, this);
+				default:
+					return;
+		
 				
-				this.dispatchEvent(convertMouseEvent);
-				/*
-				MouseEvent convertMouseEvent2 = SwingUtilities.convertMouseEvent(e.getComponent(), e,subEvents);
+				}
+				if(((BaseField)selectAble).isAncestorOf(subEvents)) {
+					return;
+				}
+				if(!minimized) {
+					for(int i=0;i<fields.size();i++) {
+						if(i>fields.size()) {
+							break;
+						}
+						BaseField field=fields.get(i);
+						
+					
+						if(SubContainer.isMouseWithinComponent(field)) {
+							System.out.println("insubarea");
+							field.sendEvent(e, point, selectAble);
+							 found=true;
+						}
+					
+						
+					}
+				}
 				
-				subEvents.dispatchEvent(convertMouseEvent2);
-				 */
+				if(!found) {
+					super.sendEvent(e, point, selectAble);
+					
+					/*
+					MouseEvent convertMouseEvent2 = SwingUtilities.convertMouseEvent(e.getComponent(), e,subEvents);
+					
+					subEvents.dispatchEvent(convertMouseEvent2);
+					 */
+				}
+				
 			}
-			
-		}
-		UserInputController control=UserInputController.getController();
-		if(control.isDragging()) {
-			
+			UserInputController control=UserInputController.getController();
+			if(control.isDragging()) {
+				
+			}
 		}
 	}
 
@@ -693,21 +697,38 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 
 	public void released(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		if(this.isTemporary()) {
-			super.released(arg0);
+		System.out.println("draages");
+		if(this.minimized) {
+			System.out.println("stop here");
+			super.dragged(arg0);
+		
+		}else {
+			if(this.isTemporary()) {
+				super.released(arg0);
+			}
+			else {
+				listen.mouseReleased(arg0);
+			}
 		}
-		else {
-			listen.mouseReleased(arg0);
-		}
+	
 	}
 	
 	public void dragged(MouseEvent arg0) {
-		if(this.isTemporary()) {
+		System.out.println("draages");
+		if(this.minimized) {
+			System.out.println("stop here");
 			super.dragged(arg0);
+		
 		}
 		else {
-			listen.mouseDragged(arg0);
+			if(this.isTemporary()) {
+				super.dragged(arg0);
+			}
+			else {
+				listen.mouseDragged(arg0);
+			}
 		}
+		
 	}
 
 	@Override
@@ -761,6 +782,11 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 	public void eventAdded(SingleMovementEvent singleMovementEvent) {
 		this.addEvent(singleMovementEvent);
 		
+	}
+
+	public boolean isMinimized() {
+		// TODO Auto-generated method stub
+		return this.minimized;
 	}
 
 	

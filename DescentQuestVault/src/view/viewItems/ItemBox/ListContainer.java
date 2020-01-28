@@ -334,6 +334,7 @@ public class ListContainer extends SubContainer  implements Serializable,Availab
 					switch(item.getKind()) {
 					case MONSTER:
 						 com=new SelectCommand(item.clone());
+						 break;
 					case EVENT:
 						EventItem eventit=(EventItem) item;
 						EventField field=new EventField(eventit.getEv(),100);

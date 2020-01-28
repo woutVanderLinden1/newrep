@@ -6,6 +6,7 @@ import model.event.SetBooleanValueEvent;
 import view.menu.QuestCreator;
 import view.viewItems.ItemBox.ItemOptions;
 import view.viewItems.ItemBox.SelectKind;
+import view.viewItems.ItemBox.ValueChangeListener;
 
 public class CustomBoolean extends CustomValue<Boolean> {
 
@@ -50,9 +51,11 @@ public class CustomBoolean extends CustomValue<Boolean> {
 
 	@Override
 	public void setTo(CustomValue value2) {
-		value=((CustomBoolean) value2).isValue();
+		setValue(((CustomBoolean) value2).isValue());
 		
 	}
+
+	
 
 	
 	

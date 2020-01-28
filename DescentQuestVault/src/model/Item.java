@@ -16,7 +16,11 @@ import view.viewItems.ItemBox.ListContainer;
 
 public abstract class Item implements Serializable {
 
-	private String name;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -175861789918526868L;
+	protected String name;
 	protected boolean available=true;
 	private transient ArrayList<AvailabilityChangeListener> availabilityChangeListeners=new ArrayList<AvailabilityChangeListener>();
 	

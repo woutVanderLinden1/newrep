@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import StoryEditor.CampaignSaveFile;
 import StoryEditor.DraggAblePanel;
 import controller.BaseEventController;
 import controller.commands.ICommand;
@@ -32,6 +33,7 @@ import view.game.GameToken;
 import view.game.MonsterKind;
 import view.hero.GameHero;
 import view.menu.Menus;
+import view.menu.QuestGame;
 import view.viewItems.DoorItem;
 import view.viewItems.MonsterItem;
 import view.viewItems.ShapeItem;
@@ -203,6 +205,12 @@ public interface IView {
 	void removeMapMonster(GameMonster toremove);
 
 	void startDragDragPanel(DraggAblePanel todrag);
+
+	void setGame(QuestGame game);
+
+	void loadCampaignGame(CampaignSaveFile g);
+
+	void addCityEventFile(CampaignSaveFile g);
 
 	
 	

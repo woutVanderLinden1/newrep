@@ -55,8 +55,12 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 	public Trigger basetrigger;
 	public TriggerField baseTriggerField;
 	
+
+	public Trigger endtrigger;
+	public TriggerField endTriggerField;
+	
 	private BaseField temporary;
-	private ArrayList<BaseField> fields;
+	protected ArrayList<BaseField> fields;
 	private EventBoxListener listen;
 	
 	public EventBox(Dimension defaultSize) {
@@ -90,9 +94,15 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 	}
 
 	public TriggerField addTrigger(Trigger trig) {
+		for(BaseField field2:fields) {
+			if(field2.getUnivent()==trig) {
+				return (TriggerField) field2;
+			}
+		}
 		TriggerField field=new TriggerField(trig,this.getWidth(),145);
 		//field.setLocation(0,200);
 	//	field.setSize(this.getWidth()-5,190);
+		
 		this.addTriggerField(field);
 		System.out.println("new triggerfield add");
 		
@@ -146,7 +156,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		
 	}
 
-	private void removeEvent(Event placeTileEvent) {
+	protected void removeEvent(Event placeTileEvent) {
 		// TODO Auto-generated method stub
 		for(int i=0;i<fields.size();i++) {
 			BaseField field=fields.get(i);
@@ -538,16 +548,22 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 			if(trigger==null) {
 				addEvent((Event) vent);
 			}
-			TriggerField field=Tools.CorrespondingTriggerField(trigger,fields);
-			field.addEvent((Event) vent);
+			else {
+				TriggerField field=Tools.CorrespondingTriggerField(trigger,fields);
+				field.addEvent((Event) vent);
+			}
+			
 			break;
 		case MODIFIER:
 		case TRIGGER:
 			if(trigger==null) {
 				addTrigger((Trigger) vent);
 			}
-			TriggerField field2=Tools.CorrespondingTriggerField(trigger,fields);
-			field2.addTrigger((Trigger) vent,b);
+			else {
+				TriggerField field2=Tools.CorrespondingTriggerField(trigger,fields);
+				field2.addTrigger((Trigger) vent,b);
+			}
+			
 			break;
 		
 		
@@ -666,6 +682,8 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		for(BaseField field:fields) {
 			file.addUnivent(field.getUnivent());
 		}
+		ItemController itemcontrol=ItemController.getItemController();
+		file.saveCustomValues(itemcontrol.getValues());
 		//file.setBaseTrigger((StartUpTrigger)basetrigger);
 		return file;
 		//save the events to the file
@@ -703,6 +721,14 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		
 	}
 
+	private void addEndTrigger(EndPhaseTrigger endtrigger) {
+		UserInputController control=UserInputController.getController();
+		this.endtrigger=endtrigger;
+		
+		endTriggerField=this.addTrigger(endtrigger);
+		
+	}
+
 	private void addBaseTrigger(StartUpTrigger trig) {
 		UserInputController control=UserInputController.getController();
 		basetrigger=trig;
@@ -711,6 +737,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		//baseTriggerField.addTrigger(new TestOption(),false);
 		
 	//	control.addStartGameListener((StartUpTrigger) basetrigger);
+		//control.addEndPhaseListener(trig);
 		
 		//addendturntrigger
 		//addperiltrigger
@@ -722,9 +749,12 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 
 	public void setBaseTriggers(BaseEventController baseEventController) {
 		System.out.println("bas triggers added");
-		this.addTrigger(baseEventController.getEndtrigger());
+		this.removeTrigger(basetrigger);
+		this.removeTrigger(endtrigger);
+		this.addEndTrigger(baseEventController.getEndtrigger());
 		this.addBaseTrigger(baseEventController.getStartuptrigger());
 		
 	}
+
 
 }

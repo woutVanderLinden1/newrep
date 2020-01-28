@@ -242,8 +242,10 @@ public class MultiTriggerField extends TriggerField {
 	
 	@Override
 	public void sendEvent(MouseEvent e, Point point, SelectAble selectAble) {
-		
-		
+		System.out.println("here");
+		if(this.minimized) {
+			super.sendEvent(e, point, selectAble);
+		}
 		/*
 		if(this.contains(point)) {
 			this.dispatchEvent(e);

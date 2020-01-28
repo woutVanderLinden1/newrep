@@ -38,6 +38,7 @@ public class GameHero extends ViewHero  implements ActivateAble,TurnHolder{
 	private EndTurnActivation endact;
 	private DefeatActivation defeatact;
 	private StandUpActivation standupact;
+	private BuySkillActivation buyskillact;
 	private boolean turnended;
 	
 	public boolean isTurnended() {
@@ -51,6 +52,7 @@ public class GameHero extends ViewHero  implements ActivateAble,TurnHolder{
 		this.hero=hero;
 		endact=new EndTurnActivation(this);
 		defeatact=new DefeatActivation(this);
+		buyskillact= new BuySkillActivation(this);
 		standupact=new StandUpActivation(this);
 		addBasicActivations();
 	}
@@ -59,8 +61,9 @@ public class GameHero extends ViewHero  implements ActivateAble,TurnHolder{
 		if(!turnended) {
 			activationList.add(endact);
 		}
-	
+		
 		activationList.add(defeatact);
+		activationList.add(buyskillact);
 	}
 	public void addDefeatActivations() {
 		activationList.clear();
@@ -304,6 +307,14 @@ public class GameHero extends ViewHero  implements ActivateAble,TurnHolder{
         field.setPreferredSize(new Dimension(w/2,25));
         button.setHorizontalAlignment(SwingConstants.RIGHT);
 		itemInfoText.addPreButton(field,button);
+	}
+	public String getImageString() {
+		// TODO Auto-generated method stub
+		return hero.getImageString();
+	}
+	public Hero getHero() {
+		// TODO Auto-generated method stub
+		return hero;
 	}
 
 }

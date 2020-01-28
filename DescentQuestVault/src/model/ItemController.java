@@ -1,11 +1,16 @@
 package model;
 
+import java.awt.Component;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import ItemEditor.ActionTaker;
+import StoryEditor.EndStoryEvent;
+import StoryEditor.StartStoryEvent;
 import misc.BaseFile;
 import misc.CampaignFile;
 import misc.save.WorldSaveFile;
@@ -31,13 +36,46 @@ import view.events.BaseField;
 import view.viewItems.ItemBox.ListContainer;
 import view.viewItems.ItemBox.ValueChangeListener;
 
-public  class ItemController implements ValueChangeListener{
+public  class ItemController implements ValueChangeListener, Serializable{
 
-    private HashMap<String, Item> biMap = new HashMap<String, Item>();
+	private CampaignFile campaignFile;
+	
+	private ArrayList<ActionTaker> cityEvents=new ArrayList<ActionTaker>();
+	
+	
+    public ArrayList<ActionTaker> getCityEvents() {
+		return cityEvents;
+	}
+
+
+	public void setCityEvents(ArrayList<ActionTaker> cityEvents) {
+		this.cityEvents = cityEvents;
+	}
+
+	public void addCityEvent(ActionTaker cityevent) {
+		cityEvents.add(cityevent);
+	}
+
+	public CampaignFile getCampaignFile() {
+		return campaignFile;
+	}
+
+
+	public void setCampaignFile(CampaignFile campaignFile) {
+		this.campaignFile = campaignFile;
+	}
+
+
+
+	private HashMap<String, Item> biMap = new HashMap<String, Item>();
     //private HashMap<String, CustomValue> values=new HashMap<String,CustomValue>();
 
     
 	public CustomInteger getPeril() {
+		
+		if( customvalues.get("peril")==null){
+			customvalues.put("peril",new CustomInteger("peril",0));
+		}
 		return (CustomInteger) customvalues.get("peril");
 	}
 	
@@ -45,12 +83,24 @@ public  class ItemController implements ValueChangeListener{
 	public void resetMap() {
 		customvalues=new HashMap<String,CustomValue>();
 	}
-	public void loadMap(HashMap toload) {
-		customvalues.putAll(toload);
+	public void loadMap(HashMap<String,CustomValue> toload) {
+		for(CustomValue val:toload.values()) {
+			if(customvalues.get(val.getName())==null) {
+				customvalues.put(val.getName(), val);
+			}
+			else {
+				CustomValue val2=customvalues.get(val.getName());
+				val2.setValue(val);
+			}
+		}
+		
 	}
 
 
 	public void setPeril(CustomInteger peril) {
+		if(this.getPeril()==null) {
+			customvalues.put("peril",peril);
+		}
 		this.getPeril().setTheInteger(peril.getTheInteger());
 		
 		this.triggerValueChangeListeners();
@@ -69,7 +119,7 @@ public  class ItemController implements ValueChangeListener{
 
 
 	public CustomInteger getGold() {
-		return (CustomInteger) customvalues.get("gold");
+		return (CustomInteger) customvalues.get("money");
 	}
 
 
@@ -344,7 +394,7 @@ public  class ItemController implements ValueChangeListener{
 		HashMap m=g.getCustomValues();
 		Iterator it = m.entrySet().iterator();
 	    
-		customvalues.putAll(g.getCustomValues());
+		loadMap(g.getCustomValues());
 		triggerValueChangeListeners();
 		
 	}
@@ -372,7 +422,7 @@ public  class ItemController implements ValueChangeListener{
 
 
 	public void addAllValues(HashMap<String,CustomValue> hope) {
-		customvalues.putAll(hope);
+		loadMap(hope);
 	}
 
 
@@ -417,7 +467,8 @@ public  class ItemController implements ValueChangeListener{
 
 
 	public void addStartingValues(CampaignFile file) {
-		customvalues.putAll(file.getValues());
+		loadMap(file.getValues());
+		this.setPeril(new CustomInteger("peril",0));
 		this.getGold().addValueChangeListener(this);
         this.getPeril().addValueChangeListener(this);
         this.getDespair().addValueChangeListener(this);
@@ -432,7 +483,9 @@ public  class ItemController implements ValueChangeListener{
 		HashMap<String,CustomValue> mp=control.getValues();
 		Iterator it = mp.entrySet().iterator();
 	    while (it.hasNext()) {
+	    
 	    		Map.Entry<String,CustomValue> pair = (Map.Entry<String,CustomValue>)it.next();
+	    		System.out.println(pair.getKey());
 	    		theitems.add(pair.getValue());
 	    }
 		return theitems;
@@ -443,7 +496,7 @@ public  class ItemController implements ValueChangeListener{
 		//set each customvalue to the values of the basefile
 		HashMap<String,CustomValue> map=sampleFile.getConstantMap();
 		Iterator it = map.entrySet().iterator();
-		
+		//System.out.println("initialised basefile");
 		while (it.hasNext()) {
 			Map.Entry<String,CustomValue> pair = (Map.Entry<String,CustomValue>)it.next();
     		if(customvalues.containsKey(pair.getKey())){
@@ -451,9 +504,84 @@ public  class ItemController implements ValueChangeListener{
     			val.setTo(pair.getValue());
     			//customvalues.put(pair.getKey(),);
     		}
+    		else {
+    			customvalues.put(pair.getKey(), pair.getValue());
+    		}
 		}
+		//System.out.println("i remove perill muhhah");
 		
 		
 	}
+
+
+	public CustomInteger[] getCustomIntegers() {
+		ArrayList<CustomInteger> intlist=new ArrayList<CustomInteger>();
+		Iterator it = customvalues.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<String,CustomValue> pair = (Map.Entry<String,CustomValue>)it.next();
+			
+			switch(pair.getValue().getValueKind()) {
+			case BOOLEAN:
+				
+				break;
+			case INTEGER:
+				intlist.add((CustomInteger) pair.getValue());
+				break;
+			default:
+				break;
+			
+				
+			}
+			
+		}
+		return (CustomInteger[]) intlist.toArray(new CustomInteger[intlist.size()]);
+	}
+	
+	public CustomBoolean[] getCustomBooleans() {
+		ArrayList<CustomBoolean> intlist=new ArrayList<CustomBoolean>();
+		Iterator it = customvalues.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry<String,CustomValue> pair = (Map.Entry<String,CustomValue>)it.next();
+			
+			switch(pair.getValue().getValueKind()) {
+			case BOOLEAN:
+				intlist.add((CustomBoolean) pair.getValue());
+				break;
+			case INTEGER:
+				
+				break;
+			default:
+				break;
+			
+				
+			}
+			
+		}
+		return (CustomBoolean[]) intlist.toArray(new CustomBoolean[intlist.size()]);
+	}
+
+
+	public CustomBoolean getLostLastGame() {
+		// TODO Auto-generated method stub
+		return (CustomBoolean) customvalues.get("lostlastgame");
+	}
+
+
+	public void saveFile(CampaignFile saved) {
+		// TODO Auto-generated method stub
+		//save all the customvalues on the campaignfile
+		saved.saveAll(customvalues);
+	}
+
+
+	
+	
+
+
+
+
+
+
+
 	
 }

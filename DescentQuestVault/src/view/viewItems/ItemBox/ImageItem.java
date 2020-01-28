@@ -143,6 +143,7 @@ public abstract class ImageItem <P> implements SelectAble,Serializable{
 		//name=IDName;
 	}
 
+
 	public ImageItem(OrginalTile tile) {
 	//	this.tile=tile;
 		IDName=tile.getName();
@@ -369,6 +370,7 @@ public abstract class ImageItem <P> implements SelectAble,Serializable{
 		switch (angle) {
 		case 0:
 		case 180:
+		System.out.println(lastImage+ " "+item);
 		 newimg = lastImage.getScaledInstance( (int)(i*item.getScaleWidth()),(int) (i*item.getScaleHeight()),  java.awt.Image.SCALE_SMOOTH ) ;
 		 break;
 		case 90:
@@ -390,7 +392,9 @@ public abstract class ImageItem <P> implements SelectAble,Serializable{
 	}
 	
 	public void reinitialise() {
-		
+		if(this.getKind()==SelectKind.HERO) {
+			return;
+		}
 		try {
 			System.out.println(path);
 			setImage(ImageIO.read(new File(path)));

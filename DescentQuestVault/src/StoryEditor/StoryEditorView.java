@@ -5,14 +5,19 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import ItemEditor.ActionTaker;
 import controller.BaseEventController;
+import controller.NamedActionTaker;
+import controller.UserInputController;
 import controller.commands.ICommand;
 import frame.MainFrame;
 import misc.ActivateAble;
 import misc.save.WorldSaveFile;
 import model.Activation;
+import model.ItemController;
 import model.event.MonsterTurnTrigger;
 import model.event.MovementString;
+import model.event.Univent;
 import model.event.extraevents.TextOption;
 import monsterEditor.MonsterEditor;
 import view.IDrawWindow;
@@ -48,15 +53,15 @@ public class StoryEditorView extends ViewManager implements IView {
 
 	private StoryEditor frame;
 	private InfoItemBox info;
-	private EventBox events;
-	private StoryTextFrame storyframe;
+	private StoryEventBox events;
+	//private StoryTextFrame storyframe;
 	
 	public StoryEditorView(StoryEditor frame) {
 		super(frame);
 		this.frame = frame;
 		info=frame.getInfobox();
 		events=frame.getEventsOf();
-		storyframe=frame.getStoryframe();
+		//storyframe=frame.getStoryframe();
 	}
 
 
@@ -80,7 +85,7 @@ public class StoryEditorView extends ViewManager implements IView {
 		
 		info.removeSelected();
 		events.deleteSelected(selected);
-		storyframe.deleteSelected(selected);
+		//storyframe.deleteSelected(selected);
 	}
 
 	@Override
@@ -118,7 +123,7 @@ public class StoryEditorView extends ViewManager implements IView {
 	@Override
 	public void startDragItem(BaseField todrag) {
 		events.startDragEvent(todrag);
-		storyframe.startDragEvent(todrag);
+		//storyframe.startDragEvent(todrag);
 		
 	}
 	@Override
@@ -134,6 +139,39 @@ public class StoryEditorView extends ViewManager implements IView {
 		events.removeTemporaryShown(thefield);
 		//super.removeShownInField(thefield);
 	}
+	
+	public CampaignSaveFile saveCampaignGame() {
+		// TODO Auto-generated method stub
+		return events.saveCampaign();
+	}
+	@Override
+	public WorldSaveFile saveGame() {
+		
+		return events.saveThis();
+		
+	}
+	@Override
+	public void loadCampaignGame(CampaignSaveFile file) {
+		// TODO Auto-generated method stub
+		
+		ItemController.getItemController().readValues(file);
+		UserInputController control=UserInputController.getController();
+		control.initialiseBaseEventController(file.getControl());
+		events.clearEventBox();
+		events.setStartEvent(file.getStartEvent());
+		for(Univent vent:file.getUnivents()) {
+			//add the univent
+			events.addUniventToTriggerField(vent, null);
+			
+			events.initialise(vent);
+			
+		}
+		events.addUniventToTriggerField(file.getStartEvent(),null);
+		events.addUniventToTriggerField(file.getStartEvent().getEndEvent(),null);
+		//events.loadGame(file);
+		
+	}
+
 
 
 	@Override
@@ -162,9 +200,23 @@ public class StoryEditorView extends ViewManager implements IView {
 
 	@Override
 	public void startDragDragPanel(DraggAblePanel todrag) {
-		storyframe.startDragPanel(todrag);
+		//storyframe.startDragPanel(todrag);
 		
 	}
+
+	@Override
+	public void addCityEventFile(CampaignSaveFile g) {
+		NamedActionTaker take=new NamedActionTaker(g.getName(),g);
+		ItemController control=ItemController.getItemController();
+		control.addCityEvent(take);
+		
+	}
+
+	
+
+
+
+
 
 	
 

@@ -1,12 +1,19 @@
 package controller;
 
+import java.io.Serializable;
+
 import model.event.StartUpTrigger;
 import model.event.advancedevents.PerilEvent;
 import model.event.advancedevents.PerilTiming;
 import model.event.trigger.EndPhaseTrigger;
 
-public class BaseEventController  {
+public class BaseEventController  implements Serializable {
+	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7380724632504626825L;
 	private StartUpTrigger startuptrigger;
 	private EndPhaseTrigger endtrigger;
 	public StartUpTrigger getStartuptrigger() {

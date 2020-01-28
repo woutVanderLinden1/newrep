@@ -25,6 +25,7 @@ public class StartEditorCommand extends BasicCommand implements ICommand {
 		//itcontrol.setFame(fame);
 		//itcontrol.setGold(gold);
 		//itcontrol.setDespair(despair);
+		itcontrol.resetMap();
 		model.addStartingValues(new DefaultCampaingFile());
 		view.addStartTriggers();
 		mainStack.addStackElement(new MapEditStackElement());

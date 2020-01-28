@@ -15,7 +15,9 @@ public abstract class Univent implements EventBase,Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String IDName;
-	private String name;
+	protected String name;
+	private transient ArrayList<NameChangeListener> namechangelisteners=new ArrayList<NameChangeListener>();
+	
 	
 	public abstract SelectKind getKind();
 
@@ -50,9 +52,11 @@ public abstract class Univent implements EventBase,Serializable {
 	}
 	
 	
-	private ArrayList<NameChangeListener> namechangelisteners=new ArrayList<NameChangeListener>();
 	
 	public void addNameChangeListener(NameChangeListener listen) {
+		if(namechangelisteners==null) {
+			namechangelisteners=new ArrayList<NameChangeListener>();
+		}
 		namechangelisteners.add(listen);
 	}
 	public void triggerNameChangeListeners(String newname) {

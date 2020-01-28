@@ -12,6 +12,8 @@ import javax.swing.WindowConstants;
 import controller.UserInputController;
 import frame.MainFrame;
 import misc.BaseFile;
+import misc.save.WorldSaveFile;
+import model.IModel;
 import monsterEditor.MonsterEditor;
 import monsterEditor.MonsterEditorController;
 import monsterEditor.MonsterItemTabField;
@@ -25,17 +27,15 @@ public class StoryEditor extends MainFrame{
 	
 	private BaseFile file;
 	//has textframe
-	private StoryTextFrame storyframe;
+	//private StoryTextFrame storyframe;
 	
-	public StoryTextFrame getStoryframe() {
-		return storyframe;
-	}
+	
 
 	
 
 	private StoryOptions options;
 	//hero/monster adder
-	private EventBox eventsOf;
+	private StoryEventBox eventsOf;
 	private ItemTabField field;
 	private StoryInfoItemBox infobox;
 	private StoryEditorView view;
@@ -43,17 +43,22 @@ public class StoryEditor extends MainFrame{
 	//events in actions
 	
 	//test function
+	/*
+	public StoryTextFrame getStoryframe() {
+		return storyframe;
+	}
 	
 	
 	public void setStoryframe(StoryTextFrame storyframe) {
 		this.storyframe = storyframe;
 	}
+	*/
 
-	public EventBox getEventsOf() {
+	public StoryEventBox getEventsOf() {
 		return eventsOf;
 	}
 
-	public void setEventsOf(EventBox eventsOf) {
+	public void setEventsOf(StoryEventBox eventsOf) {
 		this.eventsOf = eventsOf;
 	}
 
@@ -66,13 +71,13 @@ public class StoryEditor extends MainFrame{
 	}
 	public StoryEditor() {
 		this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-		this.setSize(1600,800);
-		this.setMinimumSize(new Dimension(1800,800));
-		this.setPreferredSize(new Dimension(1800,800));
+		this.setSize(1200,880);
+		this.setMinimumSize(new Dimension(1200,880));
+		this.setPreferredSize(new Dimension(1200,880));
 		this.setVisible(true);
 		this.setName("StoryEditor");
 		this.setTitle("StoryEditor");
-		eventsOf=new EventBox(400,800);
+		eventsOf=new StoryEventBox(400,800);
 		eventsOf.setMinimumSize(new Dimension(350,800));
 		infobox=new StoryInfoItemBox(400,800,300);
 		infobox.setMinimumSize(new Dimension(300,800));
@@ -83,15 +88,15 @@ public class StoryEditor extends MainFrame{
 		options.setMinimumSize(new Dimension(300,250));
 		infobox.setController((StoryEditorController) userInput);
 		field=new StoryItemTabField(300,350);
-		storyframe=new StoryTextFrame(600,800);
+	//	storyframe=new StoryTextFrame(600,800);
 		view=new StoryEditorView(this);
 		this.initialiseNewController();
 		JSplitPane splitPane0 = new JSplitPane(JSplitPane.VERTICAL_SPLIT,options,field);
 		JSplitPane splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,splitPane0,infobox);
 		JPanel pan2=new JPanel();
 		pan2.add(splitPane1);
-		JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,pan2,storyframe);
-		JSplitPane splitPane3 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,splitPane2,eventsOf);
+	//	JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,pan2,storyframe);
+		JSplitPane splitPane3 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,pan2,eventsOf);
 		JPanel panel=new JPanel();
 		panel.setPreferredSize(this.getSize());
 		panel.setSize(this.getSize());
@@ -112,7 +117,7 @@ public class StoryEditor extends MainFrame{
 		//options.defaultSelect();
 		lpane.moveToFront(glasspane);
 		
-		
+		eventsOf.initialiseController();
 	}
 	
 	@Override
@@ -125,14 +130,14 @@ public class StoryEditor extends MainFrame{
 		eventsOf.sendEvent(e, newLocation, selectAble);
 		infobox.sendEvent(e, newLocation, selectAble);
 		options.sendEvent(e,newLocation,selectAble);
-		storyframe.sendEvent(e,newLocation,selectAble);
+		//storyframe.sendEvent(e,newLocation,selectAble);
 		
 	}
 	
 	
 
 	private void initialiseNewController() {
-		userInput=StoryEditorController.createStoryEditorController(null, view,this);
+		userInput=StoryEditorController.createStoryEditorController(new IModel(), view,this);
 		oldcontroller=UserInputController.getController();
 		UserInputController.setController(userInput);
 	}
@@ -140,6 +145,26 @@ public class StoryEditor extends MainFrame{
 	protected void returnOldController() {
 	
 		UserInputController.setController(oldcontroller);
+	}
+
+	
+	public CampaignSaveFile saveCampaign() {
+		// TODO Auto-generated method stub
+		//storyframe.saveThis();
+		System.out.println("saving game");
+		CampaignSaveFile file=view.saveCampaignGame();
+		return file;
+		
+	}
+
+	public void startDrag(DraggAblePanel todrag) {
+		// TODO Auto-generated method stub
+		//storyframe.startDrag(todrag);
+	}
+
+	public void startStory(ProgressStatus status) {
+		eventsOf.startStory( status);
+		
 	}
 
 

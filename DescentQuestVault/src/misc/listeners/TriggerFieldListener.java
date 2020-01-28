@@ -127,7 +127,7 @@ public class TriggerFieldListener implements MouseListener,MouseMotionListener,S
 		}
 	
 
-		if(thefield.isTemporary()) {
+		if(thefield.isTemporary()||thefield.isMinimized()) {
 			System.out.println("the field is temporary");
 			thefield.dragged(arg0);
 		}

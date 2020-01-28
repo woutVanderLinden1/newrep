@@ -3,10 +3,13 @@ package StoryEditor;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -20,6 +23,8 @@ import javax.swing.text.DocumentFilter;
 import javax.swing.text.DocumentFilter.FilterBypass;
 
 import model.Condition;
+import model.ItemController;
+import model.values.Comparison;
 import view.viewItems.NameChangeListener;
 import view.viewItems.ItemBox.ImageItem;
 import view.viewItems.ItemBox.ItemInfoContainer;
@@ -28,7 +33,7 @@ import view.viewItems.ItemBox.SelectKind;
 
 public class ViewArrow extends Arrow implements SelectAble{
 	
-	private Condition nextcondition;
+	private DataCondition nextcondition;
 	private int nextpriority;
 	private String idname;
 	private String name;
@@ -41,6 +46,9 @@ public class ViewArrow extends Arrow implements SelectAble{
 		arrownr++;
 		idname="arrow"+arrownr;
 		name=idname;
+		ItemController control=ItemController.getItemController();
+		
+		nextcondition=new IntegerCondition(control.getGold(), Comparison.EQUALS, 0);
 				// TODO Auto-generated constructor stub
 	}
 
@@ -144,11 +152,51 @@ public class ViewArrow extends Arrow implements SelectAble{
 		//add add new condition button 
 		//addConditionPicker();
 		addPriorityModifier(itemInfoText);
+		addConditionPicker(itemInfoText);
+		nextcondition.addEventSpecifics(itemInfoText);
 	}
 
 
+private void addConditionPicker(ItemInfoContainer itemInfoText) {
+		//lets you pick a condition 
+		ItemController control=ItemController.getItemController();
+		String[] strings= {"integerCondition","customintegercondition","booleancondition","custombooleancondition"};
+		DataCondition[] possibleconditions= {new IntegerCondition(control.getGold(), Comparison.EQUALS, 0),new CustomIntegerCondition(control.getGold(), Comparison.EQUALS, control.getGold()),new BooleanCondition(control.getLostLastGame(),false),new CustomBooleanCondition(control.getLostLastGame(),control.getLostLastGame())};
+		JComboBox<String> button=new JComboBox<String>(strings);
+		
+		
+		
+		button.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int t=button.getSelectedIndex();
+				nextcondition=possibleconditions[t];
+				itemInfoText.refreshImage();
+			
+			}
+			
+		});
+		 JLabel field = new JLabel();
+		 field.setText("change setvalue");
+		
+		 field.setEnabled(false);
+		 field.setBackground(Color.yellow);
+		
+       // itemInfoText.add(lab);
+       // itemInfoText.add(field);
+        int w=itemInfoText.getWidth();
+        field.setSize(new Dimension(w/2-20,25));
+        button.setSize(new Dimension(w/2,25));
+        button.setPreferredSize(new Dimension((int)(w/2-20),25));
+        field.setPreferredSize(new Dimension(w/2,25));
+        //button.setHorizontalAlignment(SwingConstants.RIGHT);
+		itemInfoText.addPreComboBox(field,button);
+
+}
+
 public void addPriorityModifier(ItemInfoContainer itemInfoText) {
-		JLabel lab=new JLabel("damage: ");
+		JLabel lab=new JLabel("priority: ");
 		 JTextField field = new JFormattedTextField();
 		
 		 field.setName(Integer.toString(priority));

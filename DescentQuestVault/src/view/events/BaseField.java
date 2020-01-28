@@ -31,6 +31,18 @@ public abstract class BaseField extends DraggAblePanel implements SelectAble,Ser
 
 	private boolean placed=false;
 
+	protected Univent event;
+	protected boolean temporary;
+
+	protected boolean selected;
+	protected TriggerField triggerfield;
+
+	
+
+	protected abstract void removeEvent(Event placeTileEvent);
+
+
+	public abstract  void removeTrigger(Trigger trigger) ;
 	public boolean isPlaced() {
 		return placed;
 	}
@@ -40,8 +52,6 @@ public abstract class BaseField extends DraggAblePanel implements SelectAble,Ser
 
 
 
-	protected Univent event;
-	protected boolean temporary;
 
 	public BaseField(String text) {
 		super(text);
@@ -61,8 +71,6 @@ public abstract class BaseField extends DraggAblePanel implements SelectAble,Ser
 
 
 
-	protected boolean selected;
-	protected TriggerField triggerfield;
 	
 
 	public Univent getUnivent() {
@@ -72,10 +80,6 @@ public abstract class BaseField extends DraggAblePanel implements SelectAble,Ser
 
 	
 
-	protected abstract void removeEvent(Event placeTileEvent);
-
-
-	public abstract  void removeTrigger(Trigger trigger) ;
 
 
 	public Trigger getBaseTrigger() {
@@ -178,6 +182,7 @@ public abstract class BaseField extends DraggAblePanel implements SelectAble,Ser
 		//}
 	}
 	public void dragged(MouseEvent arg0) {
+	
 		// TODO Auto-generated method stub
 		//if(this.getTriggerField()!=null) {
 			( (ReleasAble) this.getParent()).dragged(arg0);

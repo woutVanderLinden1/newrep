@@ -47,6 +47,13 @@ public class TextStop extends Event implements StopAble {
 		options.add(new TextOption("continue",new ContinueCommand()));
 	}
 	
+	public TextStop(String string, TextOption textOption) {
+		thetext=string;
+		this.setIDName("textStop");
+		this.setName(getNewName());
+		options=new ArrayList<TextOption>();
+		options.add(textOption);
+	}
 	public void trigger() {
 		
 		stopped=true;

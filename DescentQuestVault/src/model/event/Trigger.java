@@ -22,7 +22,7 @@ public abstract class Trigger extends Univent implements EventBase {
 	private boolean stopped=false;
 	private static final long serialVersionUID = 1L;
 	
-	private ArrayList<AddNewEventListener> addeventlisteners=new ArrayList<AddNewEventListener>();
+	private transient ArrayList<AddNewEventListener> addeventlisteners=new ArrayList<AddNewEventListener>();
 	public SelectKind getKind() {
 		return SelectKind.TRIGGER;
 	}
@@ -149,6 +149,9 @@ public abstract class Trigger extends Univent implements EventBase {
 		
 	}
 	public void addNewEventListener(AddNewEventListener list) {
+		if(addeventlisteners==null) {
+			addeventlisteners=new ArrayList<AddNewEventListener>();
+		}
 		addeventlisteners.add(list);
 	}
 	protected void addAllTriggers(Trigger toreturn) {

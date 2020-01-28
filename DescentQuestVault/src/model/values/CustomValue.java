@@ -1,15 +1,50 @@
 package model.values;
 
+import java.util.ArrayList;
+
 import model.Item;
 import model.event.Univent;
+import view.game.mappanel.ValueChanger;
 import view.menu.QuestCreator;
 import view.viewItems.ItemBox.ItemOptions;
 import view.viewItems.ItemBox.SelectKind;
+import view.viewItems.ItemBox.ValueChangeListener;
 
-public abstract class CustomValue<P> extends Item {
+public abstract class CustomValue<P> extends Item implements ValueChanger {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6673949013681395429L;
 	protected P value;
+	private ArrayList<ValueChangeListener> list=new ArrayList<ValueChangeListener>();
 	
+	
+	
+
+	
+
+	public P getValue() {
+		return value;
+	}
+
+
+
+	public void setValue(P value) {
+		this.value = value;
+		notifylist();
+	}
+
+
+
+	private void notifylist() {
+		for(ValueChangeListener listen:list) {
+			listen.valueChanged((int) value);
+		}
+		
+	}
+
+
 
 	public CustomValue(String name, P value) {
 		super(name);
@@ -74,6 +109,11 @@ public abstract class CustomValue<P> extends Item {
 	public abstract ValueKind getValueKind();
 
 
+	@Override
+	public void addValueChangeListener(ValueChangeListener listen) {
+		// TODO Auto-generated method stub
+		list.add(listen);
+	}
 
 	public abstract void setTo(CustomValue value2);
 

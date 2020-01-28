@@ -369,7 +369,8 @@ public class QuestCreator extends SubContainer implements Serializable{
 	//place each event and each object connected to that event
 	//reinitialise object images.
 	public void loadGame(WorldSaveFile g) {
-		
+		UserInputController control=UserInputController.getController();
+		control.initialiseBaseEventController(g.getControl());
 		for(Univent vent:g.getUnivents()) {
 			//add the univent
 			eventPanel.addUniventToTriggerField(vent, null);
@@ -378,8 +379,8 @@ public class QuestCreator extends SubContainer implements Serializable{
 		}
 		
 		ItemController.getItemController().readValues(g);
-		UserInputController control=UserInputController.getController();
-		control.initialiseBaseEventController(g.getControl());
+	
+		
 		
 	}
 

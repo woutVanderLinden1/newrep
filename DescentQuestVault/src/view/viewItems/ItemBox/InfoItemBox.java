@@ -96,7 +96,7 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 		selected.addSelectedChangeListener(this);
 	
 		
-		itemInfoText=new ItemInfoContainer(new Dimension(width-20,400));
+		itemInfoText=new ItemInfoContainer(new Dimension(width-20,400),this);
 		//itemInfoText.setLayout(  new GridLayout(0,2));
 		itemInfoText.setBackground(Color.yellow);
 		itemInfoText.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
@@ -127,7 +127,7 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 		selected.addSelectedChangeListener(this);
 	
 		
-		itemInfoText=new ItemInfoContainer(new Dimension(width-20,400));
+		itemInfoText=new ItemInfoContainer(new Dimension(width-20,400),this);
 		//itemInfoText.setLayout(  new GridLayout(0,2));
 		itemInfoText.setBackground(Color.yellow);
 		itemInfoText.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
@@ -313,10 +313,12 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 
 	
 
-	private void showArrowSpecifics(ViewArrow holded) {
+	protected void showArrowSpecifics(ViewArrow holded) {
 		System.out.println("showing arrow specifics");
 		holded.addArrowSpecifics(itemInfoText);
 		//itemInfoText.addPreButton(field,button);
+		itemInfoText.revalidate();
+		itemInfoText.repaint();
 		this.revalidate();
 		this.repaint();
 		

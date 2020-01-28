@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -14,15 +15,21 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 
+import StoryEditor.ViewArrow;
 import model.event.Event;
 import view.viewItems.ItemBox.ImageItem;
 import view.viewItems.ItemBox.ItemInfoContainer;
 import view.viewItems.ItemBox.ItemOptions;
 import view.viewItems.ItemBox.SelectKind;
 
-public class EventItem extends UniventItem {
+public class EventItem extends UniventItem implements StoryElement {
 
 	private Event ev;
+	private ArrayList<ViewArrow> nextarrows=new ArrayList<ViewArrow>();
+	private ArrayList<ViewArrow> prevarrows=new ArrayList<ViewArrow>();
+	private ArrayList<StoryElement> nextelements=new ArrayList<StoryElement>();
+	private ArrayList<StoryElement> prevelements=new ArrayList<StoryElement>();
+	
 	
 	public Event getEv() {
 		return ev;
@@ -95,6 +102,7 @@ public class EventItem extends UniventItem {
 		textLabel.setLocation(10,10);
 	
 		pan.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+		
 		this.setImage(createImage(pan));
 		
 	}
@@ -146,6 +154,54 @@ public class EventItem extends UniventItem {
 	@Override
 	public boolean isAvailable() {
 		return true;
+	}
+
+	@Override
+	public ArrayList<ViewArrow> getNextArrows() {
+		// TODO Auto-generated method stub
+		return nextarrows;
+	}
+
+	@Override
+	public ArrayList<ViewArrow> getPrevArrows() {
+		// TODO Auto-generated method stub
+		return prevarrows;
+	}
+
+	@Override
+	public ArrayList<StoryElement> getNextStoryElements() {
+		// TODO Auto-generated method stub
+		return nextelements;
+	}
+
+	@Override
+	public ArrayList<StoryElement> getPrevStoryElements() {
+		// TODO Auto-generated method stub
+		return prevelements;
+	}
+
+	@Override
+	public void addNextArrow(ViewArrow next) {
+		nextarrows.add(next);
+		
+	}
+
+	@Override
+	public void addPrevArrow(ViewArrow prev) {
+		prevarrows.add(prev);
+		
+	}
+
+	@Override
+	public void addPrevStoryElement(StoryElement prev) {
+		// TODO Auto-generated method stub
+		prevelements.add(prev);
+	}
+
+	@Override
+	public void addNextStoryElement(StoryElement next) {
+		// TODO Auto-generated method stub
+		nextelements.add(next);
 	}
 
 	

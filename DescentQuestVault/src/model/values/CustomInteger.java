@@ -11,7 +11,7 @@ public class CustomInteger extends CustomValue<Integer> {
 
 	
 	private int theInteger=0;
-	private ArrayList<ValueChangeListener> valuechangelisteners=new ArrayList<ValueChangeListener>();
+	private transient ArrayList<ValueChangeListener> valuechangelisteners=new ArrayList<ValueChangeListener>();
 	
 	private static int nrintegers=0;
 	
@@ -43,7 +43,9 @@ public class CustomInteger extends CustomValue<Integer> {
 	}
 
 	private void triggerValueChangeListeners() {
-		
+		if(valuechangelisteners==null) {
+			return;
+		}
 		for(ValueChangeListener listen: valuechangelisteners) {
 			System.out.println("valuechangelisteners are "+listen);
 			listen.valueChanged(theInteger);
@@ -59,6 +61,9 @@ public class CustomInteger extends CustomValue<Integer> {
 
 	public void addValueChangeListener(ValueChangeListener itemController) {
 		// TODO Auto-generated method stub
+		if(valuechangelisteners==null) {
+			valuechangelisteners=new ArrayList<ValueChangeListener>();
+		}
 		valuechangelisteners.add(itemController);
 	}
 
@@ -70,6 +75,6 @@ public class CustomInteger extends CustomValue<Integer> {
 	@Override
 	public void setTo(CustomValue value2) {
 		// TODO Auto-generated method stub
-		theInteger=((CustomInteger) value2).getTheInteger();
+		setTheInteger(((CustomInteger) value2).getTheInteger());
 	}
 }

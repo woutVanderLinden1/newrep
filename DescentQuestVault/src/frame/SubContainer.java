@@ -85,7 +85,10 @@ public class SubContainer extends JPanel implements ReleasAble,IResizeListeners,
 	}
 	public void dragged(MouseEvent e) {
 		// TODO Auto-generated method stub
-		((ReleasAble) this.getParent()).dragged(e);
+		if(this.getParent()!=null) {
+			((ReleasAble) this.getParent()).dragged(e);
+		}
+	
 	}
 
 	@Override

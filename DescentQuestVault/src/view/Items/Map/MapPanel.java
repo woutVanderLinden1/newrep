@@ -113,6 +113,24 @@ public class MapPanel extends SubContainer implements Serializable {
 				UserInputController.getController().performCommand(comm);
 			}
 		});
+		JButton loadCampaignConstantsButton=new JButton("Load Campaign Constants");
+		
+		loadCampaignConstantsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LoadCampaignConstantCommand comm=new LoadCampaignConstantCommand(map);
+				UserInputController.getController().performCommand(comm);
+			}
+		});
+		JButton saveAsSubQuest=new JButton("make subquest");
+		
+		saveAsSubQuest.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SaveAsSubQuestCommand comm=new SaveAsSubQuestCommand(map);
+				UserInputController.getController().performCommand(comm);
+			}
+		});
 		optionPanel=new MapOptionPanel(width,100);
 		mapGrid=new GridPanel(width,height-110,userInput);
 		this.add(optionPanel);
@@ -120,6 +138,8 @@ public class MapPanel extends SubContainer implements Serializable {
 		optionPanel.add(saveButton);
 		optionPanel.add(loadButton);
 		optionPanel.add(backToMenuButton);
+		optionPanel.add(loadCampaignConstantsButton);
+		optionPanel.add(saveAsSubQuest);
 		this.add(mapGrid);
 	//	gamePanel.setPreferredSize(new Dimension(width,height));
 		

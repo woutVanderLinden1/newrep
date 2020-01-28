@@ -1,9 +1,11 @@
 package StoryEditor;
 
+import view.events.StoryElement;
 import view.viewItems.ItemBox.SelectKind;
 
-public class StartElementPanel extends DraggAblePanel {
+public class StartElementPanel extends StoryItemPanel {
 
+	
 	
 	public StartElementPanel() {
 		super("start");
@@ -14,6 +16,7 @@ public class StartElementPanel extends DraggAblePanel {
 		// TODO Auto-generated method stub
 		return SelectKind.STORYELEMENT;
 	}
+
 	
 	
 	

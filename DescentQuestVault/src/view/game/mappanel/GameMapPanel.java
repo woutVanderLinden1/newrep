@@ -21,10 +21,13 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
+import StoryEditor.AddItemEvent;
 import controller.AddGameHeroListener;
 import controller.AddGameMonsterListener;
 import controller.UserInputController;
@@ -42,6 +45,7 @@ import model.event.MovementString;
 import model.event.extraevents.StopAble;
 import model.event.extraevents.TextOption;
 import view.Items.Map.MapItem;
+import view.Items.Map.OpenMainMenuCommand;
 import view.Items.Map.ViewDoor;
 import view.Items.Map.ViewMonster;
 import view.Items.Map.ViewSquare;
@@ -63,12 +67,12 @@ import view.viewItems.MonsterItem;
 
 public class GameMapPanel extends SubContainer implements MoveToBackListener {
 	
-	private GameGrid grid;
-	private JLayeredPane mapPanels;
-	private JPanel textPanel=new JPanel();
-	private HeroPanel heroPanel=new HeroPanel();
-	private MonsterPanel monsterPanel=new MonsterPanel();
-	private ButtonPanel temporaryPanel;
+	protected GameGrid grid;
+	protected JLayeredPane mapPanels;
+	protected JPanel textPanel=new JPanel();
+	protected HeroPanel heroPanel=new HeroPanel();
+	protected MonsterPanel monsterPanel=new MonsterPanel();
+	protected ButtonPanel temporaryPanel;
 	
 	private ArrayList<AddGameHeroListener> heroPlaceListeners=new ArrayList<AddGameHeroListener>();
 	private ArrayList<AddGameMonsterListener> monsterPlaceListeners=new ArrayList<AddGameMonsterListener>();;
@@ -92,6 +96,9 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 	   
 		mapPanels.moveToFront(grid);
 		 addGoBackButton();
+		 addGetRandomItemButton();
+		 
+		 
 		 textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
 		 
 		 mapPanels.add(temporaryPanel,2,2);
@@ -110,15 +117,17 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 			goldpanel.setSize(120,30);
 			mapPanels.add(goldpanel,2,2);
 			mapPanels.moveToFront(goldpanel);
-			goldpanel.setBackground(new Color(0,0,0,0));
-			goldpanel.setLocation(50,mapPanels.getHeight()-140); 
+			goldpanel.setBackground(new Color(246,221,199));
+			goldpanel.setBorder(BorderFactory.createLineBorder(Color.black));
+			goldpanel.setLocation(45,mapPanels.getHeight()-140); 
 			
 			FamePanel famepanel=new FamePanel();
 			//goldpanel.setBackground(Color.white);
 			famepanel.setSize(120,30);
 			mapPanels.add(famepanel,2,2);
 			mapPanels.moveToFront(famepanel);
-			famepanel.setBackground(new Color(0,0,0,0));
+			famepanel.setBackground(new Color(246,221,199));
+			famepanel.setBorder(BorderFactory.createLineBorder(Color.black));
 			famepanel.setLocation(170,mapPanels.getHeight()-140); 
 			
 			PerilPanel perilpanel=new PerilPanel();
@@ -126,17 +135,20 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 			perilpanel.setSize(120,30);
 			mapPanels.add(perilpanel,2,2);
 			mapPanels.moveToFront(perilpanel);
-			perilpanel.setBackground(new Color(0,0,0,0));
-			perilpanel.setLocation(290,mapPanels.getHeight()-140);
+			perilpanel.setBackground(new Color(246,221,199));
+			perilpanel.setBorder(BorderFactory.createLineBorder(Color.black));
+			perilpanel.setLocation(295,mapPanels.getHeight()-140);
 			
 			HopePanel hopepanel=new HopePanel();
 			//goldpanel.setBackground(Color.white);
 			hopepanel.setSize(120,30);
 			mapPanels.add(hopepanel,2,2);
 			mapPanels.moveToFront(hopepanel);
-			hopepanel.setBackground(new Color(0,0,0,0));
-			hopepanel.setLocation(410,mapPanels.getHeight()-140);
+			hopepanel.setBackground(new Color(246,221,199));
+			hopepanel.setBorder(BorderFactory.createLineBorder(Color.black));
+			hopepanel.setLocation(420,mapPanels.getHeight()-140);
 	}
+
 
 
 	private void addHeroes(ArrayList<Hero> heroes) {
@@ -221,6 +233,51 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		grid.removeGameTile(tile);
 		
 	}
+	
+	public void addToMainMenuCommand() {
+		JButton backToMenuButton=new JButton("to Main");
+		backToMenuButton.setLocation(50,50);
+		backToMenuButton.setSize(90, 30);
+		backToMenuButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				OpenMainMenuCommand comm=new OpenMainMenuCommand();
+				UserInputController.getController().performCommand(comm);
+			}
+		});
+		mapPanels.add(backToMenuButton,2,2);
+		mapPanels.moveToFront(backToMenuButton);
+	}
+
+	private void addGetRandomItemButton() {
+
+		JButton butt=new JButton("Get Random Item");
+		butt.setLocation(50,90);
+		butt.setSize(140, 30);
+		butt.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				UserInputController control=UserInputController.getController();
+				try {
+					AddItemEvent comm=new AddItemEvent();
+					comm.trigger();
+					
+				}
+				catch(Exception l) {
+					System.out.println(l );
+					System.out.println( "gone back to main menu");
+					AddItemEvent comm=new AddItemEvent();
+					comm.trigger();
+				}
+				
+			}
+		});
+		mapPanels.add(butt,2,2);
+		mapPanels.moveToFront(butt);
+		
+	}
+
 
 	public void addGoBackButton() {
 		
@@ -230,8 +287,18 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		butt.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
+				
 				UserInputController control=UserInputController.getController();
-				control.performCommand(new GoBackToEditorCommand());
+				try {
+					control.performCommand(new GoBackToEditorCommand());
+				}
+				catch(Exception l) {
+					System.out.println(l );
+					System.out.println( "gone back to main menu");
+					OpenMainMenuCommand comm=new OpenMainMenuCommand();
+					UserInputController.getController().performCommand(comm);
+				}
+				
 			}
 		});
 		mapPanels.add(butt,2,2);
@@ -239,16 +306,22 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 	}
 
 
-	public void showTextDialog(String text) {
+	public void showTextDialog(String text ) {
 		mapPanels.moveToBack(temporaryPanel);
 		// TODO Auto-generated method stub
 		//grid.showTextDialog(text);
 		textPanel.removeAll();
 		// TODO Auto-generated method stub
 		mapPanels.moveToFront(textPanel);
-		JTextArea area=new JTextArea();
+		JTextPane area=new JTextPane();
 		area.setText(text);
-		area.setFont(new Font("Haettenschweiler", Font.PLAIN, 40));
+		area.setFont(new Font("Haettenschweiler", Font.PLAIN, 20));
+
+	    SimpleAttributeSet center = new SimpleAttributeSet();
+        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+        StyledDocument doc = area.getStyledDocument();
+        doc.setParagraphAttributes(0, doc.getLength(), center, false);
+   
 		textPanel.add(area);
 		area.setBackground(new Color(0,0,0,0));
 		area.setEditable(false);
@@ -256,12 +329,14 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		textPanel.setLocation(200,10);
 		area.setSize(mapPanels.getWidth()-80,300);
 		textPanel.setBackground(new Color(222,184,135,95));
+		area.getCaret().setVisible(false); 
 		this.revalidate();
 		this.repaint();
+		
 	}
 
 
-	public void showTextDialog(String text, ArrayList<TextOption> newoptions) {
+	public void showTextDialog(String text, ArrayList<TextOption> newoptions ) {
 		System.out.println(text);
 		mapPanels.moveToBack(temporaryPanel);
 		// TODO Auto-generated method stub
@@ -270,10 +345,14 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		textPanel.removeAll();
 		// TODO Auto-generated method stub
 		mapPanels.moveToFront(textPanel);
-		JTextArea area=new JTextArea();
+		JTextPane area=new JTextPane();
 		area.setText(text);
-		
-	
+		 SimpleAttributeSet center = new SimpleAttributeSet();
+	        StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+	        StyledDocument doc = area.getStyledDocument();
+	        doc.setParagraphAttributes(0, doc.getLength(), center, false);
+	   
+	    	area.getCaret().setVisible(false); 
 		
 		area.setFont(new Font("Haettenschweiler", Font.PLAIN, 40));
 		textPanel.add(area);
@@ -438,8 +517,8 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 	public void initialiseGame(BaseFile sampleFile) {
 		// TODO Auto-generated method stub
 		ItemController itcontrol=ItemController.getItemController();
-		itcontrol.resetMap();
-		itcontrol.loadMap(sampleFile.getConstantMap());
+	//	itcontrol.resetMap();
+	//	itcontrol.loadMap(sampleFile.getConstantMap());
 		basefile=sampleFile;
 		addHeroes(basefile.getHeroes());
 		grid.initialise(sampleFile);

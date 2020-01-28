@@ -74,11 +74,11 @@ public class GameGrid extends SubContainer {
 		tiles=new ArrayList<GameTile>();
 		GameGrid thisthing=this;
 		 pan=new SubContainer(offset*2+squareWidth*mapLength,offset*2+squareWidth*mapLength){
-	    	 public void paintComponent(Graphics g) {
+			    public void paintComponent(Graphics g) {
 	    		    super.paintComponent(g);
 
 	    		    // Draw the background image.
-	    		    g.drawImage(backgroundImage, 0, 0, this);
+	    		    g.drawImage(backgroundImage, scrollPane.getViewport().getViewPosition().x, scrollPane.getViewport().getViewPosition().y, this);
 	    		    for(GameTile tile:tiles){
 	    		    	
 	    		    	tile.draw(g,this);
@@ -168,7 +168,8 @@ public class GameGrid extends SubContainer {
 	    
 		try {
 			backgroundImage = ImageIO.read(new File("Images/texture1.jpg"));
-			backgroundImage=Tools.resize(squareWidth*mapLength,squareWidth*mapLength,(BufferedImage) backgroundImage);
+		//	backgroundImage=Tools.resize(squareWidth*mapLength,squareWidth*mapLength,(BufferedImage) backgroundImage);
+			backgroundImage=Tools.resize(defaultSize.width,defaultSize.height,(BufferedImage) backgroundImage);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

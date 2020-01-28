@@ -107,6 +107,9 @@ public class StoryInfoItemBox extends InfoItemBox {
 				showEvents((ViewMonster) holded);
 				break;
 				*/
+			case ARROW:
+				showArrowSpecifics((ViewArrow) holded);
+				break;
 			default:
 				needsrescale=false;
 				//return;
@@ -115,50 +118,53 @@ public class StoryInfoItemBox extends InfoItemBox {
 			}
 			
 		}
-		Image img = item.getImage();
-		Image newimg=null;
-		double max=  Math.max(item.getScaleWidth(), item.getScaleHeight());
-		
-		if(needsrescale) {
-			switch( angle){
-			case 0:
-			case 180:
-				//newimg = img.getScaledInstance( (int)(300*item.getScaleWidth()),(int) (300*item.getScaleHeight()),  java.awt.Image.SCALE_SMOOTH ) ;
-				if(max!=0) {
-					double factor= itemInfoSize/max;
-					newimg = img.getScaledInstance( (int)(factor*(item.getScaleWidth())),(int)( factor*(item.getScaleHeight())),  java.awt.Image.SCALE_SMOOTH ) ;
-					
-				}
-				else {
-					newimg = img.getScaledInstance(itemInfoSize,itemInfoSize,  java.awt.Image.SCALE_SMOOTH ) ;
-					
-				}
-				break;
+		if(item!=null) {
+			Image img = item.getImage();
+			Image newimg=null;
+			double max=  Math.max(item.getScaleWidth(), item.getScaleHeight());
 			
-			case 90:
-			case 270:
-				if(max!=0) {
-					double factor= itemInfoSize/max;
-					newimg = img.getScaledInstance( (int)(factor*(item.getScaleHeight())),(int)( factor*(item.getScaleWidth())),  java.awt.Image.SCALE_SMOOTH ) ;
-					
+			if(needsrescale) {
+				switch( angle){
+				case 0:
+				case 180:
+					//newimg = img.getScaledInstance( (int)(300*item.getScaleWidth()),(int) (300*item.getScaleHeight()),  java.awt.Image.SCALE_SMOOTH ) ;
+					if(max!=0) {
+						double factor= itemInfoSize/max;
+						newimg = img.getScaledInstance( (int)(factor*(item.getScaleWidth())),(int)( factor*(item.getScaleHeight())),  java.awt.Image.SCALE_SMOOTH ) ;
+						
+					}
+					else {
+						newimg = img.getScaledInstance(itemInfoSize,itemInfoSize,  java.awt.Image.SCALE_SMOOTH ) ;
+						
+					}
+					break;
+				
+				case 90:
+				case 270:
+					if(max!=0) {
+						double factor= itemInfoSize/max;
+						newimg = img.getScaledInstance( (int)(factor*(item.getScaleHeight())),(int)( factor*(item.getScaleWidth())),  java.awt.Image.SCALE_SMOOTH ) ;
+						
+					}
+					else {
+						newimg = img.getScaledInstance(itemInfoSize,itemInfoSize,  java.awt.Image.SCALE_SMOOTH ) ;
+						
+					}
+					//newimg = img.getScaledInstance( (int)(300*item.getScaleHeight()),(int) (300*item.getScaleWidth()),  java.awt.Image.SCALE_SMOOTH ) ;
+					break;
+				
 				}
-				else {
-					newimg = img.getScaledInstance(itemInfoSize,itemInfoSize,  java.awt.Image.SCALE_SMOOTH ) ;
-					
-				}
-				//newimg = img.getScaledInstance( (int)(300*item.getScaleHeight()),(int) (300*item.getScaleWidth()),  java.awt.Image.SCALE_SMOOTH ) ;
-				break;
-			
 			}
-		}
-		else {
-			newimg=img;
-		}
+			else {
+				newimg=img;
+			}
+			
 		
-	
+			
 		
+			imagePanel.add(new JLabel(new ImageIcon(newimg)));
+		}
 	
-		imagePanel.add(new JLabel(new ImageIcon(newimg)));
 	}
 
 	public void setController(StoryEditorController userInput) {

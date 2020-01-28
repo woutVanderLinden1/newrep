@@ -9,8 +9,10 @@ import java.util.Stack;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
+import StoryEditor.CampaignSaveFile;
 import StoryEditor.DraggAblePanel;
 import controller.BaseEventController;
+import controller.UserInputController;
 import controller.commands.ICommand;
 import frame.MainFrame;
 import misc.ActivateAble;
@@ -128,7 +130,7 @@ public class ViewManager implements IView {
 	}
 
 	public void StartQuestGame() {
-		 game=new QuestGame(new Dimension(frame.getWidth(),frame.getHeight()));
+		 game=new QuestGame(new Dimension(frame.getWidth(),frame.getHeight()), new SampleFile());
 		 //should be done in controller
 		 frame.startTestGame(game);
 	}
@@ -416,8 +418,14 @@ public class ViewManager implements IView {
 
 	@Override
 	public void showTextDialog(String text, ArrayList<TextOption> newoptions) {
-		// TODO Auto-generated method stub
-		game.showTextDialog(text,newoptions);
+		if(game==null) {
+			UserInputController control=UserInputController.getController();
+			control.showTextDialog(text,newoptions);
+		}
+		else {
+			game.showTextDialog(text,newoptions);
+		}
+	
 	}
 
 	@Override
@@ -511,7 +519,10 @@ public class ViewManager implements IView {
 	@Override
 	public void initialiseBaseEvents(BaseEventController baseEventController) {
 		// TODO Auto-generated method stub
-		quester.initialiseBaseEvents(baseEventController);
+		if(quester!=null) {
+			quester.initialiseBaseEvents(baseEventController);
+		}
+	
 	}
 
 	@Override
@@ -522,6 +533,24 @@ public class ViewManager implements IView {
 
 	@Override
 	public void startDragDragPanel(DraggAblePanel todrag) {
+		
+	}
+
+	@Override
+	public void setGame(QuestGame game) {
+		// TODO Auto-generated method stub
+		this.game=game;
+	}
+
+	@Override
+	public void loadCampaignGame(CampaignSaveFile g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addCityEventFile(CampaignSaveFile g) {
+		// TODO Auto-generated method stub
 		
 	}
 

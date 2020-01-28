@@ -19,6 +19,8 @@ public class ValueGeneratorItem extends GeneratorItem implements CommandHolder{
 		super(tile);
 		commandlist.add( new CreateBooleanValueCommand());
 		commandlist.add(new CreateIntegerValueCommand());
+		commandlist.add(new CreateGainHeroExpCommand());
+		commandlist.add(new CreateObtainItemCommand());
 		// TODO Auto-generated constructor stub
 	}
 

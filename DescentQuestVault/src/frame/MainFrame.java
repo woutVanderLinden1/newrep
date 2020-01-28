@@ -24,8 +24,14 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import HeroEditor.HeroEditor;
+import HeroPicker.HeroPicker;
+import ItemEditor.ItemEditor;
+import SkillEditor.SkillEditor;
 import StoryEditor.StoryEditor;
+import controller.CityMenu;
 import controller.EndPhaseListener;
+import controller.QuestText;
 import controller.UserInputController;
 import misc.listeners.IResizeListeners;
 import model.Monster.Monster;
@@ -104,10 +110,10 @@ public class MainFrame extends JFrame{
 	    this.add(lpane);
 	    //activateGlassPane();
 	    refresh();
-	    JPanel panel=new JPanel();
-	    panel.setSize(400,400);
-	    panel.setBackground(Color.cyan);
-	    lpane.add(panel,2,2);
+	  //  JPanel panel=new JPanel();
+	   // panel.setSize(400,400);
+	   // panel.setBackground(Color.cyan);
+	   // lpane.add(panel,2,2);
 	    lpane.moveToFront(glasspane);
 	}
 	
@@ -191,6 +197,85 @@ public class MainFrame extends JFrame{
 	public boolean isCloseRequested() {
 		// TODO Auto-generated method stub
 		return closerequested;
+	}
+	public void startQuestText(QuestText quester) {
+		resizeListeners.clear();
+		System.out.println("removed all");
+		lpane.removeAll();
+		lpane.revalidate();
+		/*
+		if(currentMenu!=null){
+			this.remove(lpane);
+			lpane.remove(currentMenu);
+		}
+		*/
+		
+		//lpane.setLayout(new BoxLayout(lpane,BoxLayout.Y_AXIS));
+		lpane.setLayout(null);
+		addResizeListener( quester);
+		//lpane.add(mainMenu);
+		//mainMenu.setComponentSizes(getWidth(),getHeight());
+		lpane.add(quester, 2,2);
+		//mainMenu.setComponentSizes(getWidth(),getHeight());
+		
+		//currentMenu=mainMenu;
+	
+		//this.resize(400, 300);
+		//changed=true;
+		
+	//	this.add(lpane);
+		//viewMan.startGame(quester);
+		//quester.startGame();
+		revalidate();
+		repaint();
+	
+	//	this.addMouseListener(getUserInputController());
+	//	lpane.addMouseListener(getUserInputController());
+	//	quester.addMouseListener(userInput);
+		currentMenu=quester;
+		lpane.moveToFront(quester);
+		this.requestFocus();
+		
+	}
+
+	public void startQuestGame(QuestGame quester) {
+		resizeListeners.clear();
+		System.out.println("removed all");
+		lpane.removeAll();
+		lpane.revalidate();
+		/*
+		if(currentMenu!=null){
+			this.remove(lpane);
+			lpane.remove(currentMenu);
+		}
+		*/
+		
+		//lpane.setLayout(new BoxLayout(lpane,BoxLayout.Y_AXIS));
+		lpane.setLayout(null);
+		addResizeListener( quester);
+		//lpane.add(mainMenu);
+		//mainMenu.setComponentSizes(getWidth(),getHeight());
+		lpane.add(quester, 2,2);
+		//mainMenu.setComponentSizes(getWidth(),getHeight());
+		
+		//currentMenu=mainMenu;
+	
+		//this.resize(400, 300);
+		//changed=true;
+		
+	//	this.add(lpane);
+		viewMan.startGame(quester);
+		quester.startGame();
+		revalidate();
+		repaint();
+	
+	//	this.addMouseListener(getUserInputController());
+	//	lpane.addMouseListener(getUserInputController());
+	//	quester.addMouseListener(userInput);
+		currentMenu=quester;
+		lpane.moveToFront(quester);
+		this.requestFocus();
+		
 	}
 
 	public void startQuestEditor(QuestCreator quester) {
@@ -308,7 +393,7 @@ public class MainFrame extends JFrame{
 		glasspane.revalidate();
 		
 	
-		
+		System.out.println(item);
 		Image img = item.getImage();
 		Image newimg=item.getScaleImage(70);
 		int xoff=x;
@@ -359,7 +444,51 @@ public class MainFrame extends JFrame{
 		Point newLocation=new Point(p.x-this.getX(),p.y-this.getY());
 		currentMenu.sendEvent(e,newLocation,selectAble);
 	}
+
+	public void startHeroPicker(HeroPicker picker) {
+		//resizeListeners.clear();
+				//System.out.println("removed all");
+				//lpane.removeAll();
+				lpane.revalidate();
+				/*
+				if(currentMenu!=null){
+					this.remove(lpane);
+					lpane.remove(currentMenu);
+				}
+				*/
+				
+				//lpane.setLayout(new BoxLayout(lpane,BoxLayout.Y_AXIS));
+				lpane.setLayout(null);
+				
+				//lpane.add(mainMenu);
+				//mainMenu.setComponentSizes(getWidth(),getHeight());
+				lpane.add(picker, 2,2);
+				lpane.moveToFront(picker);
+				//mainMenu.setComponentSizes(getWidth(),getHeight());
+				
+				//currentMenu=mainMenu;
+			
+				//this.resize(400, 300);
+				//changed=true;
+				
+			//	this.add(lpane);
+				//viewMan.startGame(gamemenu);
+				//gamemenu.startGame();
+				revalidate();
+				repaint();
+				
+			//	this.addMouseListener(getUserInputController());
+			//	lpane.addMouseListener(getUserInputController());
+			//	quester.addMouseListener(userInput);
+				//currentGame=gamemenu;
+				//lpane.moveToFront(quester);
+				
+				this.requestFocus();
+		
+	}
+
 	
+
 	public void startTestGame(QuestGame gamemenu) {
 		//resizeListeners.clear();
 		//System.out.println("removed all");
@@ -402,9 +531,22 @@ public class MainFrame extends JFrame{
 	}
 
 	public void endTestGame() {
+		if(currentMenu!=null) {
+			//lpane.remove(currentMenu);
+			lpane.moveToBack(currentMenu);
+			//currentMenu=null;
+			revalidate();
+			repaint();
+		}
+		
+		if(currentGame==null) {
+			return;
+		}
+		lpane.moveToFront(currentMenu);
 		// TODO Auto-generated method stub
 		lpane.remove(currentGame);
 		lpane.moveToBack(currentGame);
+		currentGame=null;
 		revalidate();
 		repaint();
 	}
@@ -419,12 +561,14 @@ public class MainFrame extends JFrame{
 	}
 
 	public void openMonsterEditor(Monster mon) {
-	
+		System.out.println("monstereditor opened");
+		MonsterEditor edit=new MonsterEditor();
+		edit.setVisible(true);
 		
 	}
 
 	public void addEndPhaseListener(EndPhaseListener trig) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -434,6 +578,32 @@ public class MainFrame extends JFrame{
 		edit.setVisible(true);
 		
 	}
+
+	public void openItemEditor() {
+		ItemEditor edit=new ItemEditor();
+		edit.setVisible(true);
+		
+	}
+
+	public void openSkillEditor() {
+		SkillEditor edit=new SkillEditor();
+		edit.setVisible(true);
+		
+	}
+
+	public void openHeroEditor() {
+		// TODO Auto-generated method stub
+		HeroEditor edit=new HeroEditor();
+		edit.setVisible(true);
+	}
+
+	public void bringToFront(CityMenu men) {
+		lpane.moveToFront(men);
+		this.revalidate();
+		this.repaint();
+	}
+
+	
 
 
 

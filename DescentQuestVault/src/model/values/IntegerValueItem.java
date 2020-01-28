@@ -31,6 +31,14 @@ public class IntegerValueItem extends ValueItem {
 
 	
 
+	public CustomInteger getVal() {
+		return val;
+	}
+
+	public void setVal(CustomInteger val) {
+		this.val = val;
+	}
+
 	public IfIntegerModifier getIfmodifier() {
 		return ifmodifier;
 	}

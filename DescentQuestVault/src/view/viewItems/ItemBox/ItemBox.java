@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 
 import controller.UserInputController;
 import frame.SubContainer;
@@ -22,6 +23,18 @@ public class ItemBox extends SubContainer {
 		commandButton.setPreferredSize(new Dimension(200,50));
 		commandButton.addButtonPressedListener(UserInputController.getController());
 		buttons.add(commandButton);
+		//Container cont =new Container();
+		//cont.add(commandButton);
+		//cont.setSize(this.getWidth(),100);
+		
+		//commandButton.setLocation(this.getWidth()/2-100,100);
+		this.add(commandButton);
+
+	}
+	public void addButton(JButton commandButton) {
+		commandButton.setSize(200, 50);
+		commandButton.setPreferredSize(new Dimension(200,50));
+		//buttons.add(commandButton);
 		//Container cont =new Container();
 		//cont.add(commandButton);
 		//cont.setSize(this.getWidth(),100);

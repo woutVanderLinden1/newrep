@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import controller.BaseEventController;
+import misc.CampaignFile;
 import model.event.StartUpTrigger;
 import model.event.Univent;
 import model.values.CustomBoolean;
@@ -21,6 +22,7 @@ public class WorldSaveFile implements Serializable {
 //	private ArrayList<CustomBoolean> customBooleans;
 	private HashMap<String,CustomValue> customValues=new HashMap<String,CustomValue>();
 	private BaseEventController control;
+	private String name;
 	
 
 	private ArrayList<Univent> univentList=new ArrayList<Univent>();
@@ -67,7 +69,18 @@ public class WorldSaveFile implements Serializable {
 
 	public void saveCustomValues(HashMap<String, CustomValue> customvalues2) {
 		// TODO Auto-generated method stub
-		customvalues2.putAll(customvalues2);
+		
+		customValues.putAll(customvalues2);
 	}
+
+	public void setName(String name) {
+		this.name=name;
+		
+	}
+
+	public String getName() {
+		return name;
+	}
+
 
 }

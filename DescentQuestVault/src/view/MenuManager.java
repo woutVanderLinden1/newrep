@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import frame.MainFrame;
 import view.Items.Map.ViewSquare;
+import view.menu.CampaignMenu;
 import view.menu.MainMenu;
 import view.menu.Menu;
 import view.menu.Menus;
@@ -47,6 +48,9 @@ public class MenuManager {
 			break;
 		case QUESTEDITOR:
 			mainMenu=new QuestEditorMenu(frame.getWidth(),frame.getHeight());
+			break;
+		case CAMPAIGN:
+			mainMenu=new CampaignMenu(frame.getWidth(),frame.getHeight());
 			break;
 		default:
 			break;
