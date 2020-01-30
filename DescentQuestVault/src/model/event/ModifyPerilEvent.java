@@ -193,6 +193,6 @@ public class ModifyPerilEvent extends Event implements NameChangeListener {
 		
 	}
 	public Univent copy() {
-		return new ModifyGoldEvent(mod,modvalue);
+		return new ModifyPerilEvent(mod,modvalue);
 	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import controller.commands.BasicCommand;
 import controller.commands.ICommand;
+import model.event.EventEndListener;
 import model.event.MovementString;
 import model.event.SingleMovementEvent;
 import model.event.extraevents.StopAble;
@@ -18,21 +19,23 @@ public class ShowMonsterMovementCommand extends BasicCommand implements ICommand
 	private ArrayList<MovementString> movement;
 	private MovementString continousEffect;
 	private MonsterKind kind;
+	private EventEndListener listen;
 
 	
 	public ShowMonsterMovementCommand(MonsterItem mon, ArrayList<MovementString> arrayList,
-		MovementString movementString,MonsterKind monsterkind) {
+		MovementString movementString,MonsterKind monsterkind,EventEndListener listen) {
 		monster=mon;
 		movement=arrayList;
 		continousEffect=movementString;
 		kind=monsterkind;
+		this.listen=listen;
 		
 	}
 
 	@Override
 	public void perform() {
 		
-		view.showMonsterMovement(monster,movement,continousEffect,kind);
+		view.showMonsterMovement(monster,movement,continousEffect,kind,listen);
 
 	}
 

@@ -21,6 +21,7 @@ import controller.commands.CreateNewOptionCommand;
 import controller.commands.RemoveOptionCommand;
 import controller.commands.Game.HoldToContinueCommand;
 import controller.commands.Game.ShowTextCommand;
+import model.event.EventEndListener;
 import model.event.Trigger;
 import model.event.Univent;
 import view.events.MultiTextTriggerField;
@@ -66,7 +67,14 @@ public class TextTrigger extends Trigger implements Serializable,StopAble{
 		control.performCommand(new HoldToContinueCommand(this));
 		
 
-		control.performCommand(new ShowTextCommand(thetext,options));
+		control.performCommand(new ShowTextCommand(thetext,options,new EventEndListener() {
+
+			@Override
+			public void eventEnded() {
+				triggerEventEndListeners();
+			}
+			
+		}));
 		stopped=true;
 		while(stopped) {
 			try {
@@ -255,6 +263,9 @@ public class TextTrigger extends Trigger implements Serializable,StopAble{
 		trig.addAllTriggers(this);
 		return trig;
 	}
-	
+	@Override
+	public boolean isStopEvent() {
+		return true;
+	}
 	
 }

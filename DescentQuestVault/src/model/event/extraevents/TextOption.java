@@ -3,6 +3,7 @@ package model.event.extraevents;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -14,6 +15,7 @@ import javax.swing.event.DocumentListener;
 import controller.UserInputController;
 import controller.commands.ContinueCommand;
 import controller.commands.ICommand;
+import model.event.EventTriggerStack;
 import model.event.Trigger;
 import model.event.Univent;
 import view.viewItems.ItemBox.ItemInfoContainer;
@@ -61,6 +63,22 @@ public class TextOption extends Trigger{
 		UserInputController control=UserInputController.getController();
 		control.performCommand(continueCommand);
 		super.trigger();
+	}
+	public void triggerHere(ArrayList<Univent> totrigger) {
+		
+		EventTriggerStack triggerstack=EventTriggerStack.getTriggerStack();
+		triggerstack.addNewEvents(totrigger);
+		
+		//triggerstack.triggerNextStackEvent();
+		/*
+		    	for(Univent ev:totrigger) {
+		    		ev.trigger();
+		    	}
+		    	*/
+	
+	
+		//keep them as a continue prepared
+		//if continue pressed trigger the rest
 	}
 
 	public void setContinueCommand(ContinueCommand continueCommand) {

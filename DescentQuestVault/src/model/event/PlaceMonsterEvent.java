@@ -66,10 +66,17 @@ public class PlaceMonsterEvent extends Event implements NameChangeListener {
 
 	@Override
 	public void trigger() {
-		
+	
 		//commands.add(new ShowTextCommand("Place "+ viewmonster.getIDName()+ " on the map as indicated"));
 		TextStop stop=new TextStop("Place "+ viewmonster.getIDName()+ " on the map as indicated");
-		
+		stop.addEventEndListener(new EventEndListener() {
+
+			@Override
+			public void eventEnded() {
+				triggerEventEndListeners();
+			}
+			
+		});
 		super.trigger();
 		stop.trigger();
 		//addmapmonsterremoval to triggerstack

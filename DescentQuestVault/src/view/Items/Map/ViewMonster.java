@@ -47,6 +47,7 @@ import monstercreator.MonsterMovement;
 import view.events.RemoveMonsterEvent;
 import view.game.DefeatMonsterActivation;
 import view.game.MonsterActivation;
+import view.hero.EndTurnListener;
 import view.viewItems.MonsterItem;
 import view.viewItems.ItemBox.ImageItem;
 import view.viewItems.ItemBox.ItemInfoContainer;
@@ -56,6 +57,10 @@ public class ViewMonster extends MapItem implements ActivateAble{
 
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4408577912517461213L;
 	private PlaceMonsterEvent placeMonsterEvent;
 	private RemoveMonsterEvent removeMonsterEvent;
 	private DefeatMonsterTrigger defeatTrigger;
@@ -369,6 +374,34 @@ public class ViewMonster extends MapItem implements ActivateAble{
 		  } else {
 		  
 		  }
+			File dir2 = new File(System.getProperty("user.dir")+"/Movement//Default");
+			  File[] directoryListing2 = dir2.listFiles();
+			  if (directoryListing2 != null) {
+			    for (File child : directoryListing2) {
+			    	MonsterTurnTrigger g=null;
+					 FileInputStream fileIn;
+					try {
+						fileIn = new FileInputStream(child);
+						ObjectInputStream in = new ObjectInputStream(fileIn);
+						g = (MonsterTurnTrigger) in.readObject();
+					    in.close();
+					    fileIn.close();
+					    possibleturns.add(g);
+					    System.out.println("the read file is " +g);
+					} catch (IOException | ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			    	
+			    	
+			    	
+			    }
+			  } else {
+			  
+			  }
+			  
+		  
+		  
 		Map<String,MonsterTurnTrigger> trigmap=new HashMap<String,MonsterTurnTrigger>();
 		String[] comboOptions = new String[possibleturns.size()];
 		int k=0;
@@ -513,6 +546,10 @@ public class ViewMonster extends MapItem implements ActivateAble{
 	public Image getPreciseImage(int i, int j) {
 		// TODO Auto-generated method stub
 		return item.getPreciseImage(i, j);
+	}
+
+	public void addEndTurnListener(EndTurnListener endTurnListener) {
+		turnTrigger.addEndTurnListener(endTurnListener);
 	}
 
 

@@ -219,7 +219,7 @@ public class ItemShop extends JFrame{
 				    in.close();
 				    fileIn.close();
 				    System.out.println("the read file is " +i);
-				    if(i.isShopavailable() && i.getMinfame()>fame&&(i.getMaxfame()>fame||i.getMaxfame()==0)){
+				    if(i.isShopavailable() && i.getMinfame()<=fame&&(i.getMaxfame()>fame||i.getMaxfame()==0)){
 				        if(!file.getEquipment().contains(i)) {
 				        	shownitems.add(i);
 				        }

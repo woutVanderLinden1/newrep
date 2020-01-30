@@ -45,6 +45,13 @@ public class Hero extends Item implements ImageHolder, ValueChanger{
 	}
 
 
+	public Hero(String string, String string2) {
+		super(string);
+		name=string;
+		imagestring=string2;
+	}
+
+
 	public Hero copy() {
 		return new Hero(name,heroclass,imagestring);
 	}

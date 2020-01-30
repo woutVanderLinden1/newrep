@@ -12,6 +12,7 @@ import misc.ActivateAble;
 import misc.save.WorldSaveFile;
 import model.Activation;
 import model.Item;
+import model.event.EventEndListener;
 import model.event.MonsterTurnTrigger;
 import model.event.MovementString;
 import model.event.Trigger;
@@ -160,15 +161,15 @@ public interface IView {
 
 	boolean eventBoxContains(int x, int y);
 
-	void showTextDialog(String text);
+	void showTextDialog(String text, ArrayList<TextOption> newoptions, EventEndListener listen);
 
-	void showTextDialog(String text, ArrayList<TextOption> newoptions);
+	void showTextDialog(String text,EventEndListener listen);
 
 	GameMonster addGameMonster(ViewMonster toplace);
 
 	
 
-	void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect, MonsterKind kind);
+	void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect, MonsterKind kind, EventEndListener listen);
 
 	void makeInvisible(SelectAble mapit);
 

@@ -13,6 +13,7 @@ import controller.commands.ContinueCommand;
 import controller.commands.Game.HoldToContinueCommand;
 import controller.commands.Game.ShowTextCommand;
 import model.event.Event;
+import model.event.EventEndListener;
 import model.event.Univent;
 import view.menu.QuestCreator;
 import view.viewItems.ItemBox.ItemInfoContainer;
@@ -60,7 +61,16 @@ public class TextStop extends Event implements StopAble {
 		
 		UserInputController control=UserInputController.getController();
 		//control.performCommand(new HoldToContinueCommand(this));
-		control.performCommand(new ShowTextCommand(thetext,options));
+		control.performCommand(new ShowTextCommand(thetext,options,new EventEndListener() {
+
+			@Override
+			public void eventEnded() {
+				triggerEventEndListeners();
+				
+			}
+			
+		}));
+		
 		/*
 		while(stopped) {
 			try {

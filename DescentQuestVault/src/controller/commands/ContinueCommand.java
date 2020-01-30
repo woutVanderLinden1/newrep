@@ -18,10 +18,16 @@ public class ContinueCommand extends BasicCommand {
 	public void perform() {
 		//stop.continueStop();
 		// TODO Auto-generated method stub
+	
 		UserInputController control=UserInputController.getController();
-		control.showNextText();
-		EventTriggerStack stack=EventTriggerStack.getTriggerStack();
-		stack.triggerNextStackEvent();
+		boolean bool=control.showNextText();
+		/*
+		if(!bool) {
+			EventTriggerStack stack=EventTriggerStack.getTriggerStack();
+			stack.triggerNextStackEvent();
+		}
+		*/
+		
 	}
 
 }

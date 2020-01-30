@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
@@ -56,6 +57,7 @@ public class SavedClass implements Serializable ,ImageHolder{
 	}
 	public void setClassname(String classname) {
 		this.classname = classname;
+		classcard.setSkillname(classname);
 	}
 	public HeroType getType() {
 		return type;
@@ -105,7 +107,7 @@ public class SavedClass implements Serializable ,ImageHolder{
 			
 		});
 		HeroType[] list= {HeroType.WARRIOR,HeroType.CLERIC,HeroType.MAGE,HeroType.SCOUT};
-		box.addJComboBox("Type", list, new ActionTaker<HeroType>() {
+		JComboBox bos=box.addJComboBox("Type", list, new ActionTaker<HeroType>() {
 
 			@Override
 			public void perform(HeroType performstring) {
@@ -115,6 +117,7 @@ public class SavedClass implements Serializable ,ImageHolder{
 
 			
 		});
+		bos.setSelectedItem(this.type);
 		for(SavedItem item:initialitems) {
 			box.addButton(item.getName(),"remove",new ActionTaker<ActionEvent>(){
 

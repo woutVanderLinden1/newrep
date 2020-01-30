@@ -14,6 +14,7 @@ import model.Item;
 import model.Resources;
 import model.Monster.Monster;
 import model.event.Event;
+import model.event.EventEndListener;
 import model.event.Univent;
 import model.event.advancedevents.PlaceSpecialMonsterEvent;
 import view.Items.Map.ViewMonster;
@@ -50,8 +51,14 @@ public class MajorMonsterPerilEvent extends Event {
 	public void trigger() {
 		periliteration++;
 		double val=Math.min(viewmonster.getMonsterLimit(),periliteration);
-		commands.add(new ShowTextCommand("Place "+val+" "+ viewmonster.getIDName()+ " on the entrance of the map (ignore group limits)"));
-		
+		commands.add(new ShowTextCommand("Place "+val+" "+ viewmonster.getIDName()+ " on the entrance of the map (ignore group limits)",new EventEndListener() {
+
+			@Override
+			public void eventEnded() {
+				triggerEventEndListeners();
+			}
+			
+		}));
 		super.trigger();
 		
 	}

@@ -68,6 +68,7 @@ public abstract class Trigger extends Univent implements EventBase {
 	
 		EventTriggerStack triggerstack=EventTriggerStack.getTriggerStack();
 		triggerstack.addNewEvents(totrigger);
+		
 		triggerstack.triggerNextStackEvent();
 		/*
 		    	for(Univent ev:totrigger) {

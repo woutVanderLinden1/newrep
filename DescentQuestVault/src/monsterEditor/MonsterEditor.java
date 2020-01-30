@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.WindowConstants;
 
@@ -46,15 +47,15 @@ public class MonsterEditor extends MainFrame {
 	
 	public MonsterEditor() {
 		this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-		this.setSize(1200,800);
-		this.setMinimumSize(new Dimension(1200,800));
-		this.setPreferredSize(new Dimension(1200,800));
+		this.setSize(1250,850);
+		this.setMinimumSize(new Dimension(1250,850));
+		this.setPreferredSize(new Dimension(1250,850));
 		this.setVisible(true);
 		this.setName("MonsterEditor");
 		this.setTitle("MonsterEditor");
 		info=new MonsterInfoItemBox(400,800,300);
 		info.setMinimumSize(new Dimension(300,800));
-		events=new EventBox(400,800);
+		events=new EventBox(400,1600);
 		events.setMinimumSize(new Dimension(350,800));
 		view=new MonsterEditorView(this);
 		initialiseNewController();
@@ -67,7 +68,9 @@ public class MonsterEditor extends MainFrame {
 		JSplitPane splitPane1 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,splitPane0,info);
 		JPanel pan2=new JPanel();
 		pan2.add(splitPane1);
-		JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,pan2,events);
+		JScrollPane pane=new JScrollPane(events);
+		pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		JSplitPane splitPane2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,pan2,pane);
 		
 		JPanel panel=new JPanel();
 		panel.setPreferredSize(this.getSize());

@@ -2,6 +2,9 @@ package model.event.advancedevents.peril;
 
 import java.util.ArrayList;
 
+import controller.UserInputController;
+import controller.commands.Game.ShowTextCommand;
+import model.event.EventEndListener;
 import model.event.EventTriggerStack;
 import model.event.GameLoseEvent;
 import model.event.Univent;
@@ -13,8 +16,15 @@ public class TextPeril extends Peril {
 	
 	public void trigger() {
 		ArrayList<Univent> totrigger=new ArrayList<Univent>();
-		
-		totrigger.add(new TextStop("a peril is happening"));
+		UserInputController control=UserInputController.getController();
+		control.performCommand(new ShowTextCommand("a peril is happening",new EventEndListener() {
+
+			@Override
+			public void eventEnded() {
+				triggerEventEndListeners();
+			}
+			
+		}));
 		
 		
 		this.actions.addAll(totrigger);

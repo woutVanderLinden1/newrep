@@ -9,6 +9,7 @@ import controller.commands.Game.ShowMonsterMovementCommand;
 import controller.turns.TurnHolder;
 import misc.ActivateAble;
 import model.Activation;
+import model.event.EventEndListener;
 import model.event.Trigger;
 import monstercreator.MonsterMovement;
 import monstercreator.SampleMovement;
@@ -68,7 +69,18 @@ public class GameMonster extends ViewMonster implements ActivateAble ,TurnHolder
 		//monsterActivations
 		//this.setRemoveMonsterEvent(toplace.getRemoveMonsterEvent());
 		//this.getRemoveMonsterEvent().setGameMonster(this);
-	
+		GameMonster mon=this;
+		toplace.getTurnTrigger().addEventEndListener(new EventEndListener() {
+			
+		
+			
+
+			@Override
+			public void eventEnded() {
+				UserInputController control=UserInputController.getController();
+				control.performCommand(new EndTurnCommand(mon));
+			}
+		});
 		
 		System.out.println("toremove monster is "+toplace.getRemoveMonsterEvent().getGameMonster());
 		
@@ -107,12 +119,13 @@ public class GameMonster extends ViewMonster implements ActivateAble ,TurnHolder
 	@Override
 	public void startTurn() {
 		//process monster movement
+		
 		this.getTurnTrigger().trigger();
 		// TODO Auto-generated method stub
-		UserInputController control=UserInputController.getController();
-		control.performCommand(new EndTurnCommand(this));
+		
 		
 	}
+	
 
 	public Trigger getTurnTrigger() {
 		// TODO Auto-generated method stub

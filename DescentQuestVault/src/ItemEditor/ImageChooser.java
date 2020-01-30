@@ -100,6 +100,8 @@ public class ImageChooser extends SubContainer{
 	protected File loadSavedItem() {
 		UserInputController.renew();
 		final JFileChooser fc = new JFileChooser();
+		 File workingDirectory = new File("C:\\Users\\User\\Pictures\\skillcards");
+		fc.setCurrentDirectory(workingDirectory);
 		fc.setAcceptAllFileFilterUsed(false);
 		fc.addChoosableFileFilter(new FileFilter() {
 			@Override
@@ -129,7 +131,7 @@ public class ImageChooser extends SubContainer{
 				return ".ser";
 			}
 		});
-		File workingDirectory = new File(System.getProperty("user.home"));
+		//File workingDirectory = new File(System.getProperty("user.home"));
 		fc.setCurrentDirectory(workingDirectory);
 		int returnVal = fc.showOpenDialog(this);
 		File f=fc.getSelectedFile();

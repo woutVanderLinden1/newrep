@@ -19,6 +19,7 @@ import misc.ActivateAble;
 import misc.SampleFile;
 import misc.save.WorldSaveFile;
 import model.Activation;
+import model.event.EventEndListener;
 import model.event.MonsterTurnTrigger;
 import model.event.MovementString;
 import model.event.Trigger;
@@ -411,19 +412,19 @@ public class ViewManager implements IView {
 	}
 
 	@Override
-	public void showTextDialog(String text) {
+	public void showTextDialog(String text,EventEndListener listen) {
 		// TODO Auto-generated method stub
-		game.showTextDialog(text);
+		game.showTextDialog(text,listen);
 	}
 
 	@Override
-	public void showTextDialog(String text, ArrayList<TextOption> newoptions) {
+	public void showTextDialog(String text, ArrayList<TextOption> newoptions,EventEndListener listen) {
 		if(game==null) {
 			UserInputController control=UserInputController.getController();
 			control.showTextDialog(text,newoptions);
 		}
 		else {
-			game.showTextDialog(text,newoptions);
+			game.showTextDialog(text,newoptions,listen);
 		}
 	
 	}
@@ -474,9 +475,9 @@ public class ViewManager implements IView {
 
 	@Override
 	public void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect,
-			MonsterKind kind) {
+			MonsterKind kind,EventEndListener listen) {
 		// TODO Auto-generated method stub
-		game.showMonsterMovement(monster,movement,continousEffect,kind);
+		game.showMonsterMovement(monster,movement,continousEffect,kind,listen);
 	}
 
 	@Override

@@ -9,7 +9,7 @@ public class ClassSkillCard extends SavedSkill {
 
 	public ClassSkillCard(SavedClass savedClass) {
 		super("Class", "", 0,savedClass);
-		this.setSkillname("Class");
+		this.setSkillname(savedClass.getClassname());
 		clas=savedClass;
 	}
 	public void addItemSpecifics(ItemInfoContainer box) {

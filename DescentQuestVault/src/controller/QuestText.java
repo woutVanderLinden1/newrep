@@ -17,6 +17,7 @@ import frame.SubContainer;
 import misc.ActivateAble;
 import misc.BaseFile;
 import model.ItemController;
+import model.event.EventEndListener;
 import model.event.MovementString;
 import model.event.StartGameListener;
 import model.event.extraevents.TextOption;
@@ -144,9 +145,9 @@ public class QuestText extends SubContainer  {
 
 
 
-	public void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect,MonsterKind kind) {
+	public void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect,MonsterKind kind,EventEndListener listen) {
 		// TODO Auto-generated method stub
-		gamemap.showMonsterMovement(monster,movement,continousEffect, kind);
+		gamemap.showMonsterMovement(monster,movement,continousEffect, kind, listen);
 	}
 
 

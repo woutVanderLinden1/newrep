@@ -193,7 +193,7 @@ public class ModifyDespairEvent extends Event implements NameChangeListener {
 		
 	}
 	public Univent copy() {
-		return new ModifyGoldEvent(mod,modvalue);
+		return new ModifyDespairEvent(mod,modvalue);
 	}
 
 }

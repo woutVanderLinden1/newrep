@@ -38,6 +38,10 @@ public class BaseFile implements Serializable {
 		return equipment;
 	}
 
+	public void addHero(Hero hero) {
+		heroes.add(hero);
+		
+	}
 	public void setEquipment(ArrayList<SavedItem> equipment) {
 		this.equipment = equipment;
 	}

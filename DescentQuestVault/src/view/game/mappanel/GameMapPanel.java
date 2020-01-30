@@ -41,6 +41,7 @@ import misc.SampleFile;
 import model.Activation;
 import model.ItemController;
 import model.Hero.Hero;
+import model.event.EventEndListener;
 import model.event.MovementString;
 import model.event.extraevents.StopAble;
 import model.event.extraevents.TextOption;
@@ -154,7 +155,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 	private void addHeroes(ArrayList<Hero> heroes) {
 		
 		heroPanel.setSize(100,450);
-		heroPanel.setLocation(50,100);
+		heroPanel.setLocation(50,130);
 		for(Hero hero:heroes) {
 			GameHero viewher=new GameHero(hero);
 			heroPanel.addHero(viewher);
@@ -185,7 +186,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		System.out.println("shownow");
 		temporaryPanel.reset();
 		temporaryPanel.setLocation(point);
-		temporaryPanel.setBackground(new Color(222,184,135,95));
+		temporaryPanel.setBackground(new Color(222,184,135,99));
 		for(ActivateAble act:list) {
 			for(Activation activation:act.getActivations()) {
 				temporaryPanel.addButton(ActivationFactory.createActivationButton(activation));
@@ -306,7 +307,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 	}
 
 
-	public void showTextDialog(String text ) {
+	public void showTextDialog(String text, EventEndListener listen ) {
 		mapPanels.moveToBack(temporaryPanel);
 		// TODO Auto-generated method stub
 		//grid.showTextDialog(text);
@@ -328,15 +329,36 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		textPanel.setSize(Math.max(mapPanels.getWidth()-400,400),400);
 		textPanel.setLocation(200,10);
 		area.setSize(mapPanels.getWidth()-80,300);
-		textPanel.setBackground(new Color(222,184,135,95));
+		textPanel.setBackground(new Color(222,184,135));
 		area.getCaret().setVisible(false); 
 		this.revalidate();
 		this.repaint();
+		JButton optionbutton=new JButton("continue");
+		JPanel buttonpanel=new JPanel();
+		textPanel.add(buttonpanel);
+		buttonpanel.setSize(Math.max(mapPanels.getWidth()-500,400),50);
+		buttonpanel.setLocation(50, 350);
+		buttonpanel.setBackground(new Color(0,0,0,0));
+		optionbutton.setSize(300,200);
+		optionbutton.setBackground(new Color(222,194,145));
+		optionbutton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				closeText();
+				
+				listen.eventEnded();
+			}
+
+		
+		});
+		buttonpanel.add(optionbutton);
 		
 	}
 
 
-	public void showTextDialog(String text, ArrayList<TextOption> newoptions ) {
+	public void showTextDialog(String text, ArrayList<TextOption> newoptions, EventEndListener listen ) {
 		System.out.println(text);
 		mapPanels.moveToBack(temporaryPanel);
 		// TODO Auto-generated method stub
@@ -361,7 +383,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		textPanel.setSize(Math.max(mapPanels.getWidth()-400,400),400);
 		textPanel.setLocation(200,10);
 		area.setSize(mapPanels.getWidth()-80,300);
-		textPanel.setBackground(new Color(222,184,135,95));
+		textPanel.setBackground(new Color(222,184,135));
 		JPanel buttonpanel=new JPanel();
 		textPanel.add(buttonpanel);
 		buttonpanel.setSize(Math.max(mapPanels.getWidth()-500,400),50);
@@ -380,7 +402,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 					closeText();
 					option.trigger();
 					option.perform();
-					
+					listen.eventEnded();
 				}
 
 			
@@ -405,7 +427,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 	}
 
 
-	public void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect, MonsterKind kind) {
+	public void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect, MonsterKind kind, EventEndListener listen) {
 		// TODO Auto-generated method stub
 		textPanel.removeAll();
 		// TODO Auto-generated method stub
@@ -417,11 +439,13 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		textPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		JLabel picLabel = new JLabel(new ImageIcon(monster.getImageItem().getPreciseImage(70,70)));
 		textPanel.add(picLabel);
-		textPanel.setSize(Math.max(mapPanels.getWidth()-400,400),350);
+		textPanel.setSize(Math.max(mapPanels.getWidth()-400,400),450);
 		textPanel.setLocation(200,10);
 		picLabel.setSize(70,70);
 		picLabel.setLocation(textPanel.getWidth()/2-25, 5);
 		JTextArea area=new JTextArea();
+		
+		area.setAlignmentX(Component.CENTER_ALIGNMENT);
 		area.setText(kind.toString()+" "+monster.getName() +"'s movement");
 		Font g1=new Font("descentquestbuilderfont", Font.PLAIN, 40);
 		Font g2=new Font("descentquestbuilderfont", Font.PLAIN, 26);
@@ -435,10 +459,15 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 	    
 		area.setBackground(new Color(0,0,0,0));
 		area.setEditable(false);
-		area.setSize(mapPanels.getWidth()-80,40);
+		area.setSize(mapPanels.getWidth()-80,60);
+		if(kind==MonsterKind.MASTER) {
+			textPanel.setBackground(new Color( 162, 60, 77));
+		}
+		else {
+			textPanel.setBackground(new Color(222,184,135));
+		}
 		
 		
-		textPanel.setBackground(new Color(222,184,135,95));
 		JTextArea area2=new JTextArea();
 		String str=continousEffect.getThemovement()+"\n";
 		int textwidth = (int)(g2.getStringBounds(str, frc).getWidth());
@@ -451,7 +480,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		
 		area2.setFont(g2);
 		textPanel.add(area2);
-		area2.setLocation(textPanel.getWidth()/2-textwidth/2,120);
+		area2.setLocation(textPanel.getWidth()/2-textwidth/2,130);
 
 	
 	    
@@ -461,7 +490,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		JPanel buttonpanel=new JPanel();
 		textPanel.add(buttonpanel);
 		buttonpanel.setSize(Math.max(mapPanels.getWidth()-500,400),50);
-		buttonpanel.setLocation(50, 300);
+		buttonpanel.setLocation(50, 360);
 		buttonpanel.setBackground(new Color(0,0,0,0));
 		JButton optionbutton=new JButton("continue");
 		
@@ -474,7 +503,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 				closeText();
 				UserInputController control=UserInputController.getController();
 				control.performCommand(new ContinueCommand());
-				
+				listen.eventEnded();
 				
 			}
 

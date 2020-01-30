@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
+import StoryEditor.DraggAblePanel;
 import controller.UserInputController;
 import frame.SubContainer;
 import misc.Tools;
@@ -160,7 +161,7 @@ public class TriggerContainer extends TriggerField {
 	}
 
 	@Override
-	public void removeField(BaseField todrag) {
+	public void removeField(DraggAblePanel todrag) {
 		// TODO Auto-generated method stub
 		//super.removeField(todrag);
 		this.remove(todrag);

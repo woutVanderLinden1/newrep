@@ -14,6 +14,7 @@ import model.Item;
 import model.Resources;
 import model.Monster.Monster;
 import model.event.Event;
+import model.event.EventEndListener;
 import model.event.Univent;
 import view.Items.Map.ViewMonster;
 import view.menu.QuestCreator;
@@ -48,7 +49,14 @@ public class ConditionEffect extends Event {
 	public void trigger() {
 		UserInputController control=UserInputController.getController();
 		//control.performCommand(new HoldToContinueCommand(this));
-		control.performCommand(new ShowTextCommand("The heroes are now "+ cond +"."));
+		control.performCommand(new ShowTextCommand("The heroes are now "+ cond +".",new EventEndListener() {
+
+			@Override
+			public void eventEnded() {
+				triggerEventEndListeners();
+			}
+			
+		}));
 	}
 	@Override
 	public void addEventSpecifics(ItemInfoContainer itemInfoText) {

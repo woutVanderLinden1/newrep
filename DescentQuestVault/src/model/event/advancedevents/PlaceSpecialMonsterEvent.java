@@ -32,6 +32,7 @@ import model.Resources;
 import model.Monster.Monster;
 import model.Monster.TokenMonster;
 import model.event.Event;
+import model.event.EventEndListener;
 import model.event.MonsterTurnTrigger;
 import model.event.Univent;
 import model.event.extraevents.StopAble;
@@ -82,7 +83,14 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 	public void trigger() {
 		ArrayList<TextOption> options=new ArrayList<TextOption>();
 		options.add(new TextOption("continue",new ContinueCommand()));
-		commands.add(new ShowTextCommand(text,options));
+		commands.add(new ShowTextCommand(text,options,new EventEndListener() {
+
+			@Override
+			public void eventEnded() {
+				triggerEventEndListeners();
+			}
+			
+		}));
 		
 		super.trigger();
 		
@@ -171,6 +179,7 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 		    }
 		};
 		button.addActionListener(listen);
+		
 		//button
 		
 	
@@ -224,8 +233,15 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 	 */
 	private void addMonsterMovementCombBox(ItemInfoContainer itemInfoText) {
 		ArrayList<MonsterTurnTrigger> possibleturns=new ArrayList<MonsterTurnTrigger>();
-		File dir = new File(System.getProperty("user.dir")+"/Movement/zombie");
-		System.out.println("MovementCombobox"+System.getProperty("user.dir")+"/Movement/zombie");
+		File dir=null;
+		if(viewmonster==null) {
+			dir=new File(System.getProperty("user.dir")+"/Movement/");
+		}
+		else {
+			dir=  new File(System.getProperty("user.dir")+"/Movement/"+viewmonster.getImageItem().getItem().getName());
+
+		}
+		System.out.println("MovementCombobox"+System.getProperty("user.dir")+"/Movement/"+viewmonster.getImageItem().getItem().getName());
 		  File[] directoryListing = dir.listFiles();
 		  if (directoryListing != null) {
 		    for (File child : directoryListing) {
@@ -250,6 +266,31 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 		  } else {
 		  
 		  }
+			File dir2 = new File(System.getProperty("user.dir")+"/Movement//Default");
+			  File[] directoryListing2 = dir2.listFiles();
+			  if (directoryListing2 != null) {
+			    for (File child : directoryListing2) {
+			    	MonsterTurnTrigger g=null;
+					 FileInputStream fileIn;
+					try {
+						fileIn = new FileInputStream(child);
+						ObjectInputStream in = new ObjectInputStream(fileIn);
+						g = (MonsterTurnTrigger) in.readObject();
+					    in.close();
+					    fileIn.close();
+					    possibleturns.add(g);
+					    System.out.println("the read file is " +g);
+					} catch (IOException | ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			    	
+			    	
+			    	
+			    }
+			  } else {
+			  
+			  }
 		Map<String,MonsterTurnTrigger> trigmap=new HashMap<String,MonsterTurnTrigger>();
 		String[] comboOptions = new String[possibleturns.size()];
 		int k=0;
@@ -274,6 +315,9 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 			}
 			
 		});
+		String comp=((String) button.getSelectedItem());
+		MonsterTurnTrigger trig=trigmap.get(comp);
+		viewmonster.setTurnTrigger(trig);
 		 JLabel field = new JLabel();
 		 field.setText("change setvalue");
 		

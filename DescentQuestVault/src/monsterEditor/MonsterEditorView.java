@@ -39,7 +39,7 @@ public class MonsterEditorView extends ViewManager {
 	public void deleteSelected() {
 		SelectAble selected=info.getSelected();
 		//rotate selected in the  gridpanel if it's there
-		
+		System.out.println("deleteing here");
 		info.removeSelected();
 		events.deleteSelected(selected);
 	}

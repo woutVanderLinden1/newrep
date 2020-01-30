@@ -96,7 +96,7 @@ public class SavedSkill  implements Serializable, ImageHolder{
 			@Override
 			public void perform(Integer value) {
 				// TODO Auto-generated method stub
-				setSkillpoints(skillpoints);
+				setSkillpoints(value);
 			}
 			
 		});

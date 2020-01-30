@@ -60,8 +60,10 @@ public class ItemEditor extends MainFrame {
 		}
 		currentItem.setImagestring(imagechooser.getImageString());
 		final JFileChooser fc = new JFileChooser();
-		 File workingDirectory = new File(System.getProperty("user.dir")+"/Items");
+		 File workingDirectory = new File(System.getProperty("user.dir")+"//Items");
 		fc.setCurrentDirectory(workingDirectory);
+		fc.setSelectedFile(new File(currentItem.getName()+".ser"));
+	
 		int returnVal = fc.showSaveDialog(this);
 		  File newfile = fc.getSelectedFile();
 		  if (FilenameUtils.getExtension(newfile.getName()).equalsIgnoreCase("ser")) {

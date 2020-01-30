@@ -194,6 +194,6 @@ public class ModifyFameEvent extends Event implements NameChangeListener{
 		
 	}
 	public Univent copy() {
-		return new ModifyGoldEvent(mod,modvalue);
+		return new ModifyFameEvent(mod,modvalue);
 	}
 }

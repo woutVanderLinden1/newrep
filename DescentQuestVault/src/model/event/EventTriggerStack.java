@@ -10,6 +10,9 @@ public class EventTriggerStack {
 	
 	public static  EventTriggerStack EventTriggerStack;
 	
+	private ArrayList<EmptyListener> emptyListeners=new ArrayList<EmptyListener>();
+	
+	
 	public static EventTriggerStack getTriggerStack() {
 		if(EventTriggerStack==null) {
 			EventTriggerStack=new EventTriggerStack();
@@ -19,15 +22,35 @@ public class EventTriggerStack {
 	public EventTriggerStack() {
 		stack=new Stack<Univent>();
 	}
-	
-	public void triggerNextStackEvent() {
+
+	public boolean triggerNextStackEvent() {
 		if(!stack.isEmpty()) {
 			Univent vent=stack.pop();
-			vent.trigger();
+			if(vent.isStopEvent()) {
+				vent.addEventEndListener(new EventEndListener() {
+
+					@Override
+					public void eventEnded() {
+						System.out.println("do next");
+						triggerNextStackEvent();
+						vent.clearEventEndListeners();
+					}
+					
+				});
+				vent.trigger();
+				//
+			}
+		
+			
 			if(!vent.isStopEvent()) {
+				vent.trigger();
 				this.triggerNextStackEvent();
 			}
+			
+			return true;
 		}
+		this.triggerEmptyListeners();
+		return false;
 		
 	}
 	
@@ -35,5 +58,19 @@ public class EventTriggerStack {
 		ArrayList<Univent> list=new ArrayList<Univent>(newevents);
 		Collections.reverse(list);
 		stack.addAll(list);
+	}
+	public void addEmptyListener(EmptyListener listen) {
+		emptyListeners.add(listen);
+	}
+	public void triggerEmptyListeners() {
+		for(int i=emptyListeners.size()-1;i>=0;i--) {
+			EmptyListener listen=emptyListeners.get(i);
+		
+			listen.emptied();
+		}
+	}
+	public void removeEmptyListener(EmptyListener emptyListener) {
+		emptyListeners.remove(emptyListener);
+		
 	}
 }

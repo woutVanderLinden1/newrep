@@ -28,7 +28,16 @@ public class ShowMonsterMovementEvent extends Event {
 	public void trigger() {
 		UserInputController control=UserInputController.getController();
 		
-		control.performCommand(new ShowMonsterMovementCommand(mon,minionmovement,continousMinionEffect,minion));
+		control.performCommand(new ShowMonsterMovementCommand(mon,minionmovement,continousMinionEffect,minion,new EventEndListener() {
+
+			@Override
+			public void eventEnded() {
+				System.out.println("monster turn processed");
+				// TODO Auto-generated method stub
+				triggerEventEndListeners();
+			}
+			
+		}));
 			
 		
 		

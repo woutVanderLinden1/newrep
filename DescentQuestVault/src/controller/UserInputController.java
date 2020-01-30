@@ -1153,15 +1153,15 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		return theFrame;
 	}
 
-	public void showNextText() {
-	
+	public Boolean showNextText() {
+		Boolean bool=false;
 		if(textstarted) {
 			for(int i=0;i<nexttextlistener.size();i++) {
 				NextTextListeners listener = nexttextlistener.get(i);
-				listener.nextText();
+				bool=listener.nextText();
 			}
 		}
-		
+		return bool;
 	}
 
 	public void addNextTextListener(NextTextListeners listener) {

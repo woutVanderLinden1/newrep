@@ -56,6 +56,7 @@ public class GameController implements IGameController, AddGameHeroListener,AddG
 
 
 	public void startNextTurn() {
+		System.out.println("started the next turn");
 		if(heroturns.size()+monsterTurnList.size()==0) {
 			refreshTurns();
 		}
@@ -118,19 +119,22 @@ public class GameController implements IGameController, AddGameHeroListener,AddG
 		int i=rand.nextInt(t);
 		currentTurn=monsterTurnList.get(i);
 		lastturnkind=currentTurn.getTurnKind();
+		//currentTurn.performTurn();
+		
 		Thread thread=new Thread() {
 			public void run() {
-				currentTurn.performTurn();
+			currentTurn.performTurn();
 			}
 		};
-		 thread.start();
+		
+		thread.start();
 		monsterTurnList.remove(currentTurn);
 	}
 
 
 	private void refreshTurns() {
 		System.out.println("refreshed round "+rounds);
-		lastturnkind=TurnKind.MONSTER;
+		
 		monsterTurnList.addAll(basemonsterturns);
 		heroturns.addAll(baseheroturns);
 		rounds++;
@@ -142,7 +146,7 @@ public class GameController implements IGameController, AddGameHeroListener,AddG
 		}
 		triggerNextRoundListeners();
 		// TODO Auto-generated method stub
-		
+		lastturnkind=TurnKind.MONSTER;
 	}
 
 

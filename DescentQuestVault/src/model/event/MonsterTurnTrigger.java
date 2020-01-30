@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -17,6 +18,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import ItemEditor.ActionTaker;
 import controller.UserInputController;
 
 import controller.commands.AddEventToTriggerFieldCommand;
@@ -25,6 +27,7 @@ import misc.ActivateAble;
 import model.Monster.Monster;
 import monstercreator.SingleMovement;
 import view.Items.Map.ViewMonster;
+import view.hero.EndTurnListener;
 import view.viewItems.MonsterItem;
 import view.viewItems.ItemBox.ItemInfoContainer;
 import monstercreator.*;
@@ -36,9 +39,10 @@ public class MonsterTurnTrigger extends Trigger implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<MonsterSpecial> monsterspecials=new ArrayList<MonsterSpecial>();
+	private ArrayList<EndTurnListener> endturnlisteners=new ArrayList<EndTurnListener>();
 	
 	private String monsterInfo;
-	
+	private Difficulty diff;
 	
 	
 	public Monster getMonster() {
@@ -68,6 +72,17 @@ public class MonsterTurnTrigger extends Trigger implements Serializable {
 		addNewMonsterMovementToTriggerFieldButton(itemInfoText);
 		addMonsterSpecialButtons(itemInfoText);
 		addInfoTextChanger(itemInfoText);
+		Difficulty [] diffs= {Difficulty.EASY,Difficulty.NORMAL,Difficulty.HARD,Difficulty.IMPOSSIBLE};
+		JComboBox<Difficulty> box=itemInfoText.addJComboBox("Difficulty", diffs, new ActionTaker<Difficulty>() {
+ 
+			@Override
+			public void perform(Difficulty value) {
+				// TODO Auto-generated method stub
+				diff=value;
+			}
+			
+		});
+		box.setSelectedItem(diff); 
 	}
 
 
@@ -282,6 +297,45 @@ public class MonsterTurnTrigger extends Trigger implements Serializable {
 		return monsterspecials;
 	}
 
+
+	public void addEndTurnListener(EndTurnListener endTurnListener) {
+		endturnlisteners.add(endTurnListener);
+	}
+	public void triggerHere(ArrayList<Univent> totrigger) {
+		
+		EventTriggerStack triggerstack=EventTriggerStack.getTriggerStack();
+		triggerstack.addNewEvents(totrigger);
+		
+		boolean triggered=triggerstack.triggerNextStackEvent();
+		/*
+		    	for(Univent ev:totrigger) {
+		    		ev.trigger();
+		    	}
+		    	*/
+		triggerstack.addEmptyListener(new EmptyListener() {
+
+			@Override
+			public void emptied() {
+				triggerstack.removeEmptyListener(this);
+				triggerEventEndListeners();
+				
+			}
+			
+		});
+	
+		//keep them as a continue prepared
+		//if continue pressed trigger the rest
+		System.out.println("here "+triggered);
+		if(!triggered) {
+			System.out.println("id ontthinkso");
+			for(EndTurnListener endturnlistener:endturnlisteners) {
+				endturnlistener.TurnEnded();
+			}
+		}
+	}
+	
+
+	
 
 	
 }

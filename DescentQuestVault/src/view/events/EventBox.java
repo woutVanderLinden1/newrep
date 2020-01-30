@@ -297,8 +297,11 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 	private void removeField(DraggAblePanel todrag) {
 		System.out.println("event removed");
 		// TODO Auto-generated method stub
+		System.out.println(fields.size());
 		for(int i=0;i<fields.size();i++) {
+			
 			BaseField field=fields.get(i);
+			System.out.println(field.getUnivent());
 			field.removeField(todrag);
 			if(field==todrag) {
 				fields.remove(i);
@@ -447,7 +450,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 	}
 
 	public void deleteSelected(SelectAble selected) {
-		// TODO Auto-generated method stub
+		System.out.println("deleted a "+selected.getKind());
 		switch(selected.getKind()) {
 		case DOOR:
 			break;

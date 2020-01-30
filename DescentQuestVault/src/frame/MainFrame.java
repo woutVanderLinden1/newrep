@@ -408,6 +408,8 @@ public class MainFrame extends JFrame{
 			//label.setLocation(xoff,yoff);
 			
 		}
+		xoff=xoff-this.getLocation().x;
+		yoff=yoff-this.getLocation().y;
 		label.setLocation(xoff-20,yoff-45);
 		switch(item.getAngle()){
 			case 0:

@@ -21,6 +21,7 @@ import controller.commands.ContinueCommand;
 import controller.commands.Game.ShowTextCommand;
 import controller.stack.EndGameCommand;
 import model.ItemController;
+import model.event.EventEndListener;
 import model.event.Trigger;
 import model.event.Univent;
 import model.event.extraevents.TextOption;
@@ -30,6 +31,10 @@ import view.viewItems.ItemBox.ItemInfoContainer;
 
 public class StoryTextEvent extends StoryEvent implements NextTextListeners {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5697342717274260794L;
 	private int nroftext;
 	private static int nrstorytexts;
 	
@@ -49,7 +54,14 @@ public class StoryTextEvent extends StoryEvent implements NextTextListeners {
 
 	private void showText(int nr2) {
 		UserInputController control=UserInputController.getController();
-		control.performCommand(new ShowTextCommand(storyments.get(nr2).getText(),storyments.get(nr2).getTrigOptions()));
+		control.performCommand(new ShowTextCommand(storyments.get(nr2).getText(),storyments.get(nr2).getTrigOptions(),new EventEndListener() {
+
+			@Override
+			public void eventEnded() {
+				triggerEventEndListeners();
+			}
+			
+		}));
 		
 		
 		
@@ -339,19 +351,20 @@ public class StoryTextEvent extends StoryEvent implements NextTextListeners {
 
 
 	@Override
-	public void nextText() {
+	public boolean nextText() {
 		 nr++;
 		 if(nr>=storyments.size()) {
-
+			 	
 				UserInputController control=UserInputController.getController();
 				control.performCommand(new EndGameCommand());
+				return false;
 				//control.endGame();
 		 }
 		 else
 		 {
 			 this.showText(nr); 
 		 }
-	
+		 return true;
 		
 	}
 	public void removeStoryText(StoryTextElement elem) {

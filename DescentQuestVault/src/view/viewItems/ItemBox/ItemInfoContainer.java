@@ -338,7 +338,7 @@ public class ItemInfoContainer extends SubContainer {
 		itemInfoText.addToPanel(pan);
 	}
 	
-	public <P> void addJComboBox(String pretext,P[] list,ActionTaker<P> taker) {
+	public <P> JComboBox addJComboBox(String pretext,P[] list,ActionTaker<P> taker) {
 		JComboBox<P> button=new JComboBox<P>(list);
 		
 		
@@ -369,7 +369,7 @@ public class ItemInfoContainer extends SubContainer {
         field.setPreferredSize(new Dimension(w/2,25));
         //button.setHorizontalAlignment(SwingConstants.RIGHT);
        this.addPreComboBox(field,button);
-		
+		return button;
 	}
 	public <P> void addButton(String pretext,String buttontext,ActionTaker<ActionEvent> taker) {
 	

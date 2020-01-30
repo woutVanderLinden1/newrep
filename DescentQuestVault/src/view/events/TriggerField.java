@@ -28,6 +28,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import MouseListeners.SelectEventListener;
+import StoryEditor.DraggAblePanel;
 import controller.UserInputController;
 import frame.SubContainer;
 import misc.Tools;
@@ -360,14 +361,14 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 
 
 	
-
-	public void removeField(BaseField todrag) {
+	@Override
+	public void removeField(DraggAblePanel todrag) {
 		// TODO Auto-generated method stub
 		System.out.println("this shit");
 		for(int i=0;i<fields.size();i++) {
 			BaseField field=fields.get(i);
 			field.removeField(todrag);
-			trig.removeUnivent(todrag.getUnivent());
+			trig.removeUnivent(((BaseField)todrag).getUnivent());
 			if(field==todrag) {
 				System.out.println("happens");
 				fields.remove(i);

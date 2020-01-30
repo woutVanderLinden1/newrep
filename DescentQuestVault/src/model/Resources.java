@@ -46,7 +46,8 @@ public class Resources {
 			new FleshMoulder(),
 			new Ettin(),
 			new Elemental(),
-			new ShadowDragon()
+			new ShadowDragon(),
+			new Tentacle()
 			
 			));
 	

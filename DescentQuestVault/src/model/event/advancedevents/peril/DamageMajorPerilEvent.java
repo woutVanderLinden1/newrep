@@ -20,6 +20,7 @@ import javax.swing.text.DocumentFilter.FilterBypass;
 import controller.UserInputController;
 import controller.commands.Game.ShowTextCommand;
 import model.event.Event;
+import model.event.EventEndListener;
 import model.event.Univent;
 import view.menu.QuestCreator;
 import view.viewItems.ItemBox.ItemInfoContainer;
@@ -35,7 +36,14 @@ public class DamageMajorPerilEvent extends Event {
 	public void trigger() {
 		UserInputController control=UserInputController.getController();
 		//control.performCommand(new HoldToContinueCommand(this));
-		control.performCommand(new ShowTextCommand("The heroes divide "+ perildamage +" damage among them"));
+		control.performCommand(new ShowTextCommand("The heroes divide "+ perildamage +" damage among them",new EventEndListener() {
+
+			@Override
+			public void eventEnded() {
+				triggerEventEndListeners();
+			}
+			
+		}));
 		perildamage=perildamage+2;
 	}
 

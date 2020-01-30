@@ -105,10 +105,12 @@ public class SkillEditor extends MainFrame  {
 	}
 	public void setClass(SavedClass currentclass2) {
 		currentclass2.setEditor(this);
+		currentclass=currentclass2;
 		editor.setClass(currentclass2);
 		chooser.setClass(currentclass2);
 		imagechooser.setImage(currentclass2.getImagestring());
-		
+		setSkill(currentclass2.getClasscard());
+		chooser.refreshItemButttonPanel();
 	}
 
 	public void newSkill() {
@@ -117,6 +119,7 @@ public class SkillEditor extends MainFrame  {
 		}
 		saveClass();
 		currentskill=new SavedSkill("skill","", 1,currentclass);
+		setSkill(currentskill);
 		currentclass.addSkill(currentskill);
 		chooser.refreshItemButttonPanel();
 		this.revalidate();

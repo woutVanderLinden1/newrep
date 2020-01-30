@@ -14,6 +14,7 @@ import misc.ActivateAble;
 import misc.BaseFile;
 import misc.SampleFile;
 import model.ItemController;
+import model.event.EventEndListener;
 import model.event.MovementString;
 import model.event.StartGameListener;
 import model.event.extraevents.StopAble;
@@ -130,15 +131,15 @@ public class QuestGame extends SubContainer implements EndRoundListener {
 
 
 
-	public void showTextDialog(String text) {
-		gamemap.showTextDialog(text);
+	public void showTextDialog(String text, EventEndListener listen) {
+		gamemap.showTextDialog(text,listen);
 		
 	}
 
 
 
-	public void showTextDialog(String text, ArrayList<TextOption> newoptions) {
-		gamemap.showTextDialog(text,newoptions);
+	public void showTextDialog(String text, ArrayList<TextOption> newoptions, EventEndListener listen) {
+		gamemap.showTextDialog(text,newoptions,listen);
 		
 	}
 
@@ -151,9 +152,9 @@ public class QuestGame extends SubContainer implements EndRoundListener {
 
 
 
-	public void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect,MonsterKind kind) {
+	public void showMonsterMovement(MonsterItem monster, ArrayList<MovementString> movement, MovementString continousEffect,MonsterKind kind, EventEndListener listen) {
 		// TODO Auto-generated method stub
-		gamemap.showMonsterMovement(monster,movement,continousEffect, kind);
+		gamemap.showMonsterMovement(monster,movement,continousEffect, kind,listen);
 	}
 
 

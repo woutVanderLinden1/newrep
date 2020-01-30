@@ -18,14 +18,6 @@ import controller.UserInputController;
 import controller.commands.LoadMovementCommand;
 import controller.commands.SaveMovementCommand;
 import controller.commands.select.SelectCommand;
-import model.Monster.Barghest;
-import model.Monster.Elemental;
-import model.Monster.Ettin;
-import model.Monster.GoblinArcher;
-import model.Monster.Merroid;
-import model.Monster.Monster;
-import model.Monster.ShadowDragon;
-import model.Monster.Spider;
 import model.Monster.*;
 import monster.Alrick;
 import monster.Merick;
@@ -36,7 +28,7 @@ public class MonsterOptions  extends JPanel {
 
 	private JComboBox<String> box;
 	private HashMap<String,Monster> map;
-	private Monster[] list= {new Zombie(),new Barghest(),new Elemental(),new Ettin(), new GoblinArcher(),new Merroid(),new ShadowDragon(),new Spider(),new Baron(),new Eliza(),new Belthir(),new Splig(), new Alrick(),new Merick()};
+	private Monster[] list= {new Zombie(),new Barghest(),new Elemental(),new Ettin(),new FleshMoulder(), new GoblinArcher(),new Merroid(),new ShadowDragon(),new Spider(),new Baron(), new Tentacle(),new Eliza(),new Belthir(),new Splig(), new Alrick(),new Merick()};
 	private JButton saveButton;
 	private JButton loadButton;
 	
