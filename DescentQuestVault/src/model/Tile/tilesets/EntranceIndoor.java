@@ -18,20 +18,21 @@ public class EntranceIndoor extends InDoorTile {
 	                
 		shape=mat;
 		exits.add(new TileExit(new Point(1,0),new Point(1,1),Direction.RIGHT));
-
+		this.setOrigxheight(2);
+		this.setOrigyheight(2);
 		
 		}
 
 		@Override
 		public double getScaleWidth() {
 			// TODO Auto-generated method stub
-			return 0.5;
+			return 0.53;
 		}
 
 		@Override
 		public double getScaleHeight() {
 			// TODO Auto-generated method stub
-			return 0.5;
+			return 0.47;
 		}
 
 		public int getRightOff() {

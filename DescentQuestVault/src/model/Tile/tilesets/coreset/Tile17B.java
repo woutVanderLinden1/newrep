@@ -19,7 +19,8 @@ public class Tile17B extends InDoorTile{
 		shape=mat;
 		exits.add(new TileExit(new Point(2,0),new Point(3,0),Direction.UP));
 		exits.add(new TileExit(new Point(0,3),new Point(0,2),Direction.LEFT));
-		
+		this.setOrigxheight(4);
+		this.setOrigyheight(4);
 	}
 
 	@Override

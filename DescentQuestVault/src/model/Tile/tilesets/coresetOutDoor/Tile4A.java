@@ -29,7 +29,8 @@ import model.Tile.tilesets.OutDoorTile;
 			exits.add(new TileExit(new Point(2,0),new Point(3,0),Direction.UP,this.getTheming()));
 			
 			exits.add(new TileExit(new Point(5,2),new Point(5,3),Direction.RIGHT,this.getTheming()));
-			
+			this.setOrigxheight(6);
+			this.setOrigyheight(6);
 			
 		}
 

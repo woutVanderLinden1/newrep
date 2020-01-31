@@ -20,7 +20,8 @@ public class Tile19B extends InDoorTile {
 		shape=mat;
 		exits.add(new TileExit(new Point(5,0),new Point(5,1),Direction.RIGHT));
 		exits.add(new TileExit(new Point(0,2),new Point(0,1),Direction.LEFT));
-
+		this.setOrigxheight(6);
+		this.setOrigyheight(3);
 		
 		
 	}

@@ -16,7 +16,8 @@ public class EndGapTile extends InDoorTile {
                 
 		shape=mat;
 		exits.add(new TileExit(new Point(0,0),new Point(1,0),Direction.UP));
-		
+		this.setOrigxheight(2);
+		this.setOrigyheight(1);
 	
 	}
 

@@ -18,7 +18,8 @@ public class ExitIndoor extends InDoorTile {
 	                
 		shape=mat;
 		exits.add(new TileExit(new Point(1,0),new Point(1,1),Direction.RIGHT));
-
+		this.setOrigxheight(2);
+		this.setOrigyheight(2);
 		
 		}
 

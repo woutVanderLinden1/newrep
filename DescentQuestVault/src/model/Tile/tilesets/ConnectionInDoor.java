@@ -20,6 +20,9 @@ public class ConnectionInDoor extends InDoorTile {
 		shape=mat;
 		exits.add(new TileExit(new Point(0,0),new Point(1,0),Direction.UP));
 		exits.add(new TileExit(new Point(1,0),new Point(0,0),Direction.DOWN));
+		this.setOrigyheight(1);
+
+		this.setOrigxheight(2);
 		
 		}
 

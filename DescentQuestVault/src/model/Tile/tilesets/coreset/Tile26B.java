@@ -24,7 +24,8 @@ public class Tile26B extends InDoorTile {
 		shape=mat;
 		exits.add(new TileExit(new Point(1,0),new Point(2,0),Direction.UP));
 		exits.add(new TileExit(new Point(2,2),new Point(1,2),Direction.DOWN));
-
+		this.setOrigxheight(4);
+		this.setOrigyheight(3);
 		
 	}
 

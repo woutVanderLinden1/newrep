@@ -35,6 +35,8 @@ import frame.SubContainer;
 import misc.ActivateAble;
 import misc.Tools;
 import model.Activation;
+import model.Tile.Direction;
+import model.Tile.TileExit;
 import model.event.Event;
 import model.event.PlaceTileEvent;
 import model.event.RemoveTileEvent;
@@ -63,6 +65,7 @@ public class ViewTile extends MapItem implements SelectAble {
 	private RemoveTileEvent removeTileEvent;
 	ArrayList<Univent> eventlist=new ArrayList<Univent>();
 	private static int tilenr=0;
+	private TileItem tileit;
 	
 	private static String giveTileName() {
 		tilenr++;
@@ -102,6 +105,7 @@ public class ViewTile extends MapItem implements SelectAble {
 		setRemoveTileEvent(new RemoveTileEvent(this));
 		eventlist.add(placeTileEvent);
 		eventlist.add(removeTileEvent);
+		this.tileit=image;
 		
 	}
 	protected void setRemoveTileEvent(RemoveTileEvent removeTileEvent2) {
@@ -117,21 +121,41 @@ public class ViewTile extends MapItem implements SelectAble {
 	@Override
 	public void draw(Graphics g, SubContainer jPanel) {
 		Image todraw=null;
+		int extrax=0;
+		int extray=0;
+		ArrayList<TileExit> exits=tileit.getExits();
+		if(hasUpOrDownDirection(exits)) {
+			extray=20;
+		}
+		if(hasUpAndDownDirection(exits)) {
+			extray=40;
+		}
+		if(hasRightOrLeftDirection(exits)) {
+			extrax=20;
+		}
+		if(hasRightAndLeftDirection(exits)) {
+			extrax=40;
+		}
+		
+		
+		double xheight=tileit.getXheight()*Tools.scale+extrax;
+		double yheight=tileit.getYheight()*Tools.scale+extray;
 		switch (item.getAngle()) {
 		case 0:
-			todraw=item.getImage().getScaledInstance( (int)(scalefactor*item.getScaleWidth()),(int)( scalefactor*item.getScaleHeight()),  java.awt.Image.SCALE_SMOOTH ) ;
+			
+			todraw=item.getImage().getScaledInstance( (int)(xheight),(int)( yheight),  java.awt.Image.SCALE_SMOOTH ) ;
 			g.drawImage(todraw,(int) point.getX()+item.getLeftOff(),(int) point.getY()+item.getTopOff(),(ImageObserver) jPanel);
 			break;
 		case 90:
-			todraw=item.getImage().getScaledInstance( (int)(scalefactor*item.getScaleHeight()),(int)( scalefactor*item.getScaleWidth()),  java.awt.Image.SCALE_SMOOTH ) ;
+			todraw=item.getImage().getScaledInstance( (int)(yheight),(int)( xheight),  java.awt.Image.SCALE_SMOOTH ) ;
 			g.drawImage(todraw,(int) point.getX()+item.getBottomOff(),(int) point.getY()+item.getLeftOff(),(ImageObserver) jPanel);
 			break;
 		case 180:
-			todraw=item.getImage().getScaledInstance( (int)(scalefactor*item.getScaleWidth()),(int)( scalefactor*item.getScaleHeight()),  java.awt.Image.SCALE_SMOOTH ) ;
+			todraw=item.getImage().getScaledInstance( (int)(xheight),(int)( yheight),  java.awt.Image.SCALE_SMOOTH ) ;
 			g.drawImage(todraw,(int) point.getX()+item.getRightOff(),(int) point.getY()+item.getBottomOff(),(ImageObserver) jPanel);
 		break;
 		case 270:
-			todraw=item.getImage().getScaledInstance( (int)(scalefactor*item.getScaleHeight()),(int)( scalefactor*item.getScaleWidth()),  java.awt.Image.SCALE_SMOOTH ) ;
+			todraw=item.getImage().getScaledInstance( (int)(yheight),(int)( xheight),  java.awt.Image.SCALE_SMOOTH ) ;
 			g.drawImage(todraw,(int) point.getX()+item.getTopOff(),(int) point.getY()+item.getRightOff(),(ImageObserver) jPanel);
 			break;
 		
@@ -139,6 +163,64 @@ public class ViewTile extends MapItem implements SelectAble {
 		}
 		
 		
+	}
+
+	private boolean hasRightAndLeftDirection(ArrayList<TileExit> exits2) {
+		boolean rightseen=false;
+		boolean leftseen=false;
+		for(TileExit ex:exits2) {
+			if(ex.getDirect()==Direction.RIGHT) {
+				if(leftseen) {
+					return true;
+				}
+				rightseen=true;
+			}
+			if(ex.getDirect()==Direction.LEFT) {
+				if(rightseen) {
+					return true;
+				}
+				leftseen=true;
+			}
+		}
+		return false;
+	}
+
+	private boolean hasRightOrLeftDirection(ArrayList<TileExit> exits2) {
+		for(TileExit ex:exits2) {
+			if(ex.getDirect()==Direction.RIGHT||ex.getDirect()==Direction.LEFT) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean hasUpAndDownDirection(ArrayList<TileExit> exits2) {
+		boolean downseen=false;
+		boolean upseen=false;
+		for(TileExit ex:exits2) {
+			if(ex.getDirect()==Direction.UP) {
+				if(downseen) {
+					return true;
+				}
+				upseen=true;
+			}
+			if(ex.getDirect()==Direction.DOWN) {
+				if(upseen) {
+					return true;
+				}
+				downseen=true;
+			}
+		}
+		return false;
+	}
+
+	private boolean hasUpOrDownDirection(ArrayList<TileExit> exits2) {
+		for(TileExit ex:exits2) {
+			if(ex.getDirect()==Direction.UP||ex.getDirect()==Direction.DOWN) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public Point getPoint() {

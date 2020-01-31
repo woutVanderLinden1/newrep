@@ -20,8 +20,10 @@ import view.events.TriggerField;
 
 public class Tools {
 	
-	private static int scale=64;
+	public static int scale=64;
 	private static Random random=new Random();
+	public static final double scalexvalue=.24;
+	public static final double scaleyvalue=.25;
 
 	public static BufferedImage resize (int width, int height, BufferedImage toRescale){
 		BufferedImage myPicture=toRescale;

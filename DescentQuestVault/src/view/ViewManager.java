@@ -19,6 +19,7 @@ import misc.ActivateAble;
 import misc.SampleFile;
 import misc.save.WorldSaveFile;
 import model.Activation;
+import model.ItemController;
 import model.event.EventEndListener;
 import model.event.MonsterTurnTrigger;
 import model.event.MovementString;
@@ -120,12 +121,16 @@ public class ViewManager implements IView {
 
 	@Override
 	public void startQuestEditor() {
+		ItemController control=ItemController.getItemController();
+		control.resetAvailabilities();
 		quester=new QuestCreator(frame.getWidth(),frame.getHeight(),frame.getUserInputController());
 		frame.startQuestEditor(quester);
 		
 	}
 	@Override
 	public void loadGame(WorldSaveFile g) {
+		ItemController control=ItemController.getItemController();
+		control.resetAvailabilities();
 		quester.loadGame(g);
 		
 	}

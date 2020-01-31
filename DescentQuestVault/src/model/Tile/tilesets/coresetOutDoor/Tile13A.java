@@ -28,9 +28,13 @@ public class Tile13A extends OutDoorTile {
 		shape=mat;
 		exits.add(new TileExit(new Point(2,0),new Point(3,0),Direction.UP,this.getTheming()));
 		
-		exits.add(new TileExit(new Point(5,5),new Point(4,5),Direction.DOWN));
+		exits.add(new TileExit(new Point(1,5),new Point(0,5),Direction.DOWN,this.getTheming()));
 		
-		
+		this.setOrigyheight(6);
+
+		this.setOrigxheight(6);
+	
+		setScalex(.8);
 	}
 
 	@Override

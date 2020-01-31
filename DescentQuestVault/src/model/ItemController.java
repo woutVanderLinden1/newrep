@@ -14,6 +14,7 @@ import StoryEditor.StartStoryEvent;
 import misc.BaseFile;
 import misc.CampaignFile;
 import misc.save.WorldSaveFile;
+import model.Tile.Tile;
 import model.Tile.tilesets.ConnectionInDoor;
 import model.Tile.tilesets.ConnectionOutDoor;
 import model.Tile.tilesets.EndGapOutDoor;
@@ -324,6 +325,14 @@ public  class ItemController implements ValueChangeListener, Serializable{
 			t.availabilityIncreased();
 		}
 		
+	}
+	public void resetAvailabilities() {
+		for(Item til:coresetTiles) {
+			til.resetAvailability();
+		}
+		for(Item til:coresetOutDoorTiles) {
+			til.resetAvailability();
+		}
 	}
 
 

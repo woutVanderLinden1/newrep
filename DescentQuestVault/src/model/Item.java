@@ -23,17 +23,19 @@ public abstract class Item implements Serializable {
 	protected String name;
 	protected boolean available=true;
 	private transient ArrayList<AvailabilityChangeListener> availabilityChangeListeners=new ArrayList<AvailabilityChangeListener>();
-	
+	protected int initialavailability;
 	protected int availability;
 
 
 	public Item(String name) {
 		this.name=name;
+		this.initialavailability=1;
 		this.availability=1;
 	}
 	
 	public Item(String name,int availability) {
 		this.name=name;
+		this.initialavailability=availability;
 		this.availability=availability;
 	}
 
@@ -162,6 +164,19 @@ public abstract class Item implements Serializable {
 	public MapItem createItem() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void resetAvailability() {
+		// TODO Auto-generated method stub
+		this.availability=initialavailability;
+		if(this.getAvailability()>=0) {
+			//remove the item from the lists
+			available=true;
+			//RenewItemListsCommand comm=new RenewItemListsCommand(this);
+			//UserInputController control= UserInputController.getController();
+			//control.performCommand(comm);
+			notifyAvailabilityListenersAddition();
+		}
 	}
 
 

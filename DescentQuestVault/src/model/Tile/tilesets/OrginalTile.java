@@ -11,9 +11,52 @@ import view.viewItems.ItemBox.SelectKind;
 public abstract class OrginalTile extends Item{
 	
 	protected ArrayList<TileExit> exits=new ArrayList<TileExit>();
+	protected int origxheight;
+	protected int origyheight;
+	protected int xheight;
+	protected int yheight;
+	protected double scalex=1;
+
+	protected double scaley=1;
+	public double getScalex() {
+		return scalex;
+	}
+	public void setScalex(double scalex) {
+		this.scalex = scalex;
+	}
+	public double getScaley() {
+		return scaley;
+	}
+	public void setScaley(double scaley) {
+		this.scaley = scaley;
+	}
+
+
 	
-	
-	
+	public int getOrigxheight() {
+		return origxheight;
+	}
+	public void setOrigxheight(int origxheight) {
+		this.origxheight = origxheight;
+	}
+	public int getOrigyheight() {
+		return origyheight;
+	}
+	public void setOrigyheight(int origyheight) {
+		this.origyheight = origyheight;
+	}
+	public int getXheight() {
+		return xheight;
+	}
+	public void setXheight(int xheight) {
+		this.xheight = xheight;
+	}
+	public int getYheight() {
+		return yheight;
+	}
+	public void setYheight(int yheight) {
+		this.yheight = yheight;
+	}
 	public ArrayList<TileExit> getExits() {
 		return cloneList(exits);
 	}

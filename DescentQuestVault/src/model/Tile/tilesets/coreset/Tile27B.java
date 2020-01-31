@@ -25,7 +25,8 @@ public class Tile27B extends InDoorTile {
 		exits.add(new TileExit(new Point(0,1),new Point(0,0),Direction.LEFT));
 		exits.add(new TileExit(new Point(1,2),new Point(1,3),Direction.RIGHT));
 
-		
+		this.setOrigxheight(2);
+		this.setOrigyheight(4);
 	}
 
 	@Override

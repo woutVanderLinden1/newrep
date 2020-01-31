@@ -23,7 +23,8 @@ import model.Tile.tilesets.InDoorTile;
 			
 			exits.add(new TileExit(new Point(0,3),new Point(0,2),Direction.LEFT));
 			
-			
+			this.setOrigxheight(6);
+			this.setOrigyheight(6);
 		}
 
 		@Override

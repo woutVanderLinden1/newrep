@@ -26,7 +26,8 @@ public class Tile26A extends OutDoorTile{
 		exits.add(new TileExit(new Point(1,0),new Point(2,0),Direction.UP,this.getTheming()));
 		exits.add(new TileExit(new Point(2,2),new Point(1,2),Direction.DOWN,this.getTheming()));
 
-		
+		this.setOrigxheight(4);
+		this.setOrigyheight(3);
 	}
 
 	@Override

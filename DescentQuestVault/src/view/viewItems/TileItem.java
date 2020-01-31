@@ -19,10 +19,20 @@ public class TileItem extends ShapeItem {
 
 	protected boolean selected;
 	protected ArrayList<TileExit> exits;
+	protected int xheight;
+	protected int yheight;
+	protected OrginalTile tile;
+	protected double scalex;
+	protected double scaley;
+
 	
 	public TileItem(OrginalTile tile) {
 		super(tile);
-
+		xheight=tile.getOrigxheight();
+		yheight=tile.getOrigyheight();
+		scalex=tile.getScalex();
+		scaley=tile.getScaley();
+		this.tile=tile;this.prepareAngle(0);
 	}
 	
 	@Override
@@ -34,6 +44,22 @@ public class TileItem extends ShapeItem {
 		// TODO Auto-generated method stub
 		
 		return new ViewTile(this,square,x,y);
+	}
+
+	public int getXheight() {
+		return xheight;
+	}
+
+	public void setXheight(int xheight) {
+		this.xheight = xheight;
+	}
+
+	public int getYheight() {
+		return yheight;
+	}
+
+	public void setYheight(int yheight) {
+		this.yheight = yheight;
 	}
 
 	@Override
@@ -97,6 +123,13 @@ public class TileItem extends ShapeItem {
 		exits.clear();
 		switch(angle2) {
 			case 0:
+				if(tile!=null) {
+					xheight=tile.getOrigxheight();
+					yheight=tile.getOrigyheight();
+					scalex=tile.getScalex();
+					scaley=tile.getScaley();
+				}
+		
 				for(TileExit exit:((OrginalTile) item).getExits()) {
 					
 					exits.add(exit);
@@ -106,6 +139,10 @@ public class TileItem extends ShapeItem {
 			case 90:
 				rotateMatrix(3,shape);
 				System.out.println("rotating");
+				xheight=tile.getOrigyheight();
+				yheight=tile.getOrigxheight();
+				scalex=tile.getScaley();
+				scaley=tile.getScalex();
 				for(TileExit exit:((OrginalTile) item).getExits()) {
 				
 					Point point3=exit.getSquare3ShapeLocation();
@@ -121,7 +158,10 @@ public class TileItem extends ShapeItem {
 				break;
 			case 180:
 				rotateMatrix(2,shape);
-			
+				xheight=tile.getOrigxheight();
+				yheight=tile.getOrigyheight();
+				scalex=tile.getScalex();
+				scaley=tile.getScaley();
 				for(TileExit exit:((OrginalTile) item).getExits()) {
 					Point point3=exit.getSquare3ShapeLocation();
 					Point point2=exit.getSquare2ShapeLocation();
@@ -136,7 +176,10 @@ public class TileItem extends ShapeItem {
 				break;
 			case 270:
 				rotateMatrix(1,shape);
-				
+				xheight=tile.getOrigyheight();
+				yheight=tile.getOrigxheight();
+				scalex=tile.getScaley();
+				scaley=tile.getScalex();
 				for(TileExit exit:((OrginalTile) item).getExits()) {
 					Point point3=exit.getSquare3ShapeLocation();
 					Point point2=exit.getSquare2ShapeLocation();
@@ -175,6 +218,15 @@ public class TileItem extends ShapeItem {
 	public boolean isMapItem() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	public double getscalex() {
+		// TODO Auto-generated method stub
+		return scalex;
+	}
+	public double getscaley() {
+		// TODO Auto-generated method stub
+		return scaley;
 	}
 
 
