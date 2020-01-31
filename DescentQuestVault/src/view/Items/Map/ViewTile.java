@@ -123,6 +123,7 @@ public class ViewTile extends MapItem implements SelectAble {
 		Image todraw=null;
 		int extrax=0;
 		int extray=0;
+		tileit=((TileItem) item);
 		ArrayList<TileExit> exits=tileit.getExits();
 		if(hasUpOrDownDirection(exits)) {
 			extray=20;
@@ -147,7 +148,7 @@ public class ViewTile extends MapItem implements SelectAble {
 			g.drawImage(todraw,(int) point.getX()+item.getLeftOff(),(int) point.getY()+item.getTopOff(),(ImageObserver) jPanel);
 			break;
 		case 90:
-			todraw=item.getImage().getScaledInstance( (int)(yheight),(int)( xheight),  java.awt.Image.SCALE_SMOOTH ) ;
+			todraw=item.getImage().getScaledInstance( (int)(xheight),(int)( yheight),  java.awt.Image.SCALE_SMOOTH ) ;
 			g.drawImage(todraw,(int) point.getX()+item.getBottomOff(),(int) point.getY()+item.getLeftOff(),(ImageObserver) jPanel);
 			break;
 		case 180:
@@ -155,7 +156,7 @@ public class ViewTile extends MapItem implements SelectAble {
 			g.drawImage(todraw,(int) point.getX()+item.getRightOff(),(int) point.getY()+item.getBottomOff(),(ImageObserver) jPanel);
 		break;
 		case 270:
-			todraw=item.getImage().getScaledInstance( (int)(yheight),(int)( xheight),  java.awt.Image.SCALE_SMOOTH ) ;
+			todraw=item.getImage().getScaledInstance( (int)(xheight),(int)( yheight),  java.awt.Image.SCALE_SMOOTH ) ;
 			g.drawImage(todraw,(int) point.getX()+item.getTopOff(),(int) point.getY()+item.getRightOff(),(ImageObserver) jPanel);
 			break;
 		

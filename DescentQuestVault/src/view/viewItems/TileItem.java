@@ -1,5 +1,6 @@
 package view.viewItems;
 
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -66,8 +67,19 @@ public class TileItem extends ShapeItem {
 	public TileItem clone() {
 		// TODO Auto-generated method stub
 		TileItem toreturn=new TileItem((OrginalTile) this.getItem());
+		toreturn.setLastImage(this.getImage());
 		toreturn.setAngle(angle);
+		
+		//toreturn.setImage(this.getImage());
+		//toreturn.prepareAngle(angle);
+		System.out.println(toreturn.getXheight());
+		System.out.println(toreturn.getYheight());
+		
 		return toreturn;
+	}
+
+	private void setLastImage(Image image) {
+		lastImage=image;
 	}
 
 	@Override
@@ -116,7 +128,7 @@ public class TileItem extends ShapeItem {
 			exits=new ArrayList<TileExit>();
 		}
 		int[][] shape=item.getShape();
-		super.prepareAngle(angle2);
+		
 		int maxX=shape[0].length-1;
 		int maxY=shape.length-1;
 		
@@ -196,9 +208,9 @@ public class TileItem extends ShapeItem {
 			default:
 				break;
 		}
-		
+		super.prepareAngle(angle2);
 		lastShape=shape;
-
+		//super.prepareAngle(angle2);
 		//displayMatrix(lastShape);
 		//place exits correctly
 		
