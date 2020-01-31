@@ -536,6 +536,7 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	public void dragMouseEvent(int x, int y) {
 		
 		SelectAble selected=draggingStack.getTomove();
+		
 		ImageItem item=selected.getImageItem();
 		
 		//Image img=item.getImage();

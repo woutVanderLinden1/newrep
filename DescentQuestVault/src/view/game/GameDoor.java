@@ -46,6 +46,9 @@ public class GameDoor extends ViewDoor implements ActivateAble {
 	public void UnlockDoor() {
 		//openact=new OpenDoorActivation(this);
 		super.UnlockDoor();
+		if(this.activationList==null) {
+			activationList=new ArrayList<Activation>();
+		}
 		activationList.add(openact);
 		
 	}

@@ -337,7 +337,7 @@ public class ListContainer extends SubContainer  implements Serializable,Availab
 						 break;
 					case EVENT:
 						EventItem eventit=(EventItem) item;
-						EventField field=new EventField(eventit.getEv(),100);
+						EventField field=new EventField((Event) eventit.getEv().copy(),100);
 						com=new SelectCommand(field);
 						break;
 					case TILEITEM:

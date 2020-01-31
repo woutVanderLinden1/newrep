@@ -153,7 +153,7 @@ public class MultiTriggerField extends TriggerField {
 		}
 	}
 	
-	protected void refreshHeight() {
+	public void refreshHeight() {
 		if(minimized) {
 			this.setSize(new Dimension(this.getWidth(),50));
 			this.setPreferredSize(new Dimension(this.getWidth(),50));
@@ -175,6 +175,10 @@ public class MultiTriggerField extends TriggerField {
 			this.setPreferredSize(new Dimension(this.getWidth(),Math.max(145,length+45)));
 		
 		
+		}
+		
+		if(this.getParent()!=null) {
+			((SubContainer) this.getParent()).refreshHeight();
 		}
 		this.revalidate();
 		this.repaint();
@@ -227,7 +231,9 @@ public class MultiTriggerField extends TriggerField {
 
 	public void released(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		if(this.isMinimized()) {
+			super.released(arg0);
+		}
 		if(this.isTemporary()) {
 			super.released(arg0);
 		}

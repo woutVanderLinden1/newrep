@@ -107,7 +107,9 @@ public class TriggerFieldListener implements MouseListener,MouseMotionListener,S
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-	
+		if(thefield.isTemporary()||thefield.isMinimized()) {
+			thefield.released(arg0);
+		}
 		UserInputController control=UserInputController.getController();
 		
 		ICommand command=null;

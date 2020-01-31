@@ -91,7 +91,9 @@ public class SelectEventListener implements MouseListener, MouseMotionListener,S
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		if(field.isSelected()) {
+			return;
+		}
 		field.released(arg0);
 	}
 

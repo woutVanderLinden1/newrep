@@ -71,6 +71,7 @@ public class ViewMonster extends MapItem implements ActivateAble{
 	protected MonsterActivation monsterinfoActivation;
 	protected MonsterActivation forceMonsterActivation;
 	protected Event monsterInfoEvent;
+	private boolean hascustommovement;
 	
 	public Event getMonsterInfoEvent() {
 		return monsterInfoEvent;
@@ -347,6 +348,9 @@ public class ViewMonster extends MapItem implements ActivateAble{
 	 * @param itemInfoText
 	 */
 	private void addMonsterMovementCombBox(ItemInfoContainer itemInfoText) {
+		if(this.hascustommovement) {
+			return;
+		}
 		ArrayList<MonsterTurnTrigger> possibleturns=new ArrayList<MonsterTurnTrigger>();
 		File dir = new File(System.getProperty("user.dir")+"/Movement/"+this.getImageItem().getItem().getName());
 		System.out.println("MovementCombobox"+System.getProperty("user.dir")+"/Movement/"+this.getImageItem().getItem().getName());
@@ -453,7 +457,7 @@ public class ViewMonster extends MapItem implements ActivateAble{
 				public void actionPerformed(ActionEvent arg0) {
 					UserInputController control=UserInputController.getController();
 					control.performCommand(new  AddTriggerToTriggerFieldCommand(turnTrigger,null));
-				
+					hascustommovement=true;
 				}
 				
 			});

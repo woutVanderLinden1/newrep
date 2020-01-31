@@ -345,9 +345,18 @@ public class Analyzer {
 		SelectAble selected=view.getSelected();
 		if(view.hasSelected()) {
 			switch(selected.getKind()) {
+			case TRIGGER:
+				BaseField field2=(BaseField) selected;
+				return new StartDragEventCommand(field2,ev.getX(),ev.getY(),ev.getXOnScreen(),ev.getYOnScreen());
+				
+			
 			case EVENT:
+				/*
 				Event event=(Event) ((EventField) selected).getEv().copy();
 				BaseField field=new EventField(event,100);
+				return new StartDragEventCommand(field,ev.getX(),ev.getY(),ev.getXOnScreen(),ev.getYOnScreen());
+				*/
+				BaseField field=(BaseField) selected;
 				return new StartDragEventCommand(field,ev.getX(),ev.getY(),ev.getXOnScreen(),ev.getYOnScreen());
 				
 			

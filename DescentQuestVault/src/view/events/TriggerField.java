@@ -77,9 +77,18 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 	}
 
 	public TriggerField(Trigger trig, int i, int j) {
-		super(trig.getName());
+		super(trig.getName(),trig.isSelected());
+		TriggerField field=this;
 		minimized=false;
-		subEvents=new SubContainer(this.getWidth()-25,80);
+		subEvents=new SubContainer(this.getWidth()-25,80) {
+			public void increaseHeight(int height){
+				field.increaseHeight(height);
+			}
+			
+			public void refreshHeight(){
+				field.refreshHeight();
+			}
+		};
 		textLabel=new JTextField();
 		fields=new ArrayList<BaseField>();
 		this.setPreferredSize(new Dimension(i,j));
@@ -250,20 +259,26 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 		}
 		field.setSize(new Dimension(this.getWidth()-60,field.getHeight()));
 		refreshHeight();
+	
 		trig.addEvent(field.getEvent());
 		field.setTriggerField(this);
 		field.createBaseImage();
 	}
-
-	private void increaseHeight(int height) {
+	
+	@Override
+	public void increaseHeight(int height) {
 		
 		subEvents.setSize(subEvents.getHeight(), subEvents.getHeight()+height);
 		
 		this.setSize(this.getWidth(), this.getHeight()+height);
+		((SubContainer) this.getParent()).increaseHeight(height);
+		this.revalidate();
+		this.repaint();
 		
 	}
 	
-	protected void refreshHeight() {
+	public void refreshHeight() {
+		
 		
 		if(minimized) {
 			this.setSize(new Dimension(this.getWidth(),50));
@@ -290,6 +305,9 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 			this.revalidate();
 			this.repaint();
 			
+		}
+		if(this.getParent()!=null) {
+			((SubContainer) this.getParent()).refreshHeight();
 		}
 		
 	}
@@ -388,9 +406,10 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 			fields.add(field);
 		}
 		field.setSize(new Dimension(this.getWidth()-40,field.getHeight()));
-		refreshHeight();
+	
 		trig.addTrigger(field.getTrig());
 		field.setTriggerField(this);
+		refreshHeight();
 	}
 
 	public void showInTriggerField(SelectAble selected) {
@@ -553,6 +572,7 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 		// TODO Auto-generated method stub
 		ModifierField field=new ModifierField(ev,this.getWidth()-40,300);
 		this.addTriggerField(field);
+		
 	}
 	public ArrayList<BaseField> getFields() {
 		return new ArrayList<BaseField>(fields);
@@ -634,9 +654,9 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 	public void minimize() {
 		
 		minimized=!minimized;
-		refreshHeight();
-		createImage(currentColor);
 		
+		createImage(currentColor);
+		refreshHeight();
 	}
 	
 	protected void initialiseMinimizedImage(Color color) {
@@ -701,7 +721,7 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 		System.out.println("draages");
 		if(this.minimized) {
 			System.out.println("stop here");
-			super.dragged(arg0);
+			super.released(arg0);
 		
 		}else {
 			if(this.isTemporary()) {

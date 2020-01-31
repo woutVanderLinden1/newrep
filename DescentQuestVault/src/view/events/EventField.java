@@ -49,7 +49,7 @@ public class EventField extends BaseField implements SelectAble, NameChangeListe
 	}
 
 	public EventField(Event placeTileEvent, int w) {
-		super(placeTileEvent.getName());
+		super(placeTileEvent.getName(),placeTileEvent.isSelected());
 		this.setPreferredSize(new Dimension(w,50));
 		this.setSize(new Dimension(w,50));
 		selectedItem=new EventItem(placeTileEvent);
@@ -196,9 +196,16 @@ public class EventField extends BaseField implements SelectAble, NameChangeListe
 
 	@Override
 	protected void createBaseImage() {
+		if(!this.isSelected()) {
+			this.setBackground(new Color(0,230,0));
+			textLabel.setBackground(new Color(0,230,0));
+		}
+		else {
+			this.setBackground(new Color(200,230,100));
+			textLabel.setBackground(new Color(200,230,100));
+		}
 		// TODO Auto-generated method stub
-		this.setBackground(new Color(0,230,0));
-		textLabel.setBackground(new Color(0,230,0));
+		
 		//this.initialiseImage(new Color(0,230,0));
 	}
 

@@ -81,6 +81,7 @@ public class SubContainer extends JPanel implements ReleasAble,IResizeListeners,
 
 	public void released(MouseEvent e) {
 		// TODO Auto-generated method stub
+	
 		((ReleasAble) this.getParent()).released(e);
 	}
 	public void dragged(MouseEvent e) {
@@ -95,6 +96,16 @@ public class SubContainer extends JPanel implements ReleasAble,IResizeListeners,
 	public boolean isTemporary() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public void increaseHeight(int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void refreshHeight() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 

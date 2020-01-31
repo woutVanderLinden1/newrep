@@ -58,8 +58,8 @@ public class ModifyHopeEvent extends Event implements NameChangeListener {
 		//theitem=integerValueItem;
 		mod=set;
 		this.modvalue=modvalue;
-		setIDName("changeValueperil");
-		setName("change Value Peril");
+		setIDName("changeValueHope");
+		setName("change Value Hope");
 		//integerValueItem.addNameChangeListener(this);
 	}
 

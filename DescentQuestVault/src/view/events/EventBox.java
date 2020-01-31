@@ -140,7 +140,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		int lenght=0;
 		for(BaseField field:fields) {
 			
-			lenght=lenght+field.getHeight()+20;
+			lenght=lenght+field.getHeight()+30;
 		}
 		this.setSize(this.getWidth(),Math.max(lenght,this.getHeight()));
 		this.setPreferredSize(new Dimension(this.getWidth(),Math.max(lenght,this.getHeight())));
@@ -758,6 +758,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		this.addBaseTrigger(baseEventController.getStartuptrigger());
 		
 	}
+	
 
 
 }

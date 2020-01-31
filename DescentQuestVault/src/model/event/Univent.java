@@ -19,7 +19,7 @@ public abstract class Univent implements EventBase,Serializable {
 	private transient ArrayList<NameChangeListener> namechangelisteners=new ArrayList<NameChangeListener>();
 	protected ArrayList<EventEndListener> eventendListeners;
 
-	
+	protected boolean selected=false;
 	public abstract SelectKind getKind();
 
 	public void triggerEventEndListeners() {
@@ -65,6 +65,7 @@ public abstract class Univent implements EventBase,Serializable {
 
 	public void setName(String newname) {
 		name=newname;
+		this.setIDName(newname);
 		triggerNameChangeListeners(newname);
 	}
 	
@@ -108,7 +109,7 @@ public abstract class Univent implements EventBase,Serializable {
 
 	public void select() {
 		// TODO Auto-generated method stub
-		
+		selected=true;
 	}
 
 
@@ -117,11 +118,16 @@ public abstract class Univent implements EventBase,Serializable {
 
 	public void deselect() {
 		// TODO Auto-generated method stub
-		
+		selected=false;
 	}
 
 	public void clearEventEndListeners() {
 		eventendListeners.clear();
 		
+	}
+
+	public boolean isSelected() {
+		// TODO Auto-generated method stub
+		return selected;
 	}
 }

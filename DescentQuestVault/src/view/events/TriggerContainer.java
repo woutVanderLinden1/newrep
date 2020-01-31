@@ -88,7 +88,7 @@ public class TriggerContainer extends TriggerField {
 	}
 	
 	@Override
-	protected void refreshHeight() {
+	public void refreshHeight() {
 			System.out.println("in refreshheight "+fields);
 			int length=60;
 			if(fields!=null) {

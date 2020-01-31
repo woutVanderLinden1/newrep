@@ -53,9 +53,9 @@ public abstract class BaseField extends DraggAblePanel implements SelectAble,Ser
 
 
 
-	public BaseField(String text) {
+	public BaseField(String text,boolean selected) {
 		super(text);
-		
+		this.selected=selected;
 	}
 	@Override
 	public String getIDName() {
@@ -178,6 +178,7 @@ public abstract class BaseField extends DraggAblePanel implements SelectAble,Ser
 	public void released(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		//if(this.getTriggerField()!=null) {
+		
 			( (ReleasAble) this.getParent()).released(arg0);
 		//}
 	}
