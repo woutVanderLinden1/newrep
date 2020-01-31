@@ -17,6 +17,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.DocumentFilter.FilterBypass;
 
+import ItemEditor.ActionTaker;
 import controller.UserInputController;
 import controller.commands.Game.ShowTextCommand;
 import model.event.Event;
@@ -31,6 +32,8 @@ public class DamageMajorPerilEvent extends Event {
 	
 	public DamageMajorPerilEvent(int t) {
 		perildamage=t;
+		this.setName("Major perildamage");
+		this.setIDName("Major perildamage");
 	}
 
 	public void trigger() {
@@ -66,79 +69,15 @@ public class DamageMajorPerilEvent extends Event {
 
 	@Override
 	public void addEventSpecifics(ItemInfoContainer itemInfoText) {
-		JLabel lab=new JLabel("damage: ");
-		 JTextField field = new JFormattedTextField();
-		
-		 field.setName(Integer.toString(perildamage));
-		 field.setColumns(10);
-		 field.setText(Integer.toString(perildamage));
-		 field.getDocument().addDocumentListener(new DocumentListener() {
-			  public void changedUpdate(DocumentEvent e) {
-			    warn();
-			  }
-			  public void removeUpdate(DocumentEvent e) {
-			    warn();
-			  }
-			  public void insertUpdate(DocumentEvent e) {
-			    warn();
-			  }
+		itemInfoText.addNumericEditButton("damage :", itemInfoText, perildamage, new ActionTaker<Integer>() {
 
-			  public void warn() {
-				 // System.out.println("changedname "+field.getText());
-				  perildamage=Integer.parseInt(field.getText());
-			  }
-			});
-		 field.addPropertyChangeListener("name",new PropertyChangeListener() {
-
-				@Override
-				public void propertyChange(PropertyChangeEvent arg0) {
-					
-					perildamage=Integer.parseInt(field.getText());
-					
-				}
-	        	
-	        });
-		 AbstractDocument ment=(AbstractDocument) field.getDocument();
-		  ment.setDocumentFilter(new DocumentFilter() {
-	            public void replace(FilterBypass fb, int offs, int length,
-	                    String str, AttributeSet a) throws BadLocationException {
-
-	                String text = fb.getDocument().getText(0,
-	                        fb.getDocument().getLength());
-	                text += str;
-	                if ((fb.getDocument().getLength() + str.length() - length) <= 9
-	                        && text.matches("^[0-9]+[.]?[0-9]{0,1}$")) {
-	                    super.replace(fb, offs, length, str, a);
-	                } else {
-	                    Toolkit.getDefaultToolkit().beep();
-	                }
-	            }
-
-	            public void insertString(FilterBypass fb, int offs, String str,
-	                    AttributeSet a) throws BadLocationException {
-
-	                String text = fb.getDocument().getText(0,
-	                        fb.getDocument().getLength());
-	                text += str;
-	                if ((fb.getDocument().getLength() + str.length()) <= 9
-	                        && text.matches("^[0-9]+[.]?[0-9]{0,1}$")) {
-	                    super.insertString(fb, offs, str, a);
-	                } else {
-	                    Toolkit.getDefaultToolkit().beep();
-	                }
-	            }
-	        });
-		
-		 // itemInfoText.add(lab);
-		 // itemInfoText.add(field);
-		int w=itemInfoText.getWidth();
-      	lab.setSize(new Dimension(w/2-20,25));
-      	field.setSize(new Dimension(w/2,25));
-      	lab.setPreferredSize(new Dimension((int)(w/2-20),25));
-      	field.setPreferredSize(new Dimension(w/2,25));
-      	lab.setHorizontalAlignment(SwingConstants.RIGHT);
-      
-      	itemInfoText.addPreText(lab,field);
+			@Override
+			public void perform(Integer value) {
+				perildamage=value;
+				
+			}
+			
+		});
 		super.addEventSpecifics(itemInfoText);
 	}
 	
