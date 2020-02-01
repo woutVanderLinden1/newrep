@@ -443,6 +443,9 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 		ArrayList<Univent> eventlist=holder.getEvents();
 		
 		for(Univent vent:eventlist) {
+			if(vent==null) {
+				break;
+			}
 			JButton button=new JButton("add");
 			button.addActionListener(new ActionListener() {
 
@@ -452,13 +455,13 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 					switch(vent.getKind()) {
 				
 					case EVENT:
-						ICommand command=new AddEventToTriggerFieldCommand((Event) vent,null);
+						ICommand command=new AddEventToTriggerFieldCommand((Event) vent.copy(),control.getSelected());
 						
 						control.performCommand(command);
 						break;
 				
 					case TRIGGER:
-						ICommand command2=new AddTriggerToTriggerFieldCommand((Trigger) vent,null);
+						ICommand command2=new AddTriggerToTriggerFieldCommand((Trigger) vent.copy(),control.getSelected());
 						
 						control.performCommand(command2);
 						break;
@@ -467,12 +470,14 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 						break;
 					
 					}
+					refreshImage();
 					
 					
 				}
 				
 			});
 			 JLabel field = new JLabel();
+			 
 			 field.setText(vent.getName());
 			
 			 field.setEnabled(false);

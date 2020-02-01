@@ -126,7 +126,10 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 	public void tilePlaced(ViewTile tile) {
 		// TODO Auto-generated method stub
 		//if tile placed create an event of tile placecommand after the initial tileplaced
-		this.addEvent(tile.getPlaceTileEvent(),baseTriggerField);
+		UserInputController control=UserInputController.getController();
+		
+		
+		this.addEvent(tile.getPlaceTileEvent(),control.getSelected());
 	}
 
 	private void addEvent(Event placeTileEvent, TriggerField baseTriggerField2) {
@@ -197,22 +200,31 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 
 	private void addMonster(ViewMonster door) {
 		// TODO Auto-generated method stub
+		baseTriggerField=UserInputController.getController().getSelected();
 		this.addEvent(door.getPlaceMonsterEvent(),baseTriggerField);
 	}
 
 	
 	private void addTokenEvents(ViewToken door) {
+		baseTriggerField=UserInputController.getController().getSelected();
+		
 		this.addEvent(door.getPlaceSearchTokenEvent(),baseTriggerField);
-		TriggerField trig=this.addTrigger(door.getSearchTokenTrigger());
 		if(door.isSearch()) {
-			this.addEvent(((ViewSearchToken)door).getEffect(),trig);
+			TriggerField trig=this.addTrigger(((ViewSearchToken) door).getSearchTokenTrigger());
+			if(door.isSearch()) {
+				this.addEvent(((ViewSearchToken)door).getEffect(),trig);
+			}
+			//
+			this.addEvent(door.getRemoveSearchTokenEvent(), trig);
 		}
-		//
-		this.addEvent(door.getRemoveSearchTokenEvent(), trig);
+		
+	
 		
 	}
 
 	private void addDoorEvents(ViewDoor door) {
+		baseTriggerField=UserInputController.getController().getSelected();
+		
 		this.addEvent(door.getPlaceDoorEvent(),baseTriggerField);
 		TriggerField trig=this.addTrigger(door.getOpenDoorTrigger());
 
@@ -248,7 +260,10 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 	private void removeTokenEvents(ViewToken item) {
 		this.removeEvent(item.getPlaceSearchTokenEvent());
 		this.removeEvent(item.getRemoveSearchTokenEvent());
-		this.removeTrigger(item.getSearchTokenTrigger());
+		if(item.isSearch()) {
+			this.removeTrigger(((ViewSearchToken) item).getSearchTokenTrigger());
+		}
+		
 	}
 
 	private void removeMonsterEvents(ViewMonster item) {
@@ -316,9 +331,17 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 
 	public void addEventToTriggerField(SelectAble selected, TriggerField field) {
 		((BaseField) selected).setPlaced(true);
+		//UserInputController control=UserInputController.getUserInputController();
+		//if(field==null) {
+			//if(control.getSelected()!=null) {
+				
+			//}
+		//}
+		
 		switch(selected.getKind()) {
 		case TRIGGER:
 			if(field==null) {
+				
 				System.out.println("adding trigger field to eventbox");
 				this.addTriggerField((TriggerField) selected);
 			}
@@ -757,6 +780,10 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		this.addEndTrigger(baseEventController.getEndtrigger());
 		this.addBaseTrigger(baseEventController.getStartuptrigger());
 		
+	}
+	
+	public BaseField getBaseFieldFromUnivent(Univent vent) {
+		return null;
 	}
 	
 

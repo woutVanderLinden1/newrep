@@ -1,5 +1,6 @@
 package controller.commands.select;
 
+import controller.UserInputController;
 import controller.commands.BasicCommand;
 import controller.stack.StackElements.SelectstackElement;
 import view.Items.Map.MapItem;
@@ -32,6 +33,8 @@ public class SelectCommand extends BasicCommand {
 	public void perform() {
 		System.out.println("new tile selected");
 		view.setSelected(item);
+		
+		
 		if(item.getKind()==SelectKind.VIEWMONSTER) {
 			ViewMonster monster=(ViewMonster) item;
 			control.startMonsterPlacement(monster.getPlaceMonsterSquares(), monster);

@@ -17,7 +17,7 @@ public class GenerateTextStopCommand extends BasicCommand {
 
 	@Override
 	public void perform() {
-		control.performCommand(new AddEventToTriggerFieldCommand(new TextStop(),null));
+		control.performCommand(new AddEventToTriggerFieldCommand(new TextStop(),control.getSelected()));
 
 	}
 	

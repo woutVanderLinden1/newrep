@@ -45,7 +45,7 @@ import view.viewItems.ItemBox.SelectKind;
 
 public class ViewToken extends MapItem {
 	protected PlaceSearchTokenEvent placeevent;
-	protected SearchTokenTrigger searchtrigger;
+	
 
 	protected RemoveSearchTokenEvent removeevent;
 	protected static int tokennr=0;
@@ -78,10 +78,10 @@ public class ViewToken extends MapItem {
 		this.setName(giveTokenName());
 		placeevent=new PlaceSearchTokenEvent(this);
 		removeevent=new RemoveSearchTokenEvent(this);
-		searchtrigger=new SearchTokenTrigger(this);
+		
 		
 
-		activations.add(new SearchTokenActivation(this));
+
 		
 		// TODO Auto-generated constructor stub
 	}
@@ -99,10 +99,9 @@ public class ViewToken extends MapItem {
 		this.setName(giveTokenName());
 		placeevent=new PlaceSearchTokenEvent(this);
 		removeevent=new RemoveSearchTokenEvent(this);
-		searchtrigger=new SearchTokenTrigger(this);
+		//searchtrigger=new SearchTokenTrigger(this);
 		
 
-		activations.add(new SearchTokenActivation(this));
 		// TODO Auto-generated constructor stub
 	}
 
@@ -119,10 +118,7 @@ public class ViewToken extends MapItem {
 		return placeevent;
 	}
 
-	public SearchTokenTrigger getSearchTokenTrigger() {
-		// TODO Auto-generated method stub
-		return searchtrigger;
-	}
+
 
 	public RemoveSearchTokenEvent getRemoveSearchTokenEvent() {
 		// TODO Auto-generated method stub
@@ -133,7 +129,7 @@ public class ViewToken extends MapItem {
 
 
 	public void setTriggers(ViewToken toplace) {
-		this.setOpenSearchTokenTrigger(toplace.getSearchTokenTrigger());
+		//this.setOpenSearchTokenTrigger(toplace.getSearchTokenTrigger());
 		this.setPlaceSearchTokenEvent(toplace.getPlaceSearchTokenEvent());
 		this.setRemoveSearchTokenEvent(toplace.getRemoveSearchTokenEvent());
 	
@@ -150,10 +146,7 @@ public class ViewToken extends MapItem {
 		placeevent=placeSearchTokenEvent;
 	}
 
-	protected void setOpenSearchTokenTrigger(SearchTokenTrigger searchTokenTrigger) {
-		// TODO Auto-generated method stub
-		searchtrigger=searchTokenTrigger;
-	}
+	
 
 	@Override
 	public String getIDName() {
@@ -167,7 +160,7 @@ public class ViewToken extends MapItem {
 		ArrayList<Univent> toreturn=new ArrayList<Univent>();
 		toreturn.add(placeevent);
 		toreturn.add(removeevent);
-		toreturn.add(this.searchtrigger);
+	
 		//toreturn.add(effect);
 		return toreturn; 
 	}
@@ -209,7 +202,7 @@ public class ViewToken extends MapItem {
 			public void actionPerformed(ActionEvent arg0) {
 				UserInputController control=UserInputController.getController();
 				control.performCommand(new  AddTriggerToTriggerFieldCommand(act.getTrigger(),null));
-			
+				itemInfoText.refreshImage();
 			}
 			
 		});
@@ -240,7 +233,7 @@ public class ViewToken extends MapItem {
 			public void actionPerformed(ActionEvent arg0) {
 				UserInputController control=UserInputController.getController();
 				control.performCommand(new  RemoveActivationFromMapItemCommand(hold,act));
-			
+				itemInfoText.refreshImage();
 			}
 			
 		});
@@ -283,6 +276,7 @@ public class ViewToken extends MapItem {
 			  public void warn() {
 				  System.out.println("changedname "+field.getText());
 					act.changeName((String)field.getText());
+					itemInfoText.refreshImage();
 			  }
 			});
 		 field.addPropertyChangeListener("name",new PropertyChangeListener() {

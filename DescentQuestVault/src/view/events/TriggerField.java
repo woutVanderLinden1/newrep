@@ -357,11 +357,14 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 	}
 	public void select() {
 		super.select();
+		UserInputController control=UserInputController.getUserInputController();
+		control.setSelected(this);
 		createImage(new Color(255,240,170));
 	}
 	
 	public void deselect() {
 		super.deselect();
+		
 		createImage(new Color(255,230,120));
 	}
 

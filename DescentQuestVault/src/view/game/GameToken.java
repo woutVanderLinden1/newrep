@@ -6,12 +6,13 @@ import activation.SearchTokenActivation;
 import misc.ActivateAble;
 import model.Activation;
 import view.Items.Map.ViewDoor;
+import view.Items.Map.ViewSearchToken;
 import view.Items.Map.ViewSquare;
 import view.Items.Map.ViewToken;
 import view.viewItems.DoorItem;
 import view.viewItems.TokenItem;
 
-public class GameToken extends ViewToken implements ActivateAble {
+public class GameToken extends ViewSearchToken implements ActivateAble {
 	
 	private ViewToken tokenbasic;
 	
@@ -29,11 +30,20 @@ public class GameToken extends ViewToken implements ActivateAble {
 
 
 	public void setTriggers(ViewToken toplace) {
-		this.setOpenSearchTokenTrigger(toplace.getSearchTokenTrigger());
+		if(toplace.isSearch()) {
+			this.setOpenSearchTokenTrigger(((ViewSearchToken) toplace).getSearchTokenTrigger());
+		}
+		
 		this.setPlaceSearchTokenEvent(toplace.getPlaceSearchTokenEvent());
 		toplace.getRemoveSearchTokenEvent().setGameToken(this);
-		this.setRemoveSearchTokenEvent(toplace.getRemoveSearchTokenEvent());
-		toplace.getSearchTokenTrigger().setToken(this);
+		if(this.isSearch()) {
+			this.setRemoveSearchTokenEvent(toplace.getRemoveSearchTokenEvent());
+			if(toplace.isSearch()) {
+				((ViewSearchToken) toplace).getSearchTokenTrigger().setToken(this);
+			}
+		
+		}
+		
 	}
 
 

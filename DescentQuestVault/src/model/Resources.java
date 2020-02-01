@@ -19,6 +19,10 @@ import model.event.extraevents.TextOption;
 import model.event.extraevents.TextStop;
 import model.event.extraevents.TextTrigger;
 import model.search.ObjectiveToken;
+import model.search.ObjectiveTokenBlue;
+import model.search.ObjectiveTokenGreen;
+import model.search.ObjectiveTokenRed;
+import model.search.ObjectiveTokenWhite;
 import model.search.SearchToken;
 import model.search.VillagerToken;
 import model.search.VillagerTokenFemale;
@@ -73,7 +77,11 @@ public class Resources {
 			new SearchToken(),
 			new ObjectiveToken(),
 			new VillagerToken(),
-			new VillagerTokenFemale()
+			new VillagerTokenFemale(),
+			new ObjectiveTokenGreen(),
+			new ObjectiveTokenRed(),
+			new ObjectiveTokenBlue(),
+			new ObjectiveTokenWhite()
 			));
 	public static ArrayList<Item> AvailableDoors=new ArrayList<Item>(Arrays.asList(
 			new NormalDoor(), 

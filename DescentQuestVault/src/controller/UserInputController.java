@@ -130,6 +130,7 @@ import java.io.ObjectInputStream;
 
 public class UserInputController implements MouseListener,KeyListener, ButtonPressedListener, IController {
 
+	private TriggerField selected;
 	private MapFrame mapFrame;
 	public boolean miniEventMode;
 	private static UserInputController control;
@@ -1470,6 +1471,20 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	public void performTravelEvent(CampaignSaveFile g,EndTravelEventListener listen) {
 		UnNamedActionTaker take=new UnNamedActionTaker(g,listen);
 		take.perform(null);
+	}
+
+	public TriggerField getSelected() {
+		return selected;
+	}
+
+	public void setSelected(TriggerField selected) {
+	
+		this.selected = selected;
+	}
+	public void deleteSelected(TriggerField selected) {
+		if(this.getSelected()==selected) {
+			this.selected=null;
+		}
 	}
 
 

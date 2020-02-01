@@ -26,7 +26,7 @@ public class GenerateTextOptionCommand extends BasicCommand {
 		ArrayList<TextOption> textop=new ArrayList<TextOption>();
 		textop.add(new TextOption("hi"));
 		textop.add(new TextOption("bye"));
-		control.performCommand(new AddTriggerToTriggerFieldCommand(new TextTrigger(0,textop,"pls enter text"),null));
+		control.performCommand(new AddTriggerToTriggerFieldCommand(new TextTrigger(0,textop,"pls enter text"),control.getSelected()));
 
 		//control.performCommand(new AddTriggerToTriggerFieldCommand(new TextTrigger(0,new ArrayList<TextOption>(),"pls enter text"),null));
 
