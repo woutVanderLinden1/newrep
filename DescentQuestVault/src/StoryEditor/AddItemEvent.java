@@ -39,9 +39,13 @@ public class AddItemEvent extends Event {
 
 	private SavedItem toAdd;
 	
+	public AddItemEvent() {
+		this.setName("addITemEvent");
+	}
+	
 	@Override
 	public void initialise(QuestCreator questCreator) {
-		// TODO Auto-generated method stub
+		
 
 	}
 	

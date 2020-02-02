@@ -81,8 +81,8 @@ public class TriggerContainer extends TriggerField {
 		field.setPreferredSize(new Dimension(this.getWidth()-40,field.getHeight()));
 		field.setSize(this.getWidth()-40,field.getHeight());
 		
-		
-		refreshHeight();
+		//field.createBaseImage();
+		//field.refreshHeight();
 		
 	
 	}
@@ -102,12 +102,19 @@ public class TriggerContainer extends TriggerField {
 			this.setSize(new Dimension(this.getWidth(),Math.max(80,length)));
 			this.setPreferredSize(new Dimension(this.getWidth(),Math.max(80,length)));
 			
-		
+			/*
 			if(field!=null) {
 				field.refreshHeight();
 			}
+			*/
+			
+			if(this.getParent()!=null) {
+				((SubContainer) this.getParent()).refreshHeight();
+			}
 			this.revalidate();
 			this.repaint();
+			
+			
 		
 		
 	}
@@ -142,7 +149,7 @@ public class TriggerContainer extends TriggerField {
 		trig.addEvent(field.getEvent());
 		field.setTriggerField(this);
 		field.createBaseImage();
-		refreshHeight();
+		field.refreshHeight();
 	
 	}
 
@@ -180,7 +187,7 @@ public class TriggerContainer extends TriggerField {
 		
 		trig.addTrigger(field.getTrig());
 		field.setTriggerField(this);
-		refreshHeight();
+		field.refreshHeight();
 	}
 
 	@Override

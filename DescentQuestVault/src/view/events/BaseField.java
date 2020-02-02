@@ -65,8 +65,14 @@ public abstract class BaseField extends DraggAblePanel implements SelectAble,Ser
 	
 	@Override
 	public String getName() {
+		if(event!=null) {
+			return event.getName();
+		}
+		else { 
+			return "basefield";
+		}
 		// TODO Auto-generated method stub
-		return event.getName();
+		
 	}
 
 
@@ -178,7 +184,8 @@ public abstract class BaseField extends DraggAblePanel implements SelectAble,Ser
 	public void released(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		//if(this.getTriggerField()!=null) {
-		
+		System.out.println(this);
+		System.out.println(this.getParent());
 			( (ReleasAble) this.getParent()).released(arg0);
 		//}
 	}

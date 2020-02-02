@@ -171,9 +171,11 @@ public abstract class DraggAblePanel extends SubContainer implements SelectAble,
 	public void addMouseListener(MouseListener listen) {
 		super.addMouseListener(listen);
 		System.out.println(this+ "  "+listen);
+		/*
 		if(this.getMouseListeners()!=null) {
 			System.out.println("mouselisteners "+this.getMouseListeners().length);
 		}
+		*/
 		
 		if(textLabel!=null) {
 			textLabel.addMouseListener(listen);

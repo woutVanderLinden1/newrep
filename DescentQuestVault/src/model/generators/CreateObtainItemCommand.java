@@ -11,8 +11,13 @@ public class CreateObtainItemCommand extends BasicCommand implements ICommand {
 	@Override
 	public void perform() {
 		// TODO Auto-generated method stub
-		control.performCommand(new AddEventToTriggerFieldCommand(new AddItemEvent(),null));
+		control.performCommand(new AddEventToTriggerFieldCommand(new AddItemEvent(),control.getSelected()));
 
+		
+	}
+	 @Override
+	public String getStringName() {
+		return "Obtain item";
 		
 	}
 

@@ -1481,8 +1481,8 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	
 		this.selected = selected;
 	}
-	public void deleteSelected(TriggerField selected) {
-		if(this.getSelected()==selected) {
+	public void deleteSelected(SelectAble selectAble) {
+		if(this.getSelected()==selectAble) {
 			this.selected=null;
 		}
 	}

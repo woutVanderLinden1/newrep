@@ -276,7 +276,7 @@ public class ViewToken extends MapItem {
 			  public void warn() {
 				  System.out.println("changedname "+field.getText());
 					act.changeName((String)field.getText());
-					itemInfoText.refreshImage();
+					//itemInfoText.refreshImage();
 			  }
 			});
 		 field.addPropertyChangeListener("name",new PropertyChangeListener() {
@@ -311,7 +311,7 @@ public class ViewToken extends MapItem {
 			public void actionPerformed(ActionEvent arg0) {
 				UserInputController control=UserInputController.getController();
 				control.performCommand(new  AddActivationToMapItemCommand(hold));
-			
+				itemInfoText.refreshImage();
 			}
 			
 		});

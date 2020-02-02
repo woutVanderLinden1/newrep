@@ -6,7 +6,9 @@ public class DeleteSelectedCommand extends BasicCommand {
 
 	@Override
 	public void perform() {
+		control.deleteSelected(view.getSelected());
 		view.deleteSelected();
-		control.deleteSelected(control.getSelected());
+		
+		
 	}
 }

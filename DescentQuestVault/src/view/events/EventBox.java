@@ -99,11 +99,30 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 				return (TriggerField) field2;
 			}
 		}
-		TriggerField field=new TriggerField(trig,this.getWidth(),145);
+		
+			TriggerField field=null;
+			if(trig.isMultiTrigger()) {
+				if(trig.isStopEvent()) {
+					field=new MultiTextTriggerField((TextTrigger) trig);
+					 
+				}
+				else {
+					field=new MultiTriggerField(trig,this.getWidth()-40,300);
+				}
+				 
+			}
+			else {
+				field=new TriggerField(trig,this.getWidth()-40,300);
+				
+			}
+			this.addTriggerField(field);
+		
+			
+		
 		//field.setLocation(0,200);
 	//	field.setSize(this.getWidth()-5,190);
 		
-		this.addTriggerField(field);
+		//this.addTriggerField(field);
 		System.out.println("new triggerfield add");
 		
 		return field;
@@ -779,7 +798,8 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 		this.removeTrigger(endtrigger);
 		this.addEndTrigger(baseEventController.getEndtrigger());
 		this.addBaseTrigger(baseEventController.getStartuptrigger());
-		
+		UserInputController control=UserInputController.getController();
+		control.setSelected(baseTriggerField);
 	}
 	
 	public BaseField getBaseFieldFromUnivent(Univent vent) {

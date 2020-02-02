@@ -177,6 +177,11 @@ public abstract class Trigger extends Univent implements EventBase {
 		
 	}
 
+	public boolean isMultiTrigger() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 	
 	

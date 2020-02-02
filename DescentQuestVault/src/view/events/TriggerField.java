@@ -40,6 +40,7 @@ import model.event.Trigger;
 import model.event.Univent;
 import model.event.advancedevents.PerilEvent;
 import model.event.advancedevents.peril.Peril;
+import model.event.extraevents.TextTrigger;
 import model.event.modifier.Modifier;
 import view.viewItems.NameChangeListener;
 import view.viewItems.ItemBox.ImageItem;
@@ -412,7 +413,9 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 	
 		trig.addTrigger(field.getTrig());
 		field.setTriggerField(this);
+		this.createBaseImage();
 		refreshHeight();
+		
 	}
 
 	public void showInTriggerField(SelectAble selected) {
@@ -567,8 +570,24 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 	}
 
 	public void addTrigger(Trigger vent, boolean b) {
-		TriggerField field=new TriggerField(vent,this.getWidth()-40,300);
+		TriggerField field=null;
+		if(vent.isMultiTrigger()) {
+			if(vent.isStopEvent()) {
+				field=new MultiTextTriggerField((TextTrigger) vent);
+				 
+			}
+			else {
+				field=new MultiTriggerField(vent,this.getWidth()-40,300);
+			}
+			 
+		}
+		else {
+			field=new TriggerField(vent,this.getWidth()-40,300);
+			
+		}
 		this.addTriggerField(field);
+	
+		
 	}
 
 	private void addModifier(Modifier ev) {

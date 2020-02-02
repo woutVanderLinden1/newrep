@@ -72,6 +72,7 @@ public class SelectEventListener implements MouseListener, MouseMotionListener,S
 		if(!activated) {
 			return;
 		}
+		
 		if(arg0.getButton() == MouseEvent.BUTTON1) {
 			System.out.println("pressed accepted");
 			UserInputController control=UserInputController.getController();
@@ -92,6 +93,7 @@ public class SelectEventListener implements MouseListener, MouseMotionListener,S
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		if(field.isSelected()) {
+			//System.out.println("selected alfnfng");
 			return;
 		}
 		field.released(arg0);

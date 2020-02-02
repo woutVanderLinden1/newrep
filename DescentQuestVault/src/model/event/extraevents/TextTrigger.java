@@ -41,7 +41,7 @@ public class TextTrigger extends Trigger implements Serializable,StopAble{
 	private int nroptions;
 	private ArrayList<TextOption> options;
 	private String thetext;
-	private ArrayList<AddOptionListener> optionlisteners=new ArrayList<AddOptionListener>();
+	private transient ArrayList<AddOptionListener> optionlisteners=new ArrayList<AddOptionListener>();
 	
 	public int getNroptions() {
 		return nroptions;
@@ -116,6 +116,11 @@ public class TextTrigger extends Trigger implements Serializable,StopAble{
 		}
 		
 	}
+	public boolean isMultiTrigger() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 	public void addTextOption(TextOption textOption) {
 		// TODO Auto-generated method stub
 		nroptions++;
@@ -248,6 +253,9 @@ public class TextTrigger extends Trigger implements Serializable,StopAble{
 		
 	}
 	public void addAddOptionListener(AddOptionListener multiTextTriggerField) {
+		if(optionlisteners==null) {
+			optionlisteners=new ArrayList<AddOptionListener>();
+		}
 		optionlisteners.add(multiTextTriggerField);
 		
 	}

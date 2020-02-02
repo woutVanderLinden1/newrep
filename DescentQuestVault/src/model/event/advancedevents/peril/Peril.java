@@ -24,6 +24,11 @@ public class Peril extends Trigger {
 		return null;
 	}
 	
+	public boolean isMultiTrigger() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
 	
 
 
