@@ -12,14 +12,14 @@ import view.viewItems.NameChangeListener;
 public class PlaceDoorEvent extends Event implements NameChangeListener {
 
 	private ViewDoor toplace;
-	private GameDoor gamedoor;
-	private PlaceGameDoorCommand command;
+	private transient GameDoor gamedoor;
+	private transient PlaceGameDoorCommand command;
 	private boolean namebased=true;
 	
 	public PlaceDoorEvent(ViewDoor viewDoor) {
 		toplace=viewDoor;
 		setCommand(new PlaceGameDoorCommand(viewDoor));
-		commands.add(command);
+		addCommand(command);
 		setIDName("placeDoor "+ toplace.getIDName());
 		setName("place door "+ toplace.getName());
 		viewDoor.addNameChangeListener(this);
@@ -55,6 +55,8 @@ public class PlaceDoorEvent extends Event implements NameChangeListener {
 	@Override
 	public void initialise(QuestCreator questCreator) {
 		toplace.initialise();
+		setCommand(new PlaceGameDoorCommand(toplace));
+		addCommand(command);
 		ViewDoor door=questCreator.addViewDoorToSquare(toplace,toplace.getBaseSquare());
 		door.deselect();
 	}

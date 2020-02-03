@@ -33,7 +33,7 @@ public class MajorMonsterPerilEvent extends Event {
 	public  MajorMonsterPerilEvent (ViewMonster viewMonster) {
 		viewmonster=viewMonster;
 		setCommand(new PlaceGameMonsterCommand(viewMonster));
-		commands.add(command);
+		addCommand(command);
 		setIDName("placemonster "+ viewmonster.getIDName());
 		setName("place monster "+ viewmonster.getName());
 		//viewMonster.addNameChangeListener(this);
@@ -42,7 +42,7 @@ public class MajorMonsterPerilEvent extends Event {
 	public void initialiseMonset(ViewMonster viewMonster) {
 		viewmonster=viewMonster;
 		setCommand(new PlaceGameMonsterCommand(viewMonster));
-		commands.add(command);
+		addCommand(command);
 		setIDName("placemonster "+ viewmonster.getIDName());
 		setName("place monster "+ viewmonster.getName());
 		
@@ -51,7 +51,7 @@ public class MajorMonsterPerilEvent extends Event {
 	public void trigger() {
 		periliteration++;
 		double val=Math.min(viewmonster.getMonsterLimit(),periliteration);
-		commands.add(new ShowTextCommand("Place "+val+" "+ viewmonster.getIDName()+ " on the entrance of the map (ignore group limits)",new EventEndListener() {
+		addCommand(new ShowTextCommand("Place "+val+" "+ viewmonster.getIDName()+ " on the entrance of the map (ignore group limits)",new EventEndListener() {
 
 			@Override
 			public void eventEnded() {
@@ -132,7 +132,7 @@ public class MajorMonsterPerilEvent extends Event {
 	}
 	
 	public void deletedcommand() {
-		commands.clear();
+		this.removeCommand(this.getCommand());
 	}
 
 

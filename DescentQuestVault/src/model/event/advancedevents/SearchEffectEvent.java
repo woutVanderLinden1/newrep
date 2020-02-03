@@ -6,6 +6,7 @@ import controller.UserInputController;
 import controller.commands.AddGoldCommand;
 import model.ItemController;
 import model.event.Event;
+import model.event.EventEndListener;
 import model.event.Univent;
 import model.event.extraevents.TextStop;
 import view.menu.QuestCreator;
@@ -54,7 +55,22 @@ public class SearchEffectEvent extends Event {
 		}
 		AddGoldCommand mand=new AddGoldCommand(goldvalue);
 		TextStop stop=new TextStop("you found "+goldvalue+" gold and a search card");
+		stop.addEventEndListener(new EventEndListener() {
+
+			@Override
+			public void eventEnded() {
+				triggerEventEndListeners();
+				
+			}
+			
+		});
 		stop.trigger();
+		performCommand(mand);
+		
+		
+	}
+	private void performCommand(AddGoldCommand mand) {
+		// TODO Auto-generated method stub
 		UserInputController control= UserInputController.getController();
 		control.performCommand(mand);
 	}

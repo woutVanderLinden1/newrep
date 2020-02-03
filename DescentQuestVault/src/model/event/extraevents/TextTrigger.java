@@ -24,22 +24,23 @@ import controller.commands.Game.ShowTextCommand;
 import model.event.EventEndListener;
 import model.event.Trigger;
 import model.event.Univent;
+import model.event.advancedevents.MultiTrigger;
 import view.events.MultiTextTriggerField;
 import view.viewItems.ItemBox.ItemInfoContainer;
 import view.viewItems.ItemBox.SelectKind;
 // when triggered opens a textfield with some options
 //each option causes something to happen has a subevent for eacht option
 //it can also show 1 event and a continue
-public class TextTrigger extends Trigger implements Serializable,StopAble{
+public class TextTrigger extends MultiTrigger implements Serializable,StopAble{
 //
 	
-	/**
+	/*
 	 * 
 	 */
 	private boolean stopped=false;
 	private static final long serialVersionUID = 1L;
 	private int nroptions;
-	private ArrayList<TextOption> options;
+	private ArrayList<TextOption> options=new ArrayList<TextOption>();
 	private String thetext;
 	private transient ArrayList<AddOptionListener> optionlisteners=new ArrayList<AddOptionListener>();
 	
@@ -64,7 +65,7 @@ public class TextTrigger extends Trigger implements Serializable,StopAble{
 		//show the text
 		//super.trigger();
 		UserInputController control=UserInputController.getController();
-		control.performCommand(new HoldToContinueCommand(this));
+		//control.performCommand(new HoldToContinueCommand(this));
 		
 
 		control.performCommand(new ShowTextCommand(thetext,options,new EventEndListener() {
@@ -75,6 +76,7 @@ public class TextTrigger extends Trigger implements Serializable,StopAble{
 			}
 			
 		}));
+		/*
 		stopped=true;
 		while(stopped) {
 			try {
@@ -87,6 +89,7 @@ public class TextTrigger extends Trigger implements Serializable,StopAble{
 				e.printStackTrace();
 			}
 		}
+		*/
 	}
 	
 	public void continueStop() {
@@ -105,7 +108,10 @@ public class TextTrigger extends Trigger implements Serializable,StopAble{
 		this.setName("textTrigger");
 		this.setIDName("textTrigger");
 		this.nroptions = nroptions;
-		this.options = options;
+		for(TextOption opt:options) {
+			this.addTextOption(opt);
+		}
+		//this.options = options;
 		this.thetext = thetext;
 		initialiseOptions();
 	}
@@ -126,6 +132,7 @@ public class TextTrigger extends Trigger implements Serializable,StopAble{
 		nroptions++;
 		textOption.setContinueCommand(new ContinueCommand());
 		options.add(textOption);
+		this.addTriggerChoice(textOption);
 		triggerAddOptionListeners(textOption);
 	}
 	private void triggerAddOptionListeners(TextOption textOption) {
@@ -262,9 +269,11 @@ public class TextTrigger extends Trigger implements Serializable,StopAble{
 	public void removeTextOption(TextOption opt) {
 		nroptions--;
 		options.remove(opt);
+		this.removeTriggerChoice(opt);
 		triggerAddOptionListenersRemoved(opt);
 		
 	}
+
 	@Override
 	public Univent copy() {
 		TextTrigger trig= new TextTrigger(nroptions,options,thetext);

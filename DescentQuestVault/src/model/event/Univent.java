@@ -17,7 +17,7 @@ public abstract class Univent implements EventBase,Serializable {
 	private String IDName;
 	protected String name;
 	private transient ArrayList<NameChangeListener> namechangelisteners=new ArrayList<NameChangeListener>();
-	protected ArrayList<EventEndListener> eventendListeners;
+	protected transient ArrayList<EventEndListener> eventendListeners;
 
 	protected boolean selected=false;
 	public abstract SelectKind getKind();

@@ -33,8 +33,11 @@ public class GameDoor extends ViewDoor implements ActivateAble {
 		this.setPlaceDoorEvent(toplace.getPlaceDoorEvent());
 		toplace.getRemoveDoorEvent().setGameDoor(this);
 		this.setRemoveDoorEvent(toplace.getRemoveDoorEvent());
-		toplace.getUnlockDoorEvent().setDoor(this);
-		this.setUnlockDoorEvent(toplace.getUnlockDoorEvent());
+		if(toplace.getUnlockDoorEvent()!=null) {
+			toplace.getUnlockDoorEvent().setDoor(this);
+			this.setUnlockDoorEvent(toplace.getUnlockDoorEvent());
+			
+		}
 		
 	}
 	@Override

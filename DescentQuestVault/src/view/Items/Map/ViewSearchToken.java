@@ -11,12 +11,14 @@ import view.viewItems.TokenItem;
 
 public class ViewSearchToken extends ViewToken {
 	protected SearchTokenTrigger searchtrigger;
+	private SearchEffectEvent effect;
 
 	public ViewSearchToken(TokenItem image, ViewSquare square, int i, int j) {
 		super(image, square, i, j);
 		effect=new SearchEffectEvent();
-		activations.add(new SearchTokenActivation(this));
 		
+		searchtrigger=new SearchTokenTrigger(this);
+		activations.add(new SearchTokenActivation(this));
 	}
 	public SearchTokenTrigger getSearchTokenTrigger() {
 		// TODO Auto-generated method stub
@@ -27,13 +29,13 @@ public class ViewSearchToken extends ViewToken {
 	public ViewSearchToken(SearchToken searchToken) {
 		super(searchToken);
 		effect=new SearchEffectEvent();
-		activations.add(new SearchTokenActivation(this));
+		//activations.add(new SearchTokenActivation(this));
 		searchtrigger=new SearchTokenTrigger(this);
 		activations.add(new SearchTokenActivation(this));
 		
 	}
 
-	private SearchEffectEvent effect;
+	
 	
 
 	public SearchEffectEvent getEffect() {

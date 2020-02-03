@@ -2,7 +2,9 @@ package view.events;
 
 import frame.SubContainer;
 import misc.Tools;
+import model.event.Event;
 import model.event.Trigger;
+import model.event.Univent;
 import model.event.extraevents.AddOptionListener;
 import model.event.extraevents.TextOption;
 import model.event.extraevents.TextTrigger;
@@ -22,7 +24,7 @@ public class MultiTextTriggerField extends MultiTriggerField implements AddOptio
 		super(textOption, 0, 0);
 		textTrigger=textOption;
 		//add a field for each option
-		addTextOptions();
+		//addTextOptions();
 		//refreshHeight();
 		this.createBaseImage();
 		textOption.addAddOptionListener(this);
@@ -45,6 +47,32 @@ public class MultiTextTriggerField extends MultiTriggerField implements AddOptio
 		TriggerContainer contain=new TriggerContainer(option,this.getWidth()-25,80,this);
 		contain.setName(option.getName());
 		addTriggerContainer(contain);
+		for(Univent vent:option.getUnivents()) {
+			
+			switch(vent.getKind()) {
+			case DOOR:
+				break;
+			case EVENT:
+				
+				contain.addEvent((Event) vent);
+				
+				break;
+			case MODIFIER:
+			case TRIGGER:
+			
+				contain.addTrigger((Trigger) vent,false);
+				
+				
+				break;
+		
+		
+			default:
+				break;
+			
+			}
+			
+			
+		}
 		
 		//add the mouselistener
 		

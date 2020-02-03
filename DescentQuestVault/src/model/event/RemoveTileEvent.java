@@ -11,15 +11,15 @@ import view.viewItems.NameChangeListener;
 public class RemoveTileEvent extends Event implements NameChangeListener{
 
 	private ViewTile toremove;
-	private RemoveGameTileCommand command;
-	private GameTile gametile;
+	private transient RemoveGameTileCommand command;
+	private transient GameTile gametile;
 	
 	private boolean namebased=true;
 	
 	public RemoveTileEvent(ViewTile viewTile) {
 		toremove=viewTile;
 		
-		commands.add(command);
+		addCommand(command);
 		setIDName("removeTile "+ toremove.getIDName());
 		setName("remove tile "+ toremove.getName());
 		viewTile.addNameChangeListener(this);
@@ -80,10 +80,10 @@ public class RemoveTileEvent extends Event implements NameChangeListener{
 	}
 	
 	public void setGameTile(GameTile newtile) {
-		commands.remove(command);
+		removeCommand(command);
 		gametile=newtile;
 		setCommand(new RemoveGameTileCommand(gametile));
-		commands.add(command);
+		addCommand(command);
 	}
 
 }

@@ -12,7 +12,7 @@ public class RemoveMapMonsterEvent extends Event {
 	public RemoveMapMonsterEvent(GameMonster mon) {
 		this.mon=mon;
 		RemoveMapMonsterCommand comm=new RemoveMapMonsterCommand(mon);
-		commands.add(comm);
+		addCommand(comm);
 	}
 	@Override
 	public void initialise(QuestCreator questCreator) {

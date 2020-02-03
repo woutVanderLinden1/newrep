@@ -51,6 +51,10 @@ import view.viewItems.ItemBox.ViewTileExit;
 public class QuestCreator extends SubContainer implements Serializable{
 
 
+	/**
+	 * 
+	 */
+
 	protected TitleBox titleBox;
 	protected ItemInfoPanel itemPanel;
 	protected MapPanel mapPanel;

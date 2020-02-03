@@ -9,13 +9,13 @@ import view.viewItems.NameChangeListener;
 public class PlaceSearchTokenEvent extends Event implements NameChangeListener{
 
 	private ViewToken toplace;
-	private PlaceGameSearchTokenCommand command;
+	private transient PlaceGameSearchTokenCommand command;
 	private boolean namebased=true;
 	
 	public PlaceSearchTokenEvent(ViewToken viewToken) {
 		toplace=viewToken;
 		setCommand(new PlaceGameSearchTokenCommand(viewToken));
-		commands.add(command);
+		addCommand(command);
 		setIDName("placeToken "+ toplace.getIDName());
 		setName("place Token "+ toplace.getName());
 		viewToken.addNameChangeListener(this);
@@ -50,6 +50,8 @@ public class PlaceSearchTokenEvent extends Event implements NameChangeListener{
 	public void initialise(QuestCreator questCreator) {
 		questCreator.addViewTokenToSquare(toplace,toplace.getBaseSquare());
 		toplace.initialise();
+		setCommand(new PlaceGameSearchTokenCommand(toplace));
+		addCommand(command);
 	}
 
 	@Override

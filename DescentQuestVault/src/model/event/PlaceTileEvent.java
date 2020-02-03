@@ -18,13 +18,13 @@ public class PlaceTileEvent extends Event implements NameChangeListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	ViewTile toplace;
-	PlaceGameTileCommand command;
+	private ViewTile toplace;
+	private transient PlaceGameTileCommand command;
 	
 	public PlaceTileEvent(ViewTile viewTile) {
 		toplace=viewTile;
 		setCommand(new PlaceGameTileCommand(toplace));
-		commands.add(command);
+		addCommand(command);
 		setIDName("placeTile "+ toplace.getIDName());
 		System.out.println("toplace "+toplace);
 		setName("place tile "+ toplace.getName());
@@ -61,6 +61,8 @@ public class PlaceTileEvent extends Event implements NameChangeListener {
 	@Override
 	public void initialise(QuestCreator questCreator) {
 		toplace.initialise();
+		setCommand(new PlaceGameTileCommand(toplace));
+		addCommand(command);
 		ViewTile tile=questCreator.addViewTileToSquare(toplace,toplace.getBaseSquare());
 		tile.deselect();
 	}

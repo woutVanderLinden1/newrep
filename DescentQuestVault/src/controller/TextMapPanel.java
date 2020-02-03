@@ -37,7 +37,7 @@ public class TextMapPanel extends GameMapPanel {
 		mapPanels.moveToFront(textPanel);
 		JTextArea area=new JTextArea();
 		area.setText(text);
-		area.setFont(new Font("Haettenschweiler", Font.PLAIN, 40));
+		area.setFont(new Font("descentquestbuilderfont", Font.PLAIN, 40));
 		textPanel.add(area);
 		area.setBackground(new Color(246,221,199));
 		area.setEditable(false);
@@ -74,7 +74,7 @@ public class TextMapPanel extends GameMapPanel {
 		
 	
 		
-		area.setFont(new Font("Haettenschweiler", Font.PLAIN, 20));
+		area.setFont(new Font("descentquestbuilderfont", Font.PLAIN, 20));
 		textPanel.add(area);
 		area.setBackground(new Color(246,221,199));
 		area.setEditable(false);

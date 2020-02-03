@@ -73,4 +73,7 @@ public class EventTriggerStack {
 		emptyListeners.remove(emptyListener);
 		
 	}
+	public void clearStack() {
+		this.stack.clear();
+	}
 }

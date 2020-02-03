@@ -38,6 +38,7 @@ import model.event.Event;
 import model.event.SingleMovementEvent;
 import model.event.Trigger;
 import model.event.Univent;
+import model.event.advancedevents.MultiTrigger;
 import model.event.advancedevents.PerilEvent;
 import model.event.advancedevents.peril.Peril;
 import model.event.extraevents.TextTrigger;
@@ -577,7 +578,7 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 				 
 			}
 			else {
-				field=new MultiTriggerField(vent,this.getWidth()-40,300);
+				field=new MultiTriggerField((MultiTrigger) vent,this.getWidth()-40,300);
 			}
 			 
 		}

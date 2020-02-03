@@ -43,8 +43,9 @@ public class SaveGameCommand extends BasicCommand {
 			         out.close();
 			         fileOut.close();
 			         System.out.printf("Serialized data is saved in "+ newfile.toString());
-			      } catch (IOException i) {
-			         i.printStackTrace();
+			      } catch (Exception e) {
+			         e.printStackTrace();
+			         System.out.println(" error happened file not saved");
 			      }
 		  }
 		/*

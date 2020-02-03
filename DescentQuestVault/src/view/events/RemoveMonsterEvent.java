@@ -16,7 +16,7 @@ public class RemoveMonsterEvent extends Event implements NameChangeListener {
 	 */
 	private static final long serialVersionUID = 706092979699120364L;
 	private ViewMonster toremove;
-	private GameMonster gameremove;
+	private transient GameMonster gameremove;
 
 	public RemoveMonsterEvent(ViewMonster viewMonster) {
 		toremove=viewMonster;

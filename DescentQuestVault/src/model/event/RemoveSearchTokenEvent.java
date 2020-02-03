@@ -12,8 +12,8 @@ import view.viewItems.NameChangeListener;
 public class RemoveSearchTokenEvent extends Event implements NameChangeListener {
 
 	private ViewToken toremove;
-	private GameToken token;
-	private ICommand command;
+	private transient GameToken token;
+	private transient ICommand command;
 	private boolean namebased=true;
 	
 	public ViewToken getToremove() {
@@ -68,15 +68,19 @@ public class RemoveSearchTokenEvent extends Event implements NameChangeListener 
 	@Override
 	public Univent copy() {
 		// TODO Auto-generated method stub
-		return new RemoveSearchTokenEvent(token);
+		RemoveSearchTokenEvent tok=new RemoveSearchTokenEvent(toremove);
+		tok.setGameToken(token);
+		return tok;
 	}
 
 	public void setGameToken(GameToken gameToken) {
 		// TODO Auto-generated method stub
-		commands.remove(command);
+		removeCommand(command);
 		token=gameToken;
 		setCommand(new RemoveGameTokenCommand(gameToken));
-		commands.add(command);
+		addCommand(command);
 	}
+
+
 
 }

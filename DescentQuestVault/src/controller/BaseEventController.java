@@ -32,7 +32,7 @@ public class BaseEventController  implements Serializable {
 		super();
 		this.startuptrigger = startuptrigger;
 		this.endtrigger = endtrigger;
-		endtrigger.addTrigger(new PerilEvent(PerilTiming.TEST));
+		endtrigger.addTrigger(new PerilEvent(PerilTiming.SHORT));
 	}
 	
 	

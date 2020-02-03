@@ -19,7 +19,7 @@ public abstract class Event extends Univent implements EventBase {
 	 * 
 	 */
 	private static final long serialVersionUID = -7060978165749543803L;
-	protected ArrayList<ICommand> commands;
+	private transient ArrayList<ICommand> commands;
 	
 	
 	public Event() {
@@ -42,6 +42,9 @@ public abstract class Event extends Univent implements EventBase {
 
 	public void trigger() {
 		UserInputController control=UserInputController.getController();
+		if(commands==null) {
+			commands=new ArrayList<ICommand>();
+		}
 		for(ICommand comm:commands) {
 			control.performCommand(comm);
 		}
@@ -54,4 +57,19 @@ public abstract class Event extends Univent implements EventBase {
 		
 	}
 
+	public void addCommand(ICommand comm) {
+		if(commands==null) {
+			commands=new ArrayList<ICommand>();
+			
+		}
+		commands.add(comm);
+	}
+	protected void removeCommand(ICommand command2) {
+		if(commands==null) {
+			commands=new ArrayList<ICommand>();
+			
+		}
+		// TODO Auto-generated method stub
+		commands.remove(command2);
+	}
 }

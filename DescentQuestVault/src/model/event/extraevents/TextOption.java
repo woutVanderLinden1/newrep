@@ -53,15 +53,15 @@ public class TextOption extends Trigger{
 	}
 
 	public void perform() {
-		UserInputController control=UserInputController.getController();
-		control.performCommand(command);
+		//UserInputController control=UserInputController.getController();
+		//control.performCommand(command);
 		// TODO Auto-generated method stub
 		
 	}
 	
 	public void trigger() {
-		UserInputController control=UserInputController.getController();
-		control.performCommand(continueCommand);
+		//UserInputController control=UserInputController.getController();
+		//control.performCommand(continueCommand);
 		super.trigger();
 	}
 	public void triggerHere(ArrayList<Univent> totrigger) {

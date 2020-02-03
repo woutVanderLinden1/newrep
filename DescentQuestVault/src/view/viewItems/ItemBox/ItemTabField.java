@@ -46,7 +46,7 @@ public class ItemTabField  extends SubContainer implements Serializable{
 	}
 
 	public void initialiseBox() {
-		ItemOptions[] comboOptions = { ItemOptions.Essentials,ItemOptions.CoreSetOutdoor,ItemOptions.CoreSetIndoor, ItemOptions.Square, ItemOptions.Monster, ItemOptions.Event, ItemOptions.Token,ItemOptions.Door,ItemOptions.Text,ItemOptions.Value ,ItemOptions.Generator};
+		ItemOptions[] comboOptions = { ItemOptions.Essentials,ItemOptions.CoreSetOutdoor,ItemOptions.CoreSetIndoor, ItemOptions.Square, ItemOptions.Monster, ItemOptions.Event, ItemOptions.Token,ItemOptions.Door,ItemOptions.Value ,ItemOptions.Generator};
 		//maybe allow creation of new groups
 		box=new JComboBox<ItemOptions>(comboOptions) {
 			public void actionPerformed(ActionEvent e) {

@@ -15,8 +15,12 @@ import view.viewItems.NameChangeListener;
 
 public class PlaceMonsterEvent extends Event implements NameChangeListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3240955388248158505L;
 	private ViewMonster viewmonster;
-	private PlaceGameMonsterCommand command;
+	private transient PlaceGameMonsterCommand command;
 	private boolean namebased=true;
 	
 	
@@ -24,7 +28,7 @@ public class PlaceMonsterEvent extends Event implements NameChangeListener {
 	public PlaceMonsterEvent(ViewMonster viewMonster) {
 		viewmonster=viewMonster;
 		setCommand(new PlaceGameMonsterCommand(viewMonster));
-		commands.add(command);
+		addCommand(command);
 		setIDName("placemonster "+ viewmonster.getIDName());
 		setName("place monster "+ viewmonster.getName());
 		viewMonster.addNameChangeListener(this);
@@ -73,6 +77,15 @@ public class PlaceMonsterEvent extends Event implements NameChangeListener {
 
 			@Override
 			public void eventEnded() {
+				EventTriggerStack stack=EventTriggerStack.getTriggerStack();
+				ArrayList<Univent> tinylist=new ArrayList<Univent>();
+				tinylist.add(new RemoveMapMonsterEvent(command.getPlacedMonster()));
+				if(viewmonster.hasInfo()) {
+					tinylist.add(viewmonster.getMonsterInfoEvent());
+				}
+				
+				stack.addNewEvents(tinylist);
+				stack.triggerNextStackEvent();
 				triggerEventEndListeners();
 			}
 			
@@ -80,20 +93,15 @@ public class PlaceMonsterEvent extends Event implements NameChangeListener {
 		super.trigger();
 		stop.trigger();
 		//addmapmonsterremoval to triggerstack
-		EventTriggerStack stack=EventTriggerStack.getTriggerStack();
-		ArrayList<Univent> tinylist=new ArrayList<Univent>();
-		tinylist.add(new RemoveMapMonsterEvent(command.getPlacedMonster()));
-		if(viewmonster.hasInfo()) {
-			tinylist.add(viewmonster.getMonsterInfoEvent());
-		}
 		
-		stack.addNewEvents(tinylist);
 		
 	}
 	
 	@Override
 	public void initialise(QuestCreator questCreator) {
 		viewmonster.initialise();
+		setCommand(new PlaceGameMonsterCommand(viewmonster));
+		addCommand(command);
 		ViewMonster monster=questCreator.addViewMonsterToSquare(viewmonster,viewmonster.getBaseSquare());
 		monster.deselect();
 	}

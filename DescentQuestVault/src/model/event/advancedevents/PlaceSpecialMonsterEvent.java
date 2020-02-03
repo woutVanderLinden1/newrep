@@ -51,11 +51,14 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 	private boolean namebased=true;
 	private String text;
 	
-	
+	public void initialise() {
+		setCommand(new PlaceGameMonsterCommand(viewmonster));
+		addCommand(command);
+	}
 	public PlaceSpecialMonsterEvent(ViewMonster viewMonster) {
 		viewmonster=viewMonster;
 		setCommand(new PlaceGameMonsterCommand(viewMonster));
-		commands.add(command);
+		addCommand(command);
 		setIDName("placemonster "+ viewmonster.getIDName());
 		setName("place monster "+ viewmonster.getName());
 		//viewMonster.addNameChangeListener(this);
@@ -64,7 +67,7 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 	public PlaceSpecialMonsterEvent(ViewMonster viewMonster,ViewToken token) {
 		viewmonster=viewMonster;
 		setCommand(new PlaceGameMonsterCommand(viewMonster));
-		commands.add(command);
+		addCommand(command);
 		setIDName("placemonster "+ viewmonster.getIDName());
 		setName("place monster "+ viewmonster.getName());
 		
@@ -74,7 +77,7 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 	public void initialiseMonset(ViewMonster viewMonster) {
 		viewmonster=viewMonster;
 		setCommand(new PlaceGameMonsterCommand(viewMonster));
-		commands.add(command);
+		addCommand(command);
 		setIDName("placemonster "+ viewmonster.getIDName());
 		setName("place monster "+ viewmonster.getName());
 		
@@ -83,7 +86,7 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 	public void trigger() {
 		ArrayList<TextOption> options=new ArrayList<TextOption>();
 		options.add(new TextOption("continue",new ContinueCommand()));
-		commands.add(new ShowTextCommand(text,options,new EventEndListener() {
+		addCommand(new ShowTextCommand(text,options,new EventEndListener() {
 
 			@Override
 			public void eventEnded() {
@@ -117,7 +120,7 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 	public PlaceSpecialMonsterEvent(TokenMonster asmonster, TokenItem token) {
 		viewmonster=new ViewMonster(new MonsterItem(asmonster),null,0,0);
 		setCommand(new PlaceGameMonsterCommand(viewmonster));
-		commands.add(command);
+		addCommand(command);
 		setIDName("placemonster "+ viewmonster.getIDName());
 		setName("place monster "+ viewmonster.getName());
 		// TODO Auto-generated constructor stub
@@ -370,7 +373,7 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 	}
 	
 	public void deletedcommand() {
-		commands.clear();
+		removeCommand(this.getCommand());
 	}
 	@Override
 	public void continueStop() {

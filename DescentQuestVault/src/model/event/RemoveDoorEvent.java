@@ -11,8 +11,8 @@ public class RemoveDoorEvent extends Event implements NameChangeListener{
 
 	
 	private ViewDoor toremove;
-	private GameDoor gamedoor;
-	private RemoveGameDoorCommand command;
+	private transient GameDoor gamedoor;
+	private transient RemoveGameDoorCommand command;
 	private boolean namebased=true;
 	
 	public RemoveDoorEvent(ViewDoor viewDoor) {
@@ -90,10 +90,9 @@ public class RemoveDoorEvent extends Event implements NameChangeListener{
 
 	public void setGameDoor(GameDoor gameDoor) {
 		// TODO Auto-generated method stub
-		commands.remove(command);
+		removeCommand(command);
 		gamedoor=gameDoor;
 		setCommand(new RemoveGameDoorCommand(gameDoor));
-		
-		commands.add(command);
+		addCommand(command);
 	}
 }

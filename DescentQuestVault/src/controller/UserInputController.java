@@ -62,6 +62,7 @@ import misc.save.WorldSaveFile;
 import model.IModel;
 import model.ItemController;
 import model.Monster.Monster;
+import model.event.EventTriggerStack;
 import model.event.MonsterTurnTrigger;
 import model.event.StartUpTrigger;
 import model.event.Trigger;
@@ -724,6 +725,8 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		if(testBox==null) {
 			testBox=new MainFrame();
 		}
+		EventTriggerStack stack=EventTriggerStack.getTriggerStack();
+		stack.clearStack();
 		initialiseBaseEventController(g.getControl());
 		//addGameStartListener(g.getControl().getStartuptrigger());
 		//addEndPhaseListener(g.getControl().getEndtrigger());
@@ -743,6 +746,8 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		
 	}
 	public void startGame(WorldSaveFile g,CampaignFile file) {
+		EventTriggerStack stack=EventTriggerStack.getTriggerStack();
+		stack.clearStack();
 		UserInputController control=UserInputController.getController();
 		int added=0;
 		ArrayList<CampaignSaveFile> possibleevents=new ArrayList<CampaignSaveFile>();
@@ -796,6 +801,8 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		
 		
 	public void startFullGame(WorldSaveFile g,CampaignFile file) {
+		EventTriggerStack stack=EventTriggerStack.getTriggerStack();
+		stack.clearStack();
 		nexttextlistener.clear();
 		gamecontrol=new GameController();
 		if(testBox==null) {
@@ -821,6 +828,8 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	}
 
 	public void startGame() {
+		EventTriggerStack stack=EventTriggerStack.getTriggerStack();
+		stack.clearStack();
 		nexttextlistener.clear();
 		gamecontrol=new GameController();
 		QuestGame game=new QuestGame(theFrame.getSize(),new SampleFile());
@@ -839,6 +848,8 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	}
 	public void endGame() {
 		
+		EventTriggerStack stack=EventTriggerStack.getTriggerStack();
+		stack.clearStack();
 		// TODO Auto-generated method stub
 			theFrame.endTestGame();
 			if(testBox!=null) {

@@ -316,7 +316,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		mapPanels.moveToFront(textPanel);
 		JTextPane area=new JTextPane();
 		area.setText(text);
-		area.setFont(new Font("Haettenschweiler", Font.PLAIN, 20));
+		area.setFont(new Font("descentquestbuilderfont", Font.PLAIN, 20));
 
 	    SimpleAttributeSet center = new SimpleAttributeSet();
         StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
@@ -376,7 +376,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 	   
 	    	area.getCaret().setVisible(false); 
 		
-		area.setFont(new Font("Haettenschweiler", Font.PLAIN, 40));
+		area.setFont(new Font("descentquestbuilderfont", Font.PLAIN, 40));
 		textPanel.add(area);
 		area.setBackground(new Color(0,0,0,0));
 		area.setEditable(false);

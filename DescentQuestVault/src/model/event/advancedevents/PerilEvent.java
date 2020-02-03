@@ -19,8 +19,12 @@ import view.viewItems.ItemBox.ItemInfoContainer;
 import view.viewItems.ItemBox.ItemOptions;
 import view.viewItems.ItemBox.SelectKind;
 
-public class PerilEvent extends Trigger {
+public class PerilEvent extends MultiTrigger {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2980364086673355039L;
 	private StandardPerilGenre genre;
 	private AdvancedPerilGenre advgenre;
 	private PerilTiming timing;
@@ -92,6 +96,8 @@ public class PerilEvent extends Trigger {
 		firstperil.setIDName("minor peril");
 		secondperil=new Peril();
 		secondperil.setIDName("major peril");
+		this.addTriggerChoice(firstperil);
+		this.addTriggerChoice(secondperil);
 	}
 
 	@Override
@@ -108,6 +114,8 @@ public class PerilEvent extends Trigger {
 		firstperil.setIDName("minor peril");
 		secondperil=new Peril();
 		secondperil.setIDName("major peril");
+		this.addTriggerChoice(firstperil);
+		this.addTriggerChoice(secondperil);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -275,6 +283,7 @@ public class PerilEvent extends Trigger {
 		};
 		button.addActionListener(listen);
 		//button
+		button.setSelectedItem(this.timing);
 		
 	
 		//button.addActionListener(arg0);

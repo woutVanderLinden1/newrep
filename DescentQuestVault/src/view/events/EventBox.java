@@ -33,6 +33,7 @@ import model.event.MonsterTurnTrigger;
 import model.event.StartUpTrigger;
 import model.event.Trigger;
 import model.event.Univent;
+import model.event.advancedevents.MultiTrigger;
 import model.event.advancedevents.PerilEvent;
 import model.event.advancedevents.PerilTiming;
 import model.event.extraevents.TestOption;
@@ -107,7 +108,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 					 
 				}
 				else {
-					field=new MultiTriggerField(trig,this.getWidth()-40,300);
+					field=new MultiTriggerField((MultiTrigger) trig,this.getWidth()-40,300);
 				}
 				 
 			}

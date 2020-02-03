@@ -210,7 +210,7 @@ public class AddItemEvent extends Event {
 						return ".ser";
 					}
 				});
-				File workingDirectory = new File(System.getProperty("user.dir")+"/CityEvent");
+				File workingDirectory = new File(System.getProperty("user.dir")+"/Items");
 				fc.setCurrentDirectory(workingDirectory);
 				UserInputController usercontrol=UserInputController.getController();
 				int returnVal = fc.showOpenDialog(usercontrol.getMainFrame());

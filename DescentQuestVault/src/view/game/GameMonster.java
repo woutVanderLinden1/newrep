@@ -24,6 +24,11 @@ import view.viewItems.MonsterItem;
 
 public class GameMonster extends ViewMonster implements ActivateAble ,TurnHolder{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private ViewMonster theViewMonster;
 	
 	private MonsterMovement movement;

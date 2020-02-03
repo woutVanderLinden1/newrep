@@ -22,7 +22,10 @@ import controller.UserInputController;
 import frame.SubContainer;
 import misc.Tools;
 import misc.listeners.TriggerFieldListener;
+import model.event.Event;
 import model.event.Trigger;
+import model.event.Univent;
+import model.event.advancedevents.MultiTrigger;
 import model.event.extraevents.TextOption;
 import view.viewItems.ItemBox.SelectAble;
 
@@ -33,16 +36,80 @@ import view.viewItems.ItemBox.SelectAble;
 //this takes some time thinking for it to work
 public class MultiTriggerField extends TriggerField {
 	
+	private static final long serialVersionUID = 2944084166067614602L;
 	protected HashMap<TriggerContainer,JTextField> textmap=new HashMap<TriggerContainer,JTextField>();
 	protected ArrayList<TriggerContainer> subEventlist=new ArrayList<TriggerContainer>();
 	//private SelectEventListener eventlisten;
 	protected TriggerFieldListener listen;
+	protected MultiTrigger trige;
 	
-	
-	public MultiTriggerField(Trigger trig, int i, int j) {
+	public MultiTriggerField(MultiTrigger trig, int i, int j) {
 		super(trig, i, j);
+		this.trige=trig;
+		this.addOptions();
 		
+		//ev.getFirstperil
+		/*
+		TriggerContainer contain=new TriggerContainer(ev.getFirstperil(),this.getWidth()-25,80,this);
+		this.addTriggerContainer(contain);
+		contain.setName("minor peril");
+		TriggerContainer contain2=new TriggerContainer(ev.getSecondperil(),this.getWidth()-25,80,this);
+		this.addTriggerContainer(contain2);
+		contain2.setName("major peril");
+		*/
+		//this.addTriggerContainer(contain);
+		this.minimize();
+		//textTrigger=textOption;
+		//add a field for each option
+		//addTextOptions();
+		//refreshHeight();
 	
+	}
+	private void addOptions() {
+		// TODO Auto-generated method stub
+		
+		for(Trigger option:trige.getTriggerchoices()) {
+			this.initialiseTextOption(option);
+		}
+		
+		
+		
+	}
+
+	private void initialiseTextOption(Trigger option) {
+		//add new subeventfield
+		TriggerContainer contain=new TriggerContainer(option,this.getWidth()-25,80,this);
+		contain.setName(option.getName());
+		addTriggerContainer(contain);
+		for(Univent vent:option.getUnivents()) {
+			
+			switch(vent.getKind()) {
+			case DOOR:
+				break;
+			case EVENT:
+				
+				contain.addEvent((Event) vent);
+				
+				break;
+			case MODIFIER:
+			case TRIGGER:
+			
+				contain.addTrigger((Trigger) vent,false);
+				
+				
+				break;
+		
+		
+			default:
+				break;
+			
+			}
+			
+			
+		}
+		
+		//add the mouselistener
+		
 	}
 	
 	protected void initialiseMouseListener() {
@@ -226,11 +293,11 @@ public class MultiTriggerField extends TriggerField {
 		//subEvents.add(field);
 	
 			System.out.println("this does iet");
-			subEventlist.get(0).add(field);
+			subEventlist.get(0).addEventField(field);
 			this.createBaseImage();
 	}
 	public void addTriggerField(TriggerField field) {
-		subEventlist.get(0).add(field);
+		subEventlist.get(0).addTriggerField(field);
 		System.out.println("huhuhuhuh");
 		this.createBaseImage();
 	}
@@ -390,5 +457,26 @@ public class MultiTriggerField extends TriggerField {
 		}
 		
 		
+	}
+	@Override
+	public void removeTrigger(Trigger trigger) {
+		// TODO Auto-generated method stub
+		for(TriggerContainer contain:subEventlist) {
+			contain.removeTrigger(trigger);
+		}
+	
+	}
+	@Override
+	public void removeEvent(Event ev) {
+		// TODO Auto-generated method stub
+		for(TriggerContainer contain:subEventlist) {
+			contain.removeEvent(ev);
+		}
+	
+	}
+	public void removeField(BaseField todrag) {
+		for(TriggerContainer contain:subEventlist) {
+			contain.removeField(todrag);
+		}
 	}
 }
