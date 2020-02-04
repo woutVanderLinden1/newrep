@@ -171,21 +171,26 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 			// TODO Auto-generated constructor stub
 			System.out.println("this is added");
 		//	
-			textLabel.setText(trig.getName());
-			System.out.println("this is the name of the trigger "+trig.getIDName());
-					//textLabel.setOpaque(false);
-			textLabel.setEnabled(false);
-			textLabel.setDisabledTextColor(textcolor);
-			this.setBackground(col);
-			textLabel.setFont(new Font("TimesRoman", Font.BOLD, 20));
-			textLabel.setForeground(new Color(255,100,40));
-			textLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-			textLabel.setAlignmentY(Component.TOP_ALIGNMENT);
-			textLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-			textLabel.setBackground(col);
-			textLabel.setRequestFocusEnabled(false);
-			textLabel.setPreferredSize(new Dimension(this.getWidth(),25));
-			textLabel.setSize(110,25);
+			if(this.textLabel!=null) {
+				textLabel.setText(trig.getName());
+				System.out.println("this is the name of the trigger "+trig.getIDName());
+						//textLabel.setOpaque(false);
+				textLabel.setEnabled(false);
+				textLabel.setDisabledTextColor(textcolor);
+				this.setBackground(col);
+				textLabel.setFont(new Font("TimesRoman", Font.BOLD, 20));
+				textLabel.setForeground(new Color(255,100,40));
+				textLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+				textLabel.setAlignmentY(Component.TOP_ALIGNMENT);
+				textLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+				textLabel.setBackground(col);
+				textLabel.setRequestFocusEnabled(false);
+				textLabel.setPreferredSize(new Dimension(this.getWidth(),25));
+				textLabel.setSize(110,25);
+				this.add(textLabel);
+				textLabel.setLocation(10,10);
+			}
+			
 			
 			 butt=new JButton("-");
 			butt.addActionListener(new ActionListener() {
@@ -202,8 +207,7 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 			butt.setSize(35,15);
 			butt.setPreferredSize(new Dimension(35,15));
 			
-			this.add(textLabel);
-			textLabel.setLocation(10,10);
+			
 		
 			subEvents.setLocation(10,60);
 			this.add(subEvents);
@@ -405,10 +409,14 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 
 	public void addTriggerField(TriggerField field) {
 		System.out.println("droppeda triggerfield in  a triggerfield" );
-		subEvents.add(field);
+	
 		if(!Tools.containsWithSameTrigger(fields,field)) {
 			System.out.println("added to fields");
+			subEvents.add(field);
 			fields.add(field);
+		}
+		else {
+			System.out.println("does not contain");
 		}
 		field.setSize(new Dimension(this.getWidth()-40,field.getHeight()));
 	
@@ -605,7 +613,10 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 	@Override
 	public void nameChanged(String newname) {
 		// TODO Auto-generated method stub
-		textLabel.setText(newname);
+		if(textLabel!=null) {
+			textLabel.setText(newname);
+		}
+	
 	}
 
 
@@ -618,6 +629,7 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 		
 		
 		setSize((int)w.getWidth(),(int)w.getHeight());
+		
 	}
 	@Override
 	public void setSize(int w,int h) {

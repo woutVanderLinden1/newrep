@@ -93,7 +93,7 @@ public class SingleMovementEvent extends Event implements StopAble{
 			toexecute.add(getMasterMovement());
 		}
 		stack.addNewEvents(toexecute);
-		stack.triggerNextStackEvent();
+		//stack.triggerNextStackEvent();
 		
 		
 	

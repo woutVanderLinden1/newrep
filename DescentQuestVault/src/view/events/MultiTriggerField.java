@@ -18,6 +18,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 
 import MouseListeners.SelectEventListener;
+import StoryEditor.DraggAblePanel;
 import controller.UserInputController;
 import frame.SubContainer;
 import misc.Tools;
@@ -74,6 +75,13 @@ public class MultiTriggerField extends TriggerField {
 		
 		
 		
+	}
+	@Override
+	public void setSize(Dimension w) {
+		
+		
+		setSize((int)w.getWidth(),(int)w.getHeight());
+		//this.createBaseImage();
 	}
 
 	private void initialiseTextOption(Trigger option) {
@@ -141,21 +149,24 @@ public class MultiTriggerField extends TriggerField {
 			this.removeAll();
 			this.revalidate();
 			currentColor=col;
-		
-			textLabel.setText(trig.getName());
-			
-			textLabel.setEnabled(false);
-			textLabel.setDisabledTextColor(textcolor);
-			this.setBackground(col);
-			textLabel.setFont(new Font("TimesRoman", Font.BOLD, 20));
-			textLabel.setForeground(new Color(255,100,40));
-			textLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-			textLabel.setAlignmentY(Component.TOP_ALIGNMENT);
-			textLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-			textLabel.setBackground(col);
-			textLabel.setRequestFocusEnabled(false);
-			textLabel.setPreferredSize(new Dimension(this.getWidth(),25));
-			textLabel.setSize(110,25);
+			if(this.textLabel!=null && trig!=null) {
+				textLabel.setText(trig.getName());
+				
+				textLabel.setEnabled(false);
+				textLabel.setDisabledTextColor(textcolor);
+				this.setBackground(col);
+				textLabel.setFont(new Font("TimesRoman", Font.BOLD, 20));
+				textLabel.setForeground(new Color(255,100,40));
+				textLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+				textLabel.setAlignmentY(Component.TOP_ALIGNMENT);
+				textLabel.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+				textLabel.setBackground(col);
+				textLabel.setRequestFocusEnabled(false);
+				textLabel.setPreferredSize(new Dimension(this.getWidth(),25));
+				textLabel.setSize(110,25);
+				this.add(textLabel);
+				textLabel.setLocation(10,10);
+			}
 			
 			
 			JButton butt=new JButton("-");
@@ -173,8 +184,7 @@ public class MultiTriggerField extends TriggerField {
 			butt.setSize(35,15);
 			butt.setPreferredSize(new Dimension(35,15));
 			
-			this.add(textLabel);
-			textLabel.setLocation(10,10);
+			
 			int y=80;
 			if(subEventlist!=null) {
 				System.out.println("thistriggers "+subEventlist.size());
@@ -204,12 +214,18 @@ public class MultiTriggerField extends TriggerField {
 					subEvents.setLocation(10,y);
 					y=y+subEvents.getHeight()+40;
 					this.add(subEvents);
+					subEvents.createBaseImage();
+					//subEvents.removeAll();
 					//raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 					subEvents.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 					//this.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
+					
+					/*
 					for(BaseField field:subEvents.getBaseFields()) {
-						subEvents.addBaseField(field);
+						subEvents.addBaseField(field,false);
 					}
+					*/
+					//subEvents.refreshHeight();
 					
 				}
 			}
@@ -230,9 +246,11 @@ public class MultiTriggerField extends TriggerField {
 	
 		}
 	}
-	
-	public void refreshHeight() {
+	public void refreshHeight(boolean b) {
 		this.createImage(this.getBackground());
+	}
+	public void refreshHeight() {
+	
 		if(minimized) {
 			this.setSize(new Dimension(this.getWidth(),50));
 			this.setPreferredSize(new Dimension(this.getWidth(),50));
@@ -351,100 +369,103 @@ public class MultiTriggerField extends TriggerField {
 		if(this.minimized) {
 			super.sendEvent(e, point, selectAble);
 		}
-		/*
-		if(this.contains(point)) {
-			this.dispatchEvent(e);
-		}
-		*/
-		if(selectAble==this) {
-			System.out.println("issame");
-			//
-		
-			switch(e.getID()) {
-			case MouseEvent.MOUSE_RELEASED:
-				((SubContainer) this.getParent()).released(e);
-				break;
-			}
-		
-			return;
-		}
-		boolean found2=false;
-		for(TriggerContainer contain:subEventlist) {
-			if(SubContainer.isMouseWithinComponent(contain)) {
-				
-				boolean found=false;
-				switch(selectAble.getKind()) {
-				
-				case EVENT:
-					break;
-				case MODIFIER:
-				case TRIGGER:
-					break;
+		else {
 			
-				default:
-					return;
-		
-				
+			
+			/*
+			if(this.contains(point)) {
+				this.dispatchEvent(e);
+			}
+			*/
+			if(selectAble==this) {
+				System.out.println("issame");
+				//
+			
+				switch(e.getID()) {
+				case MouseEvent.MOUSE_RELEASED:
+					((SubContainer) this.getParent()).released(e);
+					break;
 				}
-				if(((BaseField)selectAble).isAncestorOf(contain)) {
-					return;
-				}
-				ArrayList<BaseField> fieldlist=contain.getBasefields();
-				
-				for(int i=0;i<fieldlist.size();i++) {
-					if(i>fieldlist.size()) {
+			
+				return;
+			}
+			boolean found2=false;
+			for(TriggerContainer contain:subEventlist) {
+				if(SubContainer.isMouseWithinComponent(contain)) {
+					
+					boolean found=false;
+					switch(selectAble.getKind()) {
+					
+					case EVENT:
 						break;
-					}
-					BaseField field=fieldlist.get(i);
-					
+					case MODIFIER:
+					case TRIGGER:
+						break;
 				
-					if(SubContainer.isMouseWithinComponent(field)) {
-						System.out.println("insubarea");
-						field.sendEvent(e, point, selectAble);
-						 found=true;
-						 found2=true;
+					default:
+						return;
+			
+					
 					}
+					if(((BaseField)selectAble).isAncestorOf(contain)) {
+						return;
+					}
+					ArrayList<BaseField> fieldlist=contain.getBasefields();
+					
+					for(int i=0;i<fieldlist.size();i++) {
+						if(i>fieldlist.size()) {
+							break;
+						}
+						BaseField field=fieldlist.get(i);
+						
+					
+						if(SubContainer.isMouseWithinComponent(field)) {
+							System.out.println("insubarea");
+							field.sendEvent(e, point, selectAble);
+							 found=true;
+							 found2=true;
+						}
+						
+					}
+					if(!found) {
+						System.out.println("given through");
+						//MouseEvent convertMouseEvent = SwingUtilities.convertMouseEvent(e.getComponent(), e, this);
+						//this.dispatchEvent(convertMouseEvent);
+						found=true;
+						found2=true;
+						MouseEvent convertMouseEvent2 = SwingUtilities.convertMouseEvent(e.getComponent(), e,contain);
+						
+						contain.dispatchEvent(convertMouseEvent2);
+						 
+					}
+					
 					
 				}
-				if(!found) {
-					System.out.println("given through");
+			
+		
+			}
+			if(!found2) {
+				if(e.getID()==MouseEvent.MOUSE_DRAGGED) {
+					SubContainer contain=subEventlist.get(0);
+					MouseEvent convertMouseEvent = SwingUtilities.convertMouseEvent(e.getComponent(), e, contain);
+					
+					contain.dispatchEvent(convertMouseEvent);
 					//MouseEvent convertMouseEvent = SwingUtilities.convertMouseEvent(e.getComponent(), e, this);
-					//this.dispatchEvent(convertMouseEvent);
-					found=true;
-					found2=true;
-					MouseEvent convertMouseEvent2 = SwingUtilities.convertMouseEvent(e.getComponent(), e,contain);
 					
-					contain.dispatchEvent(convertMouseEvent2);
-					 
+					//contain.dispatchEvent(convertMouseEvent);
 				}
-				
-				
+				if(e.getID()==MouseEvent.MOUSE_RELEASED) {
+					SubContainer contain=subEventlist.get(0);
+					MouseEvent convertMouseEvent = SwingUtilities.convertMouseEvent(e.getComponent(), e, contain);
+					
+					contain.dispatchEvent(convertMouseEvent);
+					//MouseEvent convertMouseEvent = SwingUtilities.convertMouseEvent(e.getComponent(), e, this);
+					
+					//contain.dispatchEvent(convertMouseEvent);
+				}
 			}
-		
 	
 		}
-		if(!found2) {
-			if(e.getID()==MouseEvent.MOUSE_DRAGGED) {
-				SubContainer contain=subEventlist.get(0);
-				MouseEvent convertMouseEvent = SwingUtilities.convertMouseEvent(e.getComponent(), e, contain);
-				
-				contain.dispatchEvent(convertMouseEvent);
-				//MouseEvent convertMouseEvent = SwingUtilities.convertMouseEvent(e.getComponent(), e, this);
-				
-				//contain.dispatchEvent(convertMouseEvent);
-			}
-			if(e.getID()==MouseEvent.MOUSE_RELEASED) {
-				SubContainer contain=subEventlist.get(0);
-				MouseEvent convertMouseEvent = SwingUtilities.convertMouseEvent(e.getComponent(), e, contain);
-				
-				contain.dispatchEvent(convertMouseEvent);
-				//MouseEvent convertMouseEvent = SwingUtilities.convertMouseEvent(e.getComponent(), e, this);
-				
-				//contain.dispatchEvent(convertMouseEvent);
-			}
-		}
-	
-		
 		
 	}
 
@@ -474,7 +495,8 @@ public class MultiTriggerField extends TriggerField {
 		}
 	
 	}
-	public void removeField(BaseField todrag) {
+	@Override
+	public void removeField(DraggAblePanel todrag) {
 		for(TriggerContainer contain:subEventlist) {
 			contain.removeField(todrag);
 		}

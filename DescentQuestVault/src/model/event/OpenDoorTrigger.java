@@ -52,11 +52,8 @@ public class OpenDoorTrigger extends Trigger implements OpenDoorListener,NameCha
 	}
 	
 	public void trigger() {
-		System.out.println("opendoor triggers");
-		for(Univent ev:actions) {
-			System.out.println("opendoortrigger"+ev.getIDName());
-			ev.trigger();
-		}
+		super.trigger();
+		
 	}
 
 

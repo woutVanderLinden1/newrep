@@ -443,7 +443,7 @@ public class ViewMonster extends MapItem implements ActivateAble{
         button.setSize(new Dimension(w/2,25));
         button.setPreferredSize(new Dimension((int)(w/2-20),25));
         field.setPreferredSize(new Dimension(w/2,25));
-        button.setSelectedItem(turnTrigger);
+        button.setSelectedItem(turnTrigger.getName());
         //button.setHorizontalAlignment(SwingConstants.RIGHT);
 		itemInfoText.addPreComboBox(field,button);
 		

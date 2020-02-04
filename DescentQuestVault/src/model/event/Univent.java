@@ -122,6 +122,9 @@ public abstract class Univent implements EventBase,Serializable {
 	}
 
 	public void clearEventEndListeners() {
+		if(eventendListeners==null) {
+			eventendListeners=new ArrayList<EventEndListener>();
+		}
 		eventendListeners.clear();
 		
 	}

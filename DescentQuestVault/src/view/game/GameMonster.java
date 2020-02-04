@@ -59,6 +59,7 @@ public class GameMonster extends ViewMonster implements ActivateAble ,TurnHolder
 		activations.clear();
 		System.out.println("activationsize "+this.getActivations().size());
 		theViewMonster=toplace;
+		toplace.getTurnTrigger().clearEventEndListeners();
 		this.setAsPlaceMentSquares(toplace.getPlaceMonsterSquares());
 		
 		// TODO Auto-generated constructor stub
@@ -75,7 +76,7 @@ public class GameMonster extends ViewMonster implements ActivateAble ,TurnHolder
 		//this.setRemoveMonsterEvent(toplace.getRemoveMonsterEvent());
 		//this.getRemoveMonsterEvent().setGameMonster(this);
 		GameMonster mon=this;
-		toplace.getTurnTrigger().addEventEndListener(new EventEndListener() {
+		mon.getTurnTrigger().addEventEndListener(new EventEndListener() {
 			
 		
 			

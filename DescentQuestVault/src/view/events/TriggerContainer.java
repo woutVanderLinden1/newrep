@@ -16,6 +16,7 @@ import misc.Tools;
 import misc.listeners.TriggerFieldListener;
 import model.event.Event;
 import model.event.Trigger;
+import model.event.Univent;
 import view.viewItems.ItemBox.SelectAble;
 
 public class TriggerContainer extends TriggerField {
@@ -25,13 +26,50 @@ public class TriggerContainer extends TriggerField {
 	
 	public TriggerContainer(Trigger trig, int i, int j,MultiTriggerField superfield) {
 		super(trig, i, j);
+		this.removeAll();
 		this.setLayout(new FlowLayout());
+		//this.setLayout(null);
 		fields=new ArrayList<BaseField>();
 		field=superfield;
-		refreshHeight();
+		for(Univent vent:trig.getActions()) {
+			this.addUniventToTriggerField(vent);
+		}
 		
+		refreshHeight(true);
+		this.remove(textLabel);
+		this.textLabel=null;
+		this.minimized=false;
 		
 	}
+	
+	
+public void addUniventToTriggerField(Univent vent) {
+		
+		
+		switch(vent.getKind()) {
+		case DOOR:
+			break;
+		case EVENT:
+			if(field==null) {
+				addEvent((Event) vent);
+			}
+			break;
+		case MODIFIER:
+		case TRIGGER:
+			if(field==null) {
+				addTrigger((Trigger) vent,false);
+			}
+			
+			break;
+	
+	
+		default:
+			break;
+		
+		}
+		
+	}
+	
 	public void nameChanged(String newname) {
 		super.nameChanged(newname);
 		field.changeNameofContainer(this,newname);
@@ -63,8 +101,11 @@ public class TriggerContainer extends TriggerField {
 	public TriggerContainer(Trigger option,Dimension defaultSize) {
 		super(option, (int)defaultSize.getWidth(),(int) defaultSize.getHeight());
 		fields=new ArrayList<BaseField>();
-		refreshHeight();
+		refreshHeight(true);
 	
+	}
+	public void refreshHeight() {
+		this.refreshHeight(true);
 	}
 
 
@@ -73,23 +114,44 @@ public class TriggerContainer extends TriggerField {
 		return fields;
 	}
 
-	@Override
-	public void addBaseField(BaseField field) {
+
+	public void addBaseField(BaseField field2, boolean b) {
 		System.out.println("temporary was added in triggercontainer");
-		this.add(field);
+		this.add(field2);
 		
 		field.setPreferredSize(new Dimension(this.getWidth()-40,field.getHeight()));
 		field.setSize(this.getWidth()-40,field.getHeight());
 		
+		this.refreshHeight(b);
+		
+	}
+	@Override
+	public void addBaseField(BaseField field) {
+		
+			System.out.println("temporary was added in triggercontainer");
+			this.add(field);
+			
+			field.setPreferredSize(new Dimension(this.getWidth()-40,field.getHeight()));
+			field.setSize(this.getWidth()-40,field.getHeight());
+		
+			this.refreshHeight(true);
+		
 		//field.createBaseImage();
-		//field.refreshHeight();
+		//field.refreshHeight(true);
 		
 	
 	}
-	
 	@Override
-	public void refreshHeight() {
-			System.out.println("in refreshheight "+fields);
+	public void createBaseImage() {
+		for(BaseField field:fields) {
+			this.addBaseField(field);
+		}
+		refreshHeight();
+	}
+	
+
+	public void refreshHeight(boolean b) {
+			System.out.println("in refreshHeight "+fields);
 			int length=60;
 			if(fields!=null) {
 				for(BaseField field:fields) {
@@ -104,13 +166,15 @@ public class TriggerContainer extends TriggerField {
 			
 			/*
 			if(field!=null) {
-				field.refreshHeight();
+				field.refreshHeight(true);
+			}
+			*/
+			/*
+			if(b&&this.getParent()!=null) {
+				((SubContainer) this.getParent()).refreshHeight();
 			}
 			*/
 			
-			if(this.getParent()!=null) {
-				((SubContainer) this.getParent()).refreshHeight();
-			}
 			this.revalidate();
 			this.repaint();
 			
@@ -142,6 +206,7 @@ public class TriggerContainer extends TriggerField {
 		if(!Tools.containsWithSameTrigger(fields, field)) {
 			System.out.println("this does iet");
 			fields.add(field);
+			this.add(field);
 			
 		}
 		field.setSize(new Dimension(this.getWidth()-60,field.getHeight()));
@@ -151,8 +216,21 @@ public class TriggerContainer extends TriggerField {
 		field.createBaseImage();
 		field.refreshHeight();
 	
+		this.refreshHeight();
+		if(this.getParent()!=null) {
+			((MultiTriggerField) this.getParent()).refreshHeight();
+		}
+		if(this.getParent()!=null) {
+			((MultiTriggerField) this.getParent()).refreshHeight(true);
+		}
+	
+		
+		
 	}
 
+	public void initialiseImage(Color color) {
+		
+	}
 	@Override
 	protected void removeEvent(Event placeTileEvent) {
 		// TODO Auto-generated method stub
@@ -173,6 +251,12 @@ public class TriggerContainer extends TriggerField {
 		//super.removeField(todrag);
 		this.remove(todrag);
 		fields.remove(todrag);
+		
+		this.refreshHeight(true);
+		if(this.getParent()!=null) {
+			((MultiTriggerField) this.getParent()).refreshHeight(true);
+		}
+	
 	}
 
 	@Override
@@ -182,12 +266,21 @@ public class TriggerContainer extends TriggerField {
 		if(!Tools.containsWithSameTrigger(fields,field)) {
 			System.out.println("added to fields");
 			fields.add(field);
+			this.add(field);
 		}
 		field.setSize(new Dimension(this.getWidth()-40,field.getHeight()));
 		
 		trig.addTrigger(field.getTrig());
 		field.setTriggerField(this);
 		field.refreshHeight();
+		this.refreshHeight();
+		if(this.getParent()!=null) {
+			((MultiTriggerField) this.getParent()).refreshHeight();
+		}
+		if(this.getParent()!=null) {
+			((MultiTriggerField) this.getParent()).refreshHeight(true);
+		}
+	
 	}
 
 	@Override
@@ -200,6 +293,8 @@ public class TriggerContainer extends TriggerField {
 	public void addTrigger(Trigger vent, boolean b) {
 		// TODO Auto-generated method stub
 		super.addTrigger(vent, b);
+		
+		
 	}
 
 	@Override
@@ -236,7 +331,10 @@ public class TriggerContainer extends TriggerField {
 			this.dispatchEvent(e);
 		}
 		*/
-		if(selectAble==this) {
+		if(this.minimized) {
+			super.sendEvent(e, point, selectAble);
+		}
+		if(selectAble==this||selectAble==field) {
 			System.out.println("issame");
 			//
 		
@@ -304,6 +402,8 @@ public class TriggerContainer extends TriggerField {
 			
 		}
 	}
+
+
 	
 
 }

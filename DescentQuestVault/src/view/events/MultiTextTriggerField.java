@@ -1,5 +1,7 @@
 package view.events;
 
+import java.awt.FlowLayout;
+
 import frame.SubContainer;
 import misc.Tools;
 import model.event.Event;
@@ -28,6 +30,7 @@ public class MultiTextTriggerField extends MultiTriggerField implements AddOptio
 		//refreshHeight();
 		this.createBaseImage();
 		textOption.addAddOptionListener(this);
+		
 		
 	}
 
