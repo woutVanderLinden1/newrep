@@ -105,6 +105,7 @@ public void addUniventToTriggerField(Univent vent) {
 	
 	}
 	public void refreshHeight() {
+		
 		this.refreshHeight(true);
 	}
 
@@ -134,7 +135,7 @@ public void addUniventToTriggerField(Univent vent) {
 			field.setPreferredSize(new Dimension(this.getWidth()-40,field.getHeight()));
 			field.setSize(this.getWidth()-40,field.getHeight());
 		
-			this.refreshHeight(true);
+			this.refreshHeight(false);
 		
 		//field.createBaseImage();
 		//field.refreshHeight(true);
@@ -146,7 +147,7 @@ public void addUniventToTriggerField(Univent vent) {
 		for(BaseField field:fields) {
 			this.addBaseField(field);
 		}
-		refreshHeight();
+		refreshHeight(false);
 	}
 	
 
@@ -169,11 +170,13 @@ public void addUniventToTriggerField(Univent vent) {
 				field.refreshHeight(true);
 			}
 			*/
-			/*
+			
 			if(b&&this.getParent()!=null) {
 				((SubContainer) this.getParent()).refreshHeight();
+				((SubContainer) this.getParent()).refreshHeight(true);
+			
 			}
-			*/
+			
 			
 			this.revalidate();
 			this.repaint();

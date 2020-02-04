@@ -231,7 +231,7 @@ public class MultiTriggerField extends TriggerField {
 			}
 			this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 			
-			//refreshHeight();
+			refreshHeight();
 			/*
 			this.getModel().addChangeListener(new ChangeListener() {
 	
@@ -247,7 +247,12 @@ public class MultiTriggerField extends TriggerField {
 		}
 	}
 	public void refreshHeight(boolean b) {
+		
 		this.createImage(this.getBackground());
+		this.refreshHeight();
+		if(this.getParent()!=null) {
+			((SubContainer) this.getParent()).refreshHeight(true);
+		}
 	}
 	public void refreshHeight() {
 	
@@ -274,12 +279,12 @@ public class MultiTriggerField extends TriggerField {
 		
 		}
 		
+		
+		this.revalidate();
+		this.repaint();
 		if(this.getParent()!=null) {
 			((SubContainer) this.getParent()).refreshHeight();
 		}
-		this.revalidate();
-		this.repaint();
-		
 	}
 	
 	@Override

@@ -107,6 +107,10 @@ public class SubContainer extends JPanel implements ReleasAble,IResizeListeners,
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void refreshHeight(boolean b) {
+		this.refreshHeight();
+	}
 	
 
 }

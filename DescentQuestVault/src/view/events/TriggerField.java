@@ -691,9 +691,14 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 		minimized=!minimized;
 		
 		createImage(currentColor);
-		refreshHeight();
+		refreshHeight(true);
+		
 	}
 	
+	public void refreshHeight(boolean b) {
+		this.refreshHeight();
+	}
+
 	protected void initialiseMinimizedImage(Color color) {
 		this.removeAll();
 		this.revalidate();
@@ -747,7 +752,8 @@ public class TriggerField extends BaseField implements NameChangeListener, AddNe
 	
 		this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 		
-	
+		this.setPreferredSize(new Dimension(this.getWidth(),50));
+		this.setSize(new Dimension(this.getWidth(),50));
 		
 	}
 
