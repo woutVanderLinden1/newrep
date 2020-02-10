@@ -69,7 +69,7 @@ public class CustomIntegerCondition extends DataCondition {
 				
 		    }
 		};
-		
+		button.setSelectedItem(compvalue.getName());
 		button.addActionListener(listen);
 		 JLabel field = new JLabel();
 		 field.setText("change custominteger2:");
@@ -111,7 +111,7 @@ public class CustomIntegerCondition extends DataCondition {
 				
 		    }
 		};
-		
+		button.setSelectedItem(theItem.getName());
 		button.addActionListener(listen);
 		 JLabel field = new JLabel();
 		 field.setText("change custominteger1:");
@@ -147,6 +147,7 @@ public class CustomIntegerCondition extends DataCondition {
 				}
 				
 			});
+			button.setSelectedItem(comp);
 			 JLabel field = new JLabel();
 			 field.setText("change setvalue");
 			

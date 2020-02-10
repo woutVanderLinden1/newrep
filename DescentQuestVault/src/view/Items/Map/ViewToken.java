@@ -9,6 +9,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
+import model.event.advancedevents.*;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -90,7 +91,8 @@ public class ViewToken extends MapItem {
 		TokenMonster tokenmon=new TokenMonster(token.getName());
 		this.setAsmonster(tokenmon);
 		//add tokenmonster to view
-		//PlaceSpecialMonsterEvent ev:new
+	//	PlaceSpecialMonsterEvent ev=new PlaceSpecialMonsterEvent();
+		
 	}
 
 	public ViewToken(BasicToken basicToken) {
@@ -132,7 +134,8 @@ public class ViewToken extends MapItem {
 		//this.setOpenSearchTokenTrigger(toplace.getSearchTokenTrigger());
 		this.setPlaceSearchTokenEvent(toplace.getPlaceSearchTokenEvent());
 		this.setRemoveSearchTokenEvent(toplace.getRemoveSearchTokenEvent());
-	
+		//this.setEffect(((ViewSearchToken) toplace).getEffect());
+		
 		
 	}
 
@@ -341,6 +344,7 @@ public class ViewToken extends MapItem {
 	public void generateAsMonster() {
 		asmonster=new TokenMonster(token.getName());
 		placeMonsterEv= new PlaceSpecialMonsterEvent(asmonster,token);
+		
 		
 		AddEventToTriggerFieldCommand comm =new AddEventToTriggerFieldCommand(placeMonsterEv,null);
 		UserInputController controller=UserInputController.getController();

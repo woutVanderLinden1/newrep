@@ -41,7 +41,9 @@ public class GameGridMouseListener implements MouseMotionListener, MouseListener
 		System.out.println("x "+tile.getxID());
 		System.out.println("y "+tile.getyID());
 		try {
-			command = control.generateGameGridCommand(x,y,e,MouseEvent.MOUSE_CLICKED,tile);
+			int newx=e.getXOnScreen();
+			int newy=e.getYOnScreen();
+			command = control.generateGameGridCommand(newx,newy,e,MouseEvent.MOUSE_CLICKED,tile);
 			control.performCommand(command);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block

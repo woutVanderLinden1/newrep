@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import StoryEditor.CampaignSaveFile;
 import StoryEditor.DraggAblePanel;
 import controller.BaseEventController;
+import controller.EndPhaseListener;
 import controller.UserInputController;
 import controller.commands.ICommand;
 import frame.MainFrame;
@@ -26,6 +27,7 @@ import model.event.MovementString;
 import model.event.Trigger;
 import model.event.extraevents.StopAble;
 import model.event.extraevents.TextOption;
+import model.event.trigger.EndPhaseTrigger;
 import model.values.CustomInteger;
 import view.Items.Map.MapItem;
 import view.Items.Map.ViewDoor;
@@ -266,7 +268,8 @@ public class ViewManager implements IView {
 
 	@Override
 	public void showActivateAbles(Point point,ArrayList<ActivateAble> list) {
-		game.showActivateAbles(point,list);
+		Point newpoint=new Point(point.x-frame.getX(),point.y-frame.getY());
+		game.showActivateAbles(newpoint,list);
 		
 	}
 
@@ -557,6 +560,15 @@ public class ViewManager implements IView {
 	@Override
 	public void addCityEventFile(CampaignSaveFile g) {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addEndPhaseListenerToGame(EndPhaseListener trig) {
+		if(game!=null) {
+			
+			game.addEndPhaseListener((EndPhaseTrigger) trig);
+		}
 		
 	}
 

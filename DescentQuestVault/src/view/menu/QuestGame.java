@@ -106,8 +106,9 @@ public class QuestGame extends SubContainer implements EndRoundListener {
 	}
 
 	public void showActivateAbles(Point point,ArrayList<ActivateAble> list) {
-		// TODO Auto-generated method stub
-		gamemap.showActivateAbles(point,list);
+		
+		Point newpoint=new Point(point.x-this.getX(),point.y-this.getY());
+		gamemap.showActivateAbles(newpoint,list);
 	}
 
 	public void removeGameDoor(GameDoor door) {
@@ -194,7 +195,7 @@ public class QuestGame extends SubContainer implements EndRoundListener {
 	}
 
 	public void addEndPhaseListener(EndPhaseTrigger endtrigger) {
-		// TODO Auto-generated method stub
+		endphaselisteners.clear();
 		endphaselisteners.add(endtrigger);
 		
 	}

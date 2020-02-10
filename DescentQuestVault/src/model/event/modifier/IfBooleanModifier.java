@@ -1,4 +1,4 @@
-package model.event;
+package model.event.modifier;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,6 +9,9 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
 import model.ItemController;
+import model.event.IfBooleanTrigger;
+import model.event.Univent;
+import model.event.modifier.Modifier;
 import model.values.BooleanValue;
 import model.values.BooleanValueItem;
 import model.values.CustomBoolean;
@@ -16,18 +19,17 @@ import model.values.CustomBoolean;
 import view.viewItems.NameChangeListener;
 import view.viewItems.ItemBox.ItemInfoContainer;
 
-public class IfBooleanTrigger extends Trigger implements NameChangeListener {
+public class IfBooleanModifier extends Modifier  implements NameChangeListener {
 
-	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4225081927779523921L;
+	private static final long serialVersionUID = -1929303446356797129L;
 	private boolean newvalue;
 	private CustomBoolean newitem;
 	private boolean namebased=true;
 	
-	public IfBooleanTrigger(boolean newvalue, CustomBoolean CustomBoolean) {
+	public IfBooleanModifier(boolean newvalue, CustomBoolean CustomBoolean) {
 		super();
 		this.newvalue = newvalue;
 		this.newitem = CustomBoolean;
@@ -64,7 +66,6 @@ public class IfBooleanTrigger extends Trigger implements NameChangeListener {
 			}
 			
 		});
-		button.setSelectedItem(BooleanValue.toValue(newvalue));
 		 JLabel field = new JLabel();
 		 field.setText("change setvalue");
 		
@@ -107,14 +108,10 @@ public class IfBooleanTrigger extends Trigger implements NameChangeListener {
 		this.addAllTriggers(toreturn);
 		return toreturn;
 	}
-	
 private BooleanValueItem toset;
 	
 	public void intialiseForGame(ItemController vent) {
-		if(toset!=null) {
-			newitem=(CustomBoolean) toset.getValue();
-		}
-		
+		newitem=(CustomBoolean) toset.getValue();
 		super.intialiseForGame(vent);
 	}
 	

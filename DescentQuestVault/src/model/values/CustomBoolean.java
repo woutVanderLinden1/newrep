@@ -10,8 +10,16 @@ import view.viewItems.ItemBox.ValueChangeListener;
 
 public class CustomBoolean extends CustomValue<Boolean> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2816151268047902297L;
+	/**
+	 * 
+	 */
+
 	private static int nrbooleans=0;
-	private boolean value;
+	//private boolean value;
 	
 
 	
@@ -36,9 +44,10 @@ public class CustomBoolean extends CustomValue<Boolean> {
 	}
 
 
-	public void setValue(boolean newvalue) {
+	public void setValue(Boolean newvalue) {
 		// TODO Auto-generated method stub
 		value=newvalue;
+		super.setValue(newvalue);
 	}
 
 

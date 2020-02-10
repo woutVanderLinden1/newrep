@@ -61,7 +61,7 @@ public abstract class MapItem implements SelectAble, Serializable, EventHolder,A
 	}
 
 	public ArrayList<Activation> getActivations(){
-		return activations;
+		return (ArrayList<Activation>) activations.clone();
 	}
 	
 	public void addActivation(Activation act) {

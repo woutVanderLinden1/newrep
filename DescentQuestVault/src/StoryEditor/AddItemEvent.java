@@ -37,6 +37,10 @@ import view.viewItems.ItemBox.ItemInfoContainer;
 
 public class AddItemEvent extends Event {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3587205679284363852L;
 	private SavedItem toAdd;
 	
 	public AddItemEvent() {
@@ -54,6 +58,9 @@ public class AddItemEvent extends Event {
 		
 		ItemController control=ItemController.getItemController();
 		CampaignFile cfile=control.getCampaignFile();
+		if(cfile!=null) {
+			
+		
 		BaseFile file=cfile.getBaseFile();
 		if(toAdd==null||!file.hasFullEquipment(toAdd)) {
         	
@@ -66,6 +73,7 @@ public class AddItemEvent extends Event {
 				file.addItem(toAdd);
 			}
 			
+		}
 		}
 			
 	}

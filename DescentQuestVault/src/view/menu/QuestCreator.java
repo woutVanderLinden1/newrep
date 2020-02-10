@@ -54,6 +54,10 @@ public class QuestCreator extends SubContainer implements Serializable{
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 689060945409844378L;
+	/**
+	 * 
+	 */
 
 	protected TitleBox titleBox;
 	protected ItemInfoPanel itemPanel;

@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import controller.UserInputController;
 import controller.commands.Game.HoldToContinueCommand;
+import model.ItemController;
 import view.events.EventItem;
 import view.events.TriggerItem;
 import view.game.GameDoor;
@@ -183,6 +184,11 @@ public abstract class Trigger extends Univent implements EventBase {
 	}
 
 
+	public void intialiseForGame(ItemController vent) {
+		for(Univent rvent:actions) {
+			rvent.intialiseForGame(vent);
+		}
+	}
 	
 	
 	

@@ -14,12 +14,17 @@ import javax.swing.JLabel;
 
 import controller.UserInputController;
 import controller.commands.SetBooleanValueCommand;
+import model.ItemController;
 import model.values.*;
 
 public class SetBooleanValueEvent extends Event implements NameChangeListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7057383643037117002L;
 	private boolean value;
-	private BooleanValueItem toset;
+	private CustomBoolean newitem;
 	private boolean namebased=true;
 	
 	
@@ -31,26 +36,27 @@ public class SetBooleanValueEvent extends Event implements NameChangeListener{
 		this.value = value;
 	}
 
-	public BooleanValueItem getToset() {
-		return toset;
+	public CustomBoolean getnewitem() {
+		return newitem;
 	}
 
-	public void setToset(BooleanValueItem toset) {
-		this.toset = toset;
+	public void setnewitem(CustomBoolean newitem) {
+		this.newitem = newitem;
 	}
 
-	public SetBooleanValueEvent(boolean value, BooleanValueItem booleanValueItem) {
+	public SetBooleanValueEvent(boolean value, CustomBoolean CustomBoolean) {
 		super();
 		this.value = value;
-		this.toset = booleanValueItem;
-		setIDName("changeValue "+ booleanValueItem.getIDName());
-		setName("change Value "+ booleanValueItem.getName());
-		booleanValueItem.addNameChangeListener(this);
+		this.newitem = CustomBoolean;
+		setIDName("changeValue "+ CustomBoolean.getName());
+		setName("change Value "+ CustomBoolean.getName());
+		CustomBoolean.addNameChangeListener(this);
 	}
 
-	public void Trigger() {
+	@Override
+	public void trigger() {
 		UserInputController control=UserInputController.getController();
-		control.performCommand(new SetBooleanValueCommand(value,(CustomBoolean) toset.getItem()));
+		control.performCommand(new SetBooleanValueCommand(value,(CustomBoolean) newitem));
 	}
 	
 	@Override
@@ -96,6 +102,7 @@ public class SetBooleanValueEvent extends Event implements NameChangeListener{
 			}
 			
 		});
+		button.setSelectedItem(BooleanValue.toValue(value));
 		 JLabel field = new JLabel();
 		 field.setText("change setvalue");
 		
@@ -115,8 +122,14 @@ public class SetBooleanValueEvent extends Event implements NameChangeListener{
 		
 	}
 	public Univent copy() {
-		SetBooleanValueEvent toreturn=new SetBooleanValueEvent(value,toset);
+		SetBooleanValueEvent toreturn=new SetBooleanValueEvent(value,newitem);
 		return toreturn;
 	}
 
+	private BooleanValueItem toset;
+	
+	public void intialiseForGame(ItemController vent) {
+		newitem=(CustomBoolean) toset.getValue();
+		super.intialiseForGame(vent);
+	}
 }

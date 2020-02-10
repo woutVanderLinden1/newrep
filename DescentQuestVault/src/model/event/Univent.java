@@ -3,6 +3,7 @@ package model.event;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import model.ItemController;
 import view.menu.QuestCreator;
 import view.viewItems.NameChangeListener;
 import view.viewItems.ItemBox.ImageItem;
@@ -78,6 +79,9 @@ public abstract class Univent implements EventBase,Serializable {
 		namechangelisteners.add(listen);
 	}
 	public void triggerNameChangeListeners(String newname) {
+		if(namechangelisteners==null) {
+			namechangelisteners=new ArrayList<NameChangeListener>();
+		}
 		for(NameChangeListener listen:namechangelisteners) {
 			listen.nameChanged(newname);
 		}
@@ -132,5 +136,9 @@ public abstract class Univent implements EventBase,Serializable {
 	public boolean isSelected() {
 		// TODO Auto-generated method stub
 		return selected;
+	}
+
+	public void intialiseForGame(ItemController vent) {
+		
 	}
 }

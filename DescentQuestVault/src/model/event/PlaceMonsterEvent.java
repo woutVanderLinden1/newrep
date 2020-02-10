@@ -86,12 +86,16 @@ public class PlaceMonsterEvent extends Event implements NameChangeListener {
 				
 				stack.addNewEvents(tinylist);
 				//stack.triggerNextStackEvent();
+				
 				triggerEventEndListeners();
 			}
 			
 		});
 		super.trigger();
 		stop.trigger();
+	
+		
+		
 		//addmapmonsterremoval to triggerstack
 		
 		

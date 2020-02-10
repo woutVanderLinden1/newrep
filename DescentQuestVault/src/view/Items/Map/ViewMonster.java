@@ -164,7 +164,7 @@ public class ViewMonster extends MapItem implements ActivateAble{
 
 	public String getName() {
 		// TODO Auto-generated method stub
-		return item.getName();
+		return name;
 	}
 
 	public Trigger getTurnTrigger() {
@@ -243,7 +243,7 @@ public class ViewMonster extends MapItem implements ActivateAble{
 			public void actionPerformed(ActionEvent arg0) {
 				UserInputController control=UserInputController.getController();
 				control.performCommand(new  RemoveActivationFromMapItemCommand(hold,act));
-			
+				itemInfoText.refreshImage();
 			}
 			
 		});
@@ -512,8 +512,9 @@ public class ViewMonster extends MapItem implements ActivateAble{
 
 	@Override
 	public void removeActivation(Activation activation) {
-		// TODO Auto-generated method stub
+		activations.remove(activation);
 		activationList.remove(activation);
+		
 	}
 
 	public RemoveMonsterEvent getRemoveMonsterEvent() {
@@ -546,6 +547,7 @@ public class ViewMonster extends MapItem implements ActivateAble{
 	public void setTurnTrigger(MonsterTurnTrigger trig) {
 		// TODO Auto-generated method stub
 		turnTrigger=trig;
+		trig.setMonster((Monster)((MonsterItem)this.getImageItem()).getItem());
 	}
 
 	public Image getPreciseImage(int i, int j) {

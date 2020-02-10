@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
@@ -22,12 +23,15 @@ import javax.swing.text.DocumentFilter.FilterBypass;
 import controller.UserInputController;
 import controller.commands.Game.ShowTextCommand;
 import model.event.Event;
+import model.event.EventEndListener;
+import model.event.EventTriggerStack;
 import model.event.MonsterSpecial;
 import model.event.MonsterTurnTrigger;
 import model.event.Univent;
 import model.event.advancedevents.peril.DamageMajorPerilEvent;
 import model.event.extraevents.TextStop;
 import view.Items.Map.ViewMonster;
+import view.events.RemoveMapMonsterEvent;
 import view.menu.QuestCreator;
 import view.viewItems.ItemBox.ItemInfoContainer;
 
@@ -50,6 +54,18 @@ public class MonsterInfoEvent extends Event {
 		MonsterTurnTrigger trigger=monster.getMonsterMovementTrigger();
 		//control.performCommand(new ShowTextCommand(,"continue"));
 		TextStop text=new TextStop(trigger.getMonsterInfo()+"\n \n"+makeMovePriorities(trigger));
+		text.addEventEndListener(new EventEndListener() {
+
+			@Override
+			public void eventEnded() {
+				
+				
+				//stack.triggerNextStackEvent();
+				triggerEventEndListeners();
+			}
+			
+		});
+		
 		text.trigger();
 	}
 
@@ -196,4 +212,6 @@ public class MonsterInfoEvent extends Event {
 		JScrollPane pan=new JScrollPane(area);
 		itemInfoText.addToPanel(pan);
 	}
+	
+
 }

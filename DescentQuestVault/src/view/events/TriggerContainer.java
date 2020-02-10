@@ -252,9 +252,12 @@ public void addUniventToTriggerField(Univent vent) {
 	public void removeField(DraggAblePanel todrag) {
 		// TODO Auto-generated method stub
 		//super.removeField(todrag);
+		super.removeField(todrag);
 		this.remove(todrag);
 		fields.remove(todrag);
-		
+		for(BaseField contain:fields) {
+			contain.removeField(todrag);
+		}
 		this.refreshHeight(true);
 		if(this.getParent()!=null) {
 			((MultiTriggerField) this.getParent()).refreshHeight(true);

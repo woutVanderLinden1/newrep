@@ -18,6 +18,8 @@ import model.event.IfBooleanTrigger;
 import model.event.InitialiseBooleanEvent;
 import model.event.SetBooleanValueEvent;
 import model.event.Univent;
+import model.event.modifier.IfBooleanModifier;
+import model.event.modifier.IfIntegerModifier;
 import view.viewItems.ItemBox.ImageItem;
 import view.viewItems.ItemBox.ItemInfoContainer;
 import view.viewItems.ItemBox.ItemOptions;
@@ -25,6 +27,11 @@ import view.viewItems.ItemBox.ItemOptions;
 public class BooleanValueItem extends ValueItem {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1186290164707106009L;
+
 	private CustomBoolean val;
 	
 	private InitialiseBooleanEvent ev;
@@ -34,14 +41,22 @@ public class BooleanValueItem extends ValueItem {
 	private SetBooleanValueEvent setEvent;
 	private IfBooleanTrigger iftrigger;
 	//private WhileBooleanTrigger whiletrigger;
+	private IfBooleanModifier ifmodifier;
 	
 	public BooleanValueItem(CustomBoolean val) {
 		super(val);
-		setSetEvent(new SetBooleanValueEvent(false,this));
-		setIftrigger(new IfBooleanTrigger(true,this));
+		setSetEvent(new SetBooleanValueEvent(false,val));
+		setIftrigger(new IfBooleanTrigger(true,val));
+		setIfmodifier(new IfBooleanModifier(true,val));
+		eventlist.add(ifmodifier);
 		eventlist.add(setEvent);
 		eventlist.add(iftrigger);
 		// TODO Auto-generated constructor stub
+	}
+
+	private void setIfmodifier(IfBooleanModifier ifBooleanModifier) {
+		ifmodifier=ifBooleanModifier;
+		
 	}
 
 	public SetBooleanValueEvent getSetEvent() {

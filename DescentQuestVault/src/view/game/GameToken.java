@@ -25,6 +25,7 @@ public class GameToken extends ViewSearchToken implements ActivateAble {
 		tokenbasic=toplace;
 		
 		activationList=toplace.getActivations();
+		
 	}
 
 

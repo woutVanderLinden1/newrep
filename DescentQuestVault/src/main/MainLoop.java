@@ -14,6 +14,7 @@ import frame.QuestCreatorFrame;
 public class MainLoop {
 
 	public static void main(String[] args){
+		System.setProperty("sun.io.serialization.extendedDebugInfo", "true");
 		MainLoop loop=new MainLoop();
 		loop.start();
 	}

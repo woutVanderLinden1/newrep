@@ -25,13 +25,19 @@ import model.event.Univent;
 import view.viewItems.NameChangeListener;
 import view.viewItems.ItemBox.ItemInfoContainer;
 import view.viewItems.ItemBox.ItemOptions;
+import view.viewItems.ItemBox.ValueChangeListener;
 
-public class CompareToOtherIntegerTrigger extends Trigger implements NameChangeListener {
+public class CompareToOtherIntegerTrigger extends Trigger implements NameChangeListener, ValueChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID =  2494727363197003272L;
 	private Comparison comp;
-	private IntegerValueItem theItem;
+	private CustomInteger newitem;
 	private CustomInteger compvalue;
 	private boolean namebased=true;
+	private IntegerValueItem theItem;
 
 
 
@@ -43,12 +49,12 @@ public class CompareToOtherIntegerTrigger extends Trigger implements NameChangeL
 		this.comp = comp;
 	}
 
-	public IntegerValueItem getTheItem() {
-		return theItem;
+	public CustomInteger getnewitem() {
+		return newitem;
 	}
 
-	public void setTheItem(IntegerValueItem theItem) {
-		this.theItem = theItem;
+	public void setnewitem(CustomInteger newitem) {
+		this.newitem = newitem;
 	}
 
 	public CustomInteger getCompvalue() {
@@ -59,26 +65,26 @@ public class CompareToOtherIntegerTrigger extends Trigger implements NameChangeL
 		this.compvalue = compvalue;
 	}
 
-	public CompareToOtherIntegerTrigger(Comparison equals, IntegerValueItem integerValueItem) {
+	public CompareToOtherIntegerTrigger(Comparison equals, CustomInteger customInteger) {
 		super();
 		comp=equals;
-		theItem=integerValueItem;
-		compvalue=(CustomInteger) integerValueItem.getItem();
-		integerValueItem.addNameChangeListener(this);
+		newitem=customInteger;
+		compvalue=(CustomInteger) customInteger;
+		customInteger.addNameChangeListener(this);
 		
 	}
-	public CompareToOtherIntegerTrigger(Comparison comp, IntegerValueItem theItem, CustomInteger compvalue) {
+	public CompareToOtherIntegerTrigger(Comparison comp, CustomInteger newitem, CustomInteger compvalue) {
 		super();
 		this.comp = comp;
-		this.theItem = theItem;
+		this.newitem = newitem;
 		this.compvalue = compvalue;
-		theItem.addNameChangeListener(this);
+		newitem.addNameChangeListener(this);
 	}
 	
 	
 	public void trigger() {
-		CustomInteger integer1=(CustomInteger) theItem.getItem();
-		CustomInteger integer2=(CustomInteger) theItem.getItem();
+		CustomInteger integer1=(CustomInteger) newitem;
+		CustomInteger integer2=(CustomInteger) newitem;
 		if(comp.compare(integer1.getTheInteger(),integer2.getTheInteger())) {
 			super.trigger();
 		}
@@ -147,10 +153,10 @@ public class CompareToOtherIntegerTrigger extends Trigger implements NameChangeL
 
 	private void addIntegerModifier(ItemInfoContainer itemInfoText) {
 		ItemController control=ItemController.getItemController();
-		ArrayList<Item> theitems=control.getValuesAsList();
+		ArrayList<Item> newitems=control.getValuesAsList();
 		//=control.getValues();
 		ArrayList<CustomInteger> vals=new ArrayList<CustomInteger>();
-		theitems.forEach(a->{
+		newitems.forEach(a->{
 			if(a.getItemKind()==ItemOptions.Value) {
 				if(((CustomValue) a).getValueKind()==ValueKind.INTEGER) {
 					vals.add((CustomInteger) a);
@@ -158,7 +164,7 @@ public class CompareToOtherIntegerTrigger extends Trigger implements NameChangeL
 			}
 		});
 		//add booleanvalue
-		String[] stockArr = new String[theitems.size()];
+		String[] stockArr = new String[newitems.size()];
 		for(int i=0;i<vals.size();i++) {
 			stockArr[i]=vals.get(i).getName();
 		}
@@ -199,9 +205,25 @@ public class CompareToOtherIntegerTrigger extends Trigger implements NameChangeL
 
 	@Override
 	public Univent copy() {
-		CompareToOtherIntegerTrigger toreturn=new CompareToOtherIntegerTrigger(comp, theItem, compvalue);
+		CompareToOtherIntegerTrigger toreturn=new CompareToOtherIntegerTrigger(comp, newitem, compvalue);
 		toreturn.addAllTriggers(this);
 		return toreturn;
 	}
+	public void intialiseForGame(ItemController control) {
+		//control.get
+		newitem=theItem.getVal();
+		this.setnewitem((CustomInteger) control.getValues().get(newitem.getName())); 
+		control.getValues().get(newitem.getName()).addValueChangeListener(this);
+		super.intialiseForGame(control);
+	}
+
+	@Override
+	public void valueChanged(int theInteger) {
+		// TODO Auto-generated method stub
+		this.trigger();
+	}
+	
+	
+	
 
 }

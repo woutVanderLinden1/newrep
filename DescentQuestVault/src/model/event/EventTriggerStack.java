@@ -32,8 +32,9 @@ public class EventTriggerStack {
 					@Override
 					public void eventEnded() {
 						System.out.println("do next");
-						triggerNextStackEvent();
 						vent.clearEventEndListeners();
+						triggerNextStackEvent();
+						
 					}
 					
 				});

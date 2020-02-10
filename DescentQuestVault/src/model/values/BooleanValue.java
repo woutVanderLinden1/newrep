@@ -19,4 +19,11 @@ public enum BooleanValue {
 		return false;
 	}
 
+	public static BooleanValue toValue(boolean value) {
+		if(value) {
+			return TRUE;
+		}
+		return FALSE;
+	}
+
 }

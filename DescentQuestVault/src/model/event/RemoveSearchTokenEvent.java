@@ -11,6 +11,10 @@ import view.viewItems.NameChangeListener;
 
 public class RemoveSearchTokenEvent extends Event implements NameChangeListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6925108537511472970L;
 	private ViewToken toremove;
 	private transient GameToken token;
 	private transient ICommand command;
@@ -28,8 +32,12 @@ public class RemoveSearchTokenEvent extends Event implements NameChangeListener 
 		return command;
 	}
 
+	public void trigger() {
+		super.trigger();
+	}
 	public void setCommand(ICommand command) {
 		this.command = command;
+		addCommand(command);
 	}
 
 	public RemoveSearchTokenEvent(ViewToken viewToken) {

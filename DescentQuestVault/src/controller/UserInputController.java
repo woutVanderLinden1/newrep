@@ -809,13 +809,18 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 			testBox=new MainFrame();
 		}
 		initialiseBaseEventController(g.getControl());
+		ItemController itcontrol=ItemController.getItemController();
+		itcontrol.addNotPresentValues(g.getCustomValues());
+		itcontrol.initialiseEventsForGame(g.getUnivents());
 		//addGameStartListener(g.getControl().getStartuptrigger());
 		//addEndPhaseListener(g.getControl().getEndtrigger());
 		//ItemController controller=ItemController.getItemController();
 		ItemController control=ItemController.getItemController();
 		control.addStartingValues(new DefaultCampaingFile());
+		
 		QuestGame game=new QuestGame(theFrame.getWidth(),theFrame.getHeight(),theFrame.getUserInputController());
 		view.setGame(game);
+		//then prepare the values of the quest with listeners etc.
 		game.addGameStartListener(baseEventControl.getStartuptrigger());
 		game.addEndPhaseListener(baseEventControl.getEndtrigger());
 		game.addMonsterPlaceListener(gamecontrol);
@@ -840,6 +845,11 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 		game.addHeroPlaceListener(gamecontrol);
 		game.setGameController(gamecontrol);
 		game.initialiseGameMap(new SampleFile());
+		ItemController itcontrol=ItemController.getItemController();
+		//this.saveThis(new WorldSaveFile());;
+		WorldSaveFile file=view.saveGame();
+		itcontrol.addNotPresentValues(file.getCustomValues());
+		itcontrol.initialiseEventsForGame(file.getUnivents());
 		theFrame.startTestGame(game);
 		
 		
@@ -1137,6 +1147,7 @@ public class UserInputController implements MouseListener,KeyListener, ButtonPre
 	public void addEndPhaseListener(EndPhaseListener trig) {
 		// TODO Auto-generated method stub
 		theFrame.addEndPhaseListener(trig);
+		view.addEndPhaseListenerToGame(trig);
 	}
 
 	public void saveThis(WorldSaveFile thefile) {

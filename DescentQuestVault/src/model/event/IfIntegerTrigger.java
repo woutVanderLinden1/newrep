@@ -14,6 +14,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.NumberFormatter;
 
+import model.ItemController;
 import model.values.Comparison;
 import model.values.CustomBoolean;
 import model.values.CustomInteger;
@@ -26,8 +27,12 @@ import view.viewItems.ItemBox.ValueChangeListener;
 public class IfIntegerTrigger extends Trigger implements NameChangeListener,ValueChangeListener {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6627712587966209135L;
 	private Comparison comp;
-	private IntegerValueItem theItem;
+	private CustomInteger newitem;
 	private int compvalue;
 	private boolean namebased=true;
 
@@ -41,12 +46,12 @@ public class IfIntegerTrigger extends Trigger implements NameChangeListener,Valu
 		this.comp = comp;
 	}
 
-	public IntegerValueItem getTheItem() {
-		return theItem;
+	public CustomInteger getnewitem() {
+		return newitem;
 	}
 
-	public void setTheItem(IntegerValueItem theItem) {
-		this.theItem = theItem;
+	public void setnewitem(CustomInteger newitem) {
+		this.newitem = newitem;
 	}
 
 	public int getCompvalue() {
@@ -57,28 +62,28 @@ public class IfIntegerTrigger extends Trigger implements NameChangeListener,Valu
 		this.compvalue = compvalue;
 	}
 
-	public IfIntegerTrigger(Comparison equals, IntegerValueItem integerValueItem) {
+	public IfIntegerTrigger(Comparison equals, CustomInteger integerValueItem) {
 		super();
 		comp=equals;
-		theItem=integerValueItem;
+		newitem=integerValueItem;
 		integerValueItem.addNameChangeListener(this);
-		theItem.addValueChangeListener(this);
+		newitem.addValueChangeListener(this);
 		restateName(integerValueItem.getName());
 		
 	}
-	public IfIntegerTrigger(Comparison comp, IntegerValueItem theItem, int compvalue) {
+	public IfIntegerTrigger(Comparison comp, CustomInteger newitem, int compvalue) {
 		super();
 		this.comp = comp;
-		this.theItem = theItem;
+		this.newitem = newitem;
 		this.compvalue = compvalue;
-		theItem.addNameChangeListener(this);
-		theItem.addValueChangeListener(this);
-		restateName(theItem.getName());
+		newitem.addNameChangeListener(this);
+		newitem.addValueChangeListener(this);
+		restateName(newitem.getName());
 	}
 	
 	
 	public void trigger() {
-		CustomInteger bool=(CustomInteger) theItem.getItem();
+		CustomInteger bool=(CustomInteger) newitem;
 		if(comp.compare(bool.getTheInteger(),compvalue)) {
 			super.trigger();
 		}
@@ -187,6 +192,7 @@ public class IfIntegerTrigger extends Trigger implements NameChangeListener,Valu
 			}
 			
 		});
+		button.setSelectedItem(comp);
 		 JLabel field = new JLabel();
 		 field.setText("change setvalue");
 		
@@ -207,7 +213,7 @@ public class IfIntegerTrigger extends Trigger implements NameChangeListener,Valu
 
 	
 	public Univent copy() {
-		IfIntegerTrigger toreturn=new IfIntegerTrigger(comp,theItem,compvalue);
+		IfIntegerTrigger toreturn=new IfIntegerTrigger(comp,newitem,compvalue);
 		this.addAllTriggers(toreturn);
 		return toreturn;
 	}
@@ -218,4 +224,21 @@ public class IfIntegerTrigger extends Trigger implements NameChangeListener,Valu
 		trigger();
 		
 	}
+	
+	public void intialiseForGame(ItemController control) {
+		//control.get
+		if(theItem!=null&& newitem==null) {
+			newitem=theItem.getVal();
+		}
+		
+		
+		this.setnewitem((CustomInteger) control.getValues().get(newitem.getName())); 
+		control.getValues().get(newitem.getName()).addValueChangeListener(this);
+		super.intialiseForGame(control);
+
+	}
+	
+	private IntegerValueItem theItem;
+	
+	
 }

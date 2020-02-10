@@ -9,7 +9,11 @@ import view.viewItems.ItemBox.ValueChangeListener;
 
 public class CustomInteger extends CustomValue<Integer> {
 
-	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -928849665797290398L;
 	private int theInteger=0;
 	private transient ArrayList<ValueChangeListener> valuechangelisteners=new ArrayList<ValueChangeListener>();
 	
@@ -44,7 +48,7 @@ public class CustomInteger extends CustomValue<Integer> {
 
 	private void triggerValueChangeListeners() {
 		if(valuechangelisteners==null) {
-			return;
+			valuechangelisteners=new ArrayList<ValueChangeListener>();
 		}
 		for(ValueChangeListener listen: valuechangelisteners) {
 			System.out.println("valuechangelisteners are "+listen);
@@ -76,5 +80,10 @@ public class CustomInteger extends CustomValue<Integer> {
 	public void setTo(CustomValue value2) {
 		// TODO Auto-generated method stub
 		setTheInteger(((CustomInteger) value2).getTheInteger());
+	}
+
+	public void addNameChangeListener(IfIntegerTrigger ifIntegerTrigger) {
+		// TODO Auto-generated method stub
+		
 	}
 }

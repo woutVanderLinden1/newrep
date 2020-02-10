@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import StoryEditor.CampaignSaveFile;
 import StoryEditor.DraggAblePanel;
 import controller.BaseEventController;
+import controller.EndPhaseListener;
 import controller.commands.ICommand;
 import misc.ActivateAble;
 import misc.save.WorldSaveFile;
@@ -212,6 +213,8 @@ public interface IView {
 	void loadCampaignGame(CampaignSaveFile g);
 
 	void addCityEventFile(CampaignSaveFile g);
+
+	void addEndPhaseListenerToGame(EndPhaseListener trig);
 
 	
 	

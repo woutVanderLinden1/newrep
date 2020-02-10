@@ -21,6 +21,9 @@ public class GameDoor extends ViewDoor implements ActivateAble {
 		doorbasic=toplace;
 		activationList=toplace.getActivations();
 		this.setOpenact(toplace.getOpenact());
+		if(toplace.isClosed()) {
+			activationList.clear();
+		}
 
 		
 	}

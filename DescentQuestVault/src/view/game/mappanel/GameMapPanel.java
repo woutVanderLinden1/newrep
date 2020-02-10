@@ -182,7 +182,7 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 		
 	}
 	public void showActivateAbles(Point point, ArrayList<ActivateAble> list) {
-		point=new Point(point.x-50,point.y-20);
+		point=new Point(point.x-50-this.getX(),point.y-60-this.getY());
 		System.out.println("shownow");
 		temporaryPanel.reset();
 		temporaryPanel.setLocation(point);
@@ -475,6 +475,9 @@ public class GameMapPanel extends SubContainer implements MoveToBackListener {
 			str=str+"- "+string.getThemovement()+"\n";
 			textwidth=Math.max((int)(g2.getStringBounds(string.getThemovement(), frc).getWidth()),textwidth );
 		}
+		str=str;
+		area2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		area2.setAlignmentY(Component.CENTER_ALIGNMENT);
 		
 		area2.setText(str);
 		

@@ -46,10 +46,15 @@ import view.viewItems.ItemBox.ItemInfoContainer;
 
 public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 689060945409844378L;
 	private ViewMonster viewmonster;
 	private ICommand command;
 	private boolean namebased=true;
 	private String text;
+	private boolean movementadded=false;
 	
 	public void initialise() {
 		setCommand(new PlaceGameMonsterCommand(viewmonster));
@@ -85,7 +90,10 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 	@Override
 	public void trigger() {
 		ArrayList<TextOption> options=new ArrayList<TextOption>();
+		commands=new ArrayList<ICommand>();
+		this.commands.clear();
 		options.add(new TextOption("continue",new ContinueCommand()));
+		
 		addCommand(new ShowTextCommand(text,options,new EventEndListener() {
 
 			@Override
@@ -94,6 +102,7 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 			}
 			
 		}));
+		addCommand(command);
 		
 		super.trigger();
 		
@@ -235,6 +244,9 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 	 * @param itemInfoText
 	 */
 	private void addMonsterMovementCombBox(ItemInfoContainer itemInfoText) {
+		if(movementadded) {
+			return;
+		}
 		ArrayList<MonsterTurnTrigger> possibleturns=new ArrayList<MonsterTurnTrigger>();
 		File dir=null;
 		if(viewmonster==null) {
@@ -318,7 +330,10 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 			}
 			
 		});
+		button.setSelectedItem(viewmonster.getTurnTrigger().getName());
+		
 		String comp=((String) button.getSelectedItem());
+		
 		MonsterTurnTrigger trig=trigmap.get(comp);
 		viewmonster.setTurnTrigger(trig);
 		 JLabel field = new JLabel();
@@ -348,7 +363,8 @@ public class PlaceSpecialMonsterEvent extends Event implements StopAble {
 				public void actionPerformed(ActionEvent arg0) {
 					UserInputController control=UserInputController.getController();
 					control.performCommand(new  AddTriggerToTriggerFieldCommand(viewmonster.getTurnTrigger(),null));
-				
+					movementadded=true;
+					itemInfoText.refreshImage();
 				}
 				
 			});

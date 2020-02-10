@@ -15,14 +15,22 @@ import javax.swing.border.EtchedBorder;
 
 import controller.commands.ICommand;
 import view.Items.Map.EventHolder;
+import view.viewItems.NameChangeListener;
 import view.viewItems.ItemBox.ImageItem;
 import view.viewItems.ItemBox.ItemOptions;
 import view.viewItems.ItemBox.SelectKind;
 
 public abstract class ValueItem extends ImageItem<CustomValue> implements EventHolder {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2681755507772457661L;
 	private CustomValue val;
 	
+	public CustomValue getValue() {
+		return val;
+	}
 	public Image getScaleImage(int i) {
 		Image newimg =null;
 	
@@ -118,4 +126,6 @@ public abstract class ValueItem extends ImageItem<CustomValue> implements EventH
 	
 	
 	public abstract ValueKind getValueKind();
+	
+	
 }

@@ -21,28 +21,34 @@ import javax.swing.text.PlainDocument;
 import controller.UserInputController;
 import controller.command.ModifyIntegerValueCommand;
 import controller.commands.SetBooleanValueCommand;
+import model.ItemController;
 import model.values.BooleanValue;
 import model.values.CustomBoolean;
 import model.values.CustomInteger;
 import model.values.IntegerValueItem;
+import model.values.CustomInteger;
 import model.values.Modification;
 import view.menu.QuestCreator;
 import view.viewItems.NameChangeListener;
 import view.viewItems.ItemBox.ItemInfoContainer;
 
 public class ModifyIntegerValueEvent extends Event implements NameChangeListener {
-	
-	private IntegerValueItem theitem;
+	 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2690678728456107713L;
+	private CustomInteger newitem;
 	private Modification mod;
 	private int modvalue=0;
 	private boolean namebased=true;
 
-	public IntegerValueItem getTheitem() {
-		return theitem;
+	public CustomInteger getTheitem() {
+		return newitem;
 	}
 
-	public void setTheitem(IntegerValueItem theitem) {
-		this.theitem = theitem;
+	public void setTheitem(CustomInteger theitem) {
+		this.newitem = theitem;
 	}
 
 	public Modification getMod() {
@@ -53,21 +59,21 @@ public class ModifyIntegerValueEvent extends Event implements NameChangeListener
 		this.mod = mod;
 	}
 
-	public ModifyIntegerValueEvent(Modification set, IntegerValueItem integerValueItem) {
-		theitem=integerValueItem;
+	public ModifyIntegerValueEvent(Modification set, CustomInteger customInteger) {
+		newitem=customInteger;
 		mod=set;
 		
-		setIDName("changeValue "+ integerValueItem.getIDName());
-		setName("change Value "+ integerValueItem.getName());
-		integerValueItem.addNameChangeListener(this);
+		setIDName("changeValue "+ customInteger.getName());
+		setName("change Value "+ customInteger.getName());
+		customInteger.addNameChangeListener(this);
 	}
-	public ModifyIntegerValueEvent(Modification set, IntegerValueItem integerValueItem,int modvalue) {
-		theitem=integerValueItem;
+	public ModifyIntegerValueEvent(Modification set, CustomInteger CustomInteger,int modvalue) {
+		newitem=CustomInteger;
 		mod=set;
 		this.modvalue=modvalue;
-		setIDName("changeValue "+ integerValueItem.getIDName());
-		setName("change Value "+ integerValueItem.getName());
-		integerValueItem.addNameChangeListener(this);
+		setIDName("changeValue "+ CustomInteger.getName());
+		setName("change Value "+ CustomInteger.getName());
+		CustomInteger.addNameChangeListener(this);
 	}
 
 	public int getModvalue() {
@@ -86,7 +92,7 @@ public class ModifyIntegerValueEvent extends Event implements NameChangeListener
 	@Override
 	public void trigger() {
 		UserInputController control=UserInputController.getController();
-		control.performCommand(new ModifyIntegerValueCommand(modvalue,mod,(CustomInteger) theitem.getItem()));
+		control.performCommand(new ModifyIntegerValueCommand(modvalue,mod,(CustomInteger) newitem));
 	}
 	
 	@Override
@@ -128,6 +134,7 @@ public class ModifyIntegerValueEvent extends Event implements NameChangeListener
 			}
 			
 		});
+		button.setSelectedItem(mod);
 		 JLabel field = new JLabel();
 		 field.setText("change setvalue");
 		
@@ -183,7 +190,7 @@ public class ModifyIntegerValueEvent extends Event implements NameChangeListener
 			  }
 			});
 		
-		
+			//field2.setValue(modvalue);
      // itemInfoText.add(lab);
      // itemInfoText.add(field);
      
@@ -199,7 +206,13 @@ public class ModifyIntegerValueEvent extends Event implements NameChangeListener
 		
 	}
 	public Univent copy() {
-		return new ModifyIntegerValueEvent(mod,theitem,modvalue);
+		return new ModifyIntegerValueEvent(mod,newitem,modvalue);
+	}
+	private IntegerValueItem theitem;
+	
+	public void intialiseForGame(ItemController vent) {
+		newitem=theitem.getVal();
+		super.intialiseForGame(vent);
 	}
 
 }

@@ -27,6 +27,7 @@ import model.Tile.tilesets.OrginalTile;
 import model.Tile.tilesets.coreset.*;
 import model.Tile.tilesets.coresetOutDoor.*;
 import model.event.StartUpTrigger;
+import model.event.Univent;
 import model.generators.ModifierGenerator;
 import model.generators.TextGenerator;
 import model.generators.ValueGenerator;
@@ -580,6 +581,24 @@ public  class ItemController implements ValueChangeListener, Serializable{
 		// TODO Auto-generated method stub
 		//save all the customvalues on the campaignfile
 		saved.saveAll(customvalues);
+	}
+
+
+	public void addNotPresentValues(HashMap<String, CustomValue> customValues2) {
+		for(CustomValue val:customValues2.values()) {
+			if(!customvalues.containsKey(val.getName())) {
+				customvalues.put(val.getName(),val);
+			}
+		}
+		
+	}
+
+
+	public void initialiseEventsForGame(ArrayList<Univent> univents) {
+		for(Univent vent:univents) {
+			vent.intialiseForGame(this);
+		}
+		
 	}
 
 

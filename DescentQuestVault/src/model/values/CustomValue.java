@@ -6,6 +6,7 @@ import model.Item;
 import model.event.Univent;
 import view.game.mappanel.ValueChanger;
 import view.menu.QuestCreator;
+import view.viewItems.NameChangeListener;
 import view.viewItems.ItemBox.ItemOptions;
 import view.viewItems.ItemBox.SelectKind;
 import view.viewItems.ItemBox.ValueChangeListener;
@@ -17,10 +18,17 @@ public abstract class CustomValue<P> extends Item implements ValueChanger {
 	 */
 	private static final long serialVersionUID = 6673949013681395429L;
 	protected P value;
+	private ArrayList<NameChangeListener> namechangelisteners=new ArrayList<NameChangeListener>();
+	
+	
 	private ArrayList<ValueChangeListener> list=new ArrayList<ValueChangeListener>();
 	
 	
-	
+
+	public void setName(String name) {
+		this.name = name;
+		this.triggerNameChangeListeners(name);
+	}
 
 	
 
@@ -119,6 +127,17 @@ public abstract class CustomValue<P> extends Item implements ValueChanger {
 
 
 
+	public void addNameChangeListener(NameChangeListener listen) {
+		if(namechangelisteners==null) {
+			namechangelisteners=new ArrayList<NameChangeListener>();
+		}
+		namechangelisteners.add(listen);
+	}
+	public void triggerNameChangeListeners(String newname) {
+		for(NameChangeListener listen:namechangelisteners) {
+			listen.nameChanged(newname);
+		}
+	}
 
 	
 

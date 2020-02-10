@@ -22,6 +22,7 @@ import model.event.ModifyIntegerValueEvent;
 import model.event.SetBooleanValueEvent;
 import model.event.Univent;
 import model.event.modifier.IfIntegerModifier;
+import view.viewItems.NameChangeListener;
 import view.viewItems.ItemBox.ImageItem;
 import view.viewItems.ItemBox.ItemInfoContainer;
 import view.viewItems.ItemBox.ItemOptions;
@@ -30,6 +31,11 @@ import view.viewItems.ItemBox.ValueChangeListener;
 public class IntegerValueItem extends ValueItem {
 
 	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7482775502385665484L;
 
 	public CustomInteger getVal() {
 		return val;
@@ -67,11 +73,14 @@ public class IntegerValueItem extends ValueItem {
 	public IntegerValueItem(CustomInteger val) {
 		super(val);
 		this.val=val;
-		setModifyEvent(new ModifyIntegerValueEvent(Modification.SET,this));
-		setIftrigger(new IfIntegerTrigger(Comparison.EQUALS,this));
-		setComparetrigger(new CompareToOtherIntegerTrigger(Comparison.EQUALS,this));
+		setModifyEvent(new ModifyIntegerValueEvent(Modification.SET,this.getVal()));
+		setIftrigger(new IfIntegerTrigger(Comparison.EQUALS,this.getVal()));
+		setComparetrigger(new CompareToOtherIntegerTrigger(Comparison.EQUALS,this.getVal()));
+		setIfmodifier(new IfIntegerModifier(Comparison.EQUALS,this.getVal()));
+		
 		eventlist.add(modifyEvent);
 		eventlist.add(iftrigger);
+		eventlist.add(ifmodifier);
 		eventlist.add(comparetrigger);
 		// TODO Auto-generated constructor stub
 	}
@@ -127,6 +136,7 @@ public class IntegerValueItem extends ValueItem {
 		val.addValueChangeListener(ifIntegerTrigger);
 	}
 	
+
 
 	
 	

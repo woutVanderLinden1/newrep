@@ -66,6 +66,7 @@ import view.Items.Map.ViewMonster;
 import view.Items.Map.ViewSquare;
 import view.Items.Map.ViewTile;
 import view.Items.Map.ViewToken;
+import view.events.EventField;
 import view.events.EventItem;
 import view.events.TriggerItem;
 import view.viewItems.DoorItem;
@@ -455,13 +456,13 @@ public class InfoItemBox extends SubContainer implements SelectedChangeListener 
 					switch(vent.getKind()) {
 				
 					case EVENT:
-						ICommand command=new AddEventToTriggerFieldCommand((Event) vent.copy(),control.getSelected());
+						ICommand command=new AddEventToTriggerFieldCommand(new EventField((Event) vent,1),control.getSelected());
 						
 						control.performCommand(command);
 						break;
 				
 					case TRIGGER:
-						ICommand command2=new AddTriggerToTriggerFieldCommand((Trigger) vent.copy(),control.getSelected());
+						ICommand command2=new AddTriggerToTriggerFieldCommand((Trigger) vent,control.getSelected());
 						
 						control.performCommand(command2);
 						break;

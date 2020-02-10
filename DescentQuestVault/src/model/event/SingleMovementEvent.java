@@ -356,6 +356,6 @@ public class SingleMovementEvent extends Event implements StopAble{
 	}
 
 	public boolean isStopEvent() {
-		return true;
+		return false;
 	}
 }

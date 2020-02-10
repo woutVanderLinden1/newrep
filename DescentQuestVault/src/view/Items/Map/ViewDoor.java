@@ -186,6 +186,7 @@ public class ViewDoor extends MapItem implements SelectAble {
 	public void removeActivation(Activation activation) {
 		// TODO Auto-generated method stub
 		activations.remove(activation);
+		activationList.remove(activation);
 	}
 
 	@Override

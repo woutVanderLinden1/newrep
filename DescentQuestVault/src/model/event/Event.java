@@ -19,7 +19,7 @@ public abstract class Event extends Univent implements EventBase {
 	 * 
 	 */
 	private static final long serialVersionUID = -7060978165749543803L;
-	private transient ArrayList<ICommand> commands;
+	protected transient ArrayList<ICommand> commands;
 	
 	
 	public Event() {
