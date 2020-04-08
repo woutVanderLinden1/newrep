@@ -8,6 +8,10 @@ import model.event.Trigger;
 
 public class DefeatMonsterActivation extends MonsterActivation {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3752834546131040635L;
 	private DefeatMonsterTrigger trigger;
 
 	public DefeatMonsterActivation(GameMonster gameMonster) {
@@ -62,6 +66,12 @@ public class DefeatMonsterActivation extends MonsterActivation {
 	public void setTrigger(Trigger trig) {
 		// TODO Auto-generated method stub
 		trigger=(DefeatMonsterTrigger) trig;
+	}
+
+	@Override
+	public Activation clone() {
+		// TODO Auto-generated method stub
+		return new DefeatMonsterActivation(trigger);
 	}
 
 }

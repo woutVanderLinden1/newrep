@@ -47,4 +47,10 @@ public class DefeatActivation extends Activation {
 		defeattrigger=(DefeatHeroTrigger) trig;
 	}
 
+	@Override
+	public Activation clone() {
+		// TODO Auto-generated method stub
+		return new DefeatActivation(defeated);
+	}
+
 }

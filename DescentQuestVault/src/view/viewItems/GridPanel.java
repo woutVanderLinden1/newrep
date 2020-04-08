@@ -1119,15 +1119,13 @@ private ArrayList<ViewTileExit> getConnected(int x, int y,ViewSquare square,Tile
 			
 		
 			//only if holded is a mapitem do the thingie
-			System.out.println("mouseevent got");
+			//System.out.println("mouseevent got");
 			Point point= new Point(p.x-this.getX(),p.y-this.getY());
 			
 			MouseEvent convertMouseEvent = SwingUtilities.convertMouseEvent(e.getComponent(), e, pan);
 			
 			pan.dispatchEvent(convertMouseEvent);
-			for(MouseListener listen:this.getMouseListeners()) {
-				System.out.println(listen);
-			}
+			
 			/*
 			
 				switch(e.getID()) {

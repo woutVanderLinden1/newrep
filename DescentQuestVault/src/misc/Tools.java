@@ -154,4 +154,11 @@ public class Tools {
 		}
 		return null;
 	}
+
+
+
+	public static int getRandomInt(int minvalue, int maxvalue) {
+		// TODO Auto-generated method stub
+		return random.nextInt(maxvalue-minvalue)+minvalue;
+	}
 }

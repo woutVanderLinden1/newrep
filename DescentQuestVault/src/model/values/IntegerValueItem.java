@@ -67,9 +67,18 @@ public class IntegerValueItem extends ValueItem {
 	private IfIntegerTrigger iftrigger;
 	private IfIntegerModifier ifmodifier;
 	private CompareToOtherIntegerTrigger comparetrigger;
+	private ModifyToRandomInteger modifyToRandomEvent;
 
 	//private WhileBooleanTrigger whiletrigger;
 	
+	public ModifyToRandomInteger getModifyToRandomEvent() {
+		return modifyToRandomEvent;
+	}
+
+	public void setModifyToRandomEvent(ModifyToRandomInteger modifyToRandomEvent) {
+		this.modifyToRandomEvent = modifyToRandomEvent;
+	}
+
 	public IntegerValueItem(CustomInteger val) {
 		super(val);
 		this.val=val;
@@ -77,14 +86,16 @@ public class IntegerValueItem extends ValueItem {
 		setIftrigger(new IfIntegerTrigger(Comparison.EQUALS,this.getVal()));
 		setComparetrigger(new CompareToOtherIntegerTrigger(Comparison.EQUALS,this.getVal()));
 		setIfmodifier(new IfIntegerModifier(Comparison.EQUALS,this.getVal()));
-		
+		setModifyToRandomEvent(new ModifyToRandomInteger(Modification.SET,this.getVal()));
 		eventlist.add(modifyEvent);
 		eventlist.add(iftrigger);
 		eventlist.add(ifmodifier);
 		eventlist.add(comparetrigger);
+		eventlist.add(modifyToRandomEvent);
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	public CompareToOtherIntegerTrigger getComparetrigger() {
 		return comparetrigger;
 	}

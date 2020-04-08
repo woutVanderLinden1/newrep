@@ -8,11 +8,20 @@ import view.game.GameDoor;
 import view.game.GameToken;
 
 public class SearchTokenActivation extends Activation {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8128461626674368081L;
 	private Trigger trigger;
 	
 	
 	public SearchTokenActivation(ViewToken viewToken) {
 		trigger=((ViewSearchToken) viewToken).getSearchTokenTrigger();
+	}
+
+	public SearchTokenActivation(Trigger trigger2) {
+		// TODO Auto-generated constructor stub
+		trigger=trigger2;
 	}
 
 	public void trigger() {
@@ -41,5 +50,11 @@ public class SearchTokenActivation extends Activation {
 	public void setTrigger(Trigger trig) {
 		// TODO Auto-generated method stub
 		trigger=trig;
+	}
+
+	@Override
+	public Activation clone() {
+		// TODO Auto-generated method stub
+		return new SearchTokenActivation(trigger);
 	}
 }

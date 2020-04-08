@@ -47,5 +47,10 @@ public class EndTurnActivation extends Activation {
 		// TODO Auto-generated method stub
 		this.trig=(EndTurnTrigger) trig;
 	}
+	@Override
+	public Activation clone() {
+		// TODO Auto-generated method stub
+		return new EndTurnActivation(hero);
+	}
 
 }

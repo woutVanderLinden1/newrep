@@ -532,7 +532,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 				BaseField field=newfields.get(i);
 				if(field!=null) {
 					if(SubContainer.isMouseWithinComponent(field)) {
-						System.out.println("field is found "+field);
+						//System.out.println("field is found "+field);
 						field.sendEvent(e,point,selectAble);
 						found =true;
 					}
@@ -541,7 +541,7 @@ public class EventBox extends SubContainer implements ReleasAble,TilePlaceListen
 				
 			}
 			if(!found) {
-				System.out.println("field is not found");
+				//System.out.println("field is not found");
 				MouseEvent convertMouseEvent = SwingUtilities.convertMouseEvent(e.getComponent(), e, this);
 				
 				this.dispatchEvent(convertMouseEvent);

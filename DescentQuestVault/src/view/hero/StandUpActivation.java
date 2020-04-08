@@ -51,6 +51,11 @@ public class StandUpActivation extends Activation  {
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public Activation clone() {
+		// TODO Auto-generated method stub
+		return new StandUpActivation(defeated);
+	}
 
 	
 

@@ -18,4 +18,6 @@ public abstract  class Activation  implements Serializable{
 
 	public abstract Trigger getTrigger();
 	public abstract void setTrigger(Trigger trig);
+	
+	public abstract Activation clone();
 }

@@ -39,7 +39,8 @@ public abstract class MapItem implements SelectAble, Serializable, EventHolder,A
 	protected ArrayList<ViewSquare> occupyingSquares;
 	protected ArrayList<Activation> activations=new ArrayList<Activation>();
 
-	
+	private boolean needsrescale=true;
+	private Image todraw;
 	
 	
 	protected MapItem(ImageItem image, ViewSquare square, int i, int j) {
@@ -218,6 +219,7 @@ public abstract class MapItem implements SelectAble, Serializable, EventHolder,A
 	public void rotate() {
 		// TODO Auto-generated method stub
 		this.item.rotate();
+		this.needsrescale=true;
 		switch (item.getAngle()) {
 		case 0:
 		widthheight=new Point((int)(scalefactor*item.getScaleWidth()),(int)( scalefactor*item.getScaleHeight()));
@@ -248,28 +250,50 @@ public abstract class MapItem implements SelectAble, Serializable, EventHolder,A
 	
 	public void draw(Graphics g, SubContainer jPanel) {
 		
-		Image todraw=null;
-		int sw=GridPanel.squareWidth;
-		switch (item.getAngle()) {
-		case 0:
-			todraw=item.getImage().getScaledInstance( (int)(scalefactor*item.getScaleWidth()),(int)( scalefactor*item.getScaleHeight()),  java.awt.Image.SCALE_SMOOTH ) ;
-			g.drawImage(todraw,sw-todraw.getWidth(null)/2+(int) point.getX()+item.getLeftOff(),(int) point.getY()+item.getTopOff(),(ImageObserver) jPanel);
+		if(this.needsrescale&&todraw!=null) {
+			int sw=GridPanel.squareWidth;
+			switch (item.getAngle()) {
+			case 0:
+				g.drawImage(todraw,sw-todraw.getWidth(null)/2+(int) point.getX()+item.getLeftOff(),(int) point.getY()+item.getTopOff(),(ImageObserver) jPanel);
+				break;
+			case 90:
+				g.drawImage(todraw,(int) point.getX()+item.getBottomOff(),sw-todraw.getHeight(null)/2+(int) point.getY()+item.getLeftOff(),(ImageObserver) jPanel);
+				break;
+			case 180:
+				g.drawImage(todraw,sw-todraw.getWidth(null)/2+(int) point.getX()+item.getRightOff(),(int) point.getY()+item.getBottomOff(),(ImageObserver) jPanel);
 			break;
-		case 90:
-			todraw=item.getImage().getScaledInstance( (int)(scalefactor*item.getScaleHeight()),(int)( scalefactor*item.getScaleWidth()),  java.awt.Image.SCALE_SMOOTH ) ;
-			g.drawImage(todraw,(int) point.getX()+item.getBottomOff(),sw-todraw.getHeight(null)/2+(int) point.getY()+item.getLeftOff(),(ImageObserver) jPanel);
-			break;
-		case 180:
-			todraw=item.getImage().getScaledInstance( (int)(scalefactor*item.getScaleWidth()),(int)( scalefactor*item.getScaleHeight()),  java.awt.Image.SCALE_SMOOTH ) ;
-			g.drawImage(todraw,sw-todraw.getWidth(null)/2+(int) point.getX()+item.getRightOff(),(int) point.getY()+item.getBottomOff(),(ImageObserver) jPanel);
-		break;
-		case 270:
-			todraw=item.getImage().getScaledInstance( (int)(scalefactor*item.getScaleHeight()),(int)( scalefactor*item.getScaleWidth()),  java.awt.Image.SCALE_SMOOTH ) ;
-			g.drawImage(todraw,(int) point.getX()+item.getTopOff(),sw-todraw.getHeight(null)/2+(int) point.getY()+item.getRightOff(),(ImageObserver) jPanel);
-			break;
-		
+			case 270:
+				g.drawImage(todraw,(int) point.getX()+item.getTopOff(),sw-todraw.getHeight(null)/2+(int) point.getY()+item.getRightOff(),(ImageObserver) jPanel);
+				break;
 			
+				
+			}
 		}
+		else {
+			int sw=GridPanel.squareWidth;
+			switch (item.getAngle()) {
+			case 0:
+				todraw=item.getImage().getScaledInstance( (int)(scalefactor*item.getScaleWidth()),(int)( scalefactor*item.getScaleHeight()),  java.awt.Image.SCALE_SMOOTH ) ;
+				g.drawImage(todraw,sw-todraw.getWidth(null)/2+(int) point.getX()+item.getLeftOff(),(int) point.getY()+item.getTopOff(),(ImageObserver) jPanel);
+				break;
+			case 90:
+				todraw=item.getImage().getScaledInstance( (int)(scalefactor*item.getScaleHeight()),(int)( scalefactor*item.getScaleWidth()),  java.awt.Image.SCALE_SMOOTH ) ;
+				g.drawImage(todraw,(int) point.getX()+item.getBottomOff(),sw-todraw.getHeight(null)/2+(int) point.getY()+item.getLeftOff(),(ImageObserver) jPanel);
+				break;
+			case 180:
+				todraw=item.getImage().getScaledInstance( (int)(scalefactor*item.getScaleWidth()),(int)( scalefactor*item.getScaleHeight()),  java.awt.Image.SCALE_SMOOTH ) ;
+				g.drawImage(todraw,sw-todraw.getWidth(null)/2+(int) point.getX()+item.getRightOff(),(int) point.getY()+item.getBottomOff(),(ImageObserver) jPanel);
+			break;
+			case 270:
+				todraw=item.getImage().getScaledInstance( (int)(scalefactor*item.getScaleHeight()),(int)( scalefactor*item.getScaleWidth()),  java.awt.Image.SCALE_SMOOTH ) ;
+				g.drawImage(todraw,(int) point.getX()+item.getTopOff(),sw-todraw.getHeight(null)/2+(int) point.getY()+item.getRightOff(),(ImageObserver) jPanel);
+				break;
+			
+				
+			}
+			this.needsrescale=false;
+		}
+		
 	}
 
 	public Point getPointOff() {

@@ -7,6 +7,10 @@ import view.game.MonsterActivation;
 
 public class ForceMonsterActivation extends MonsterActivation {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID =  1165852589324447435L;
 	private MonsterTurnTrigger trigger;
 	
 	public ForceMonsterActivation(MonsterTurnTrigger turnTrigger) {
@@ -42,6 +46,13 @@ public class ForceMonsterActivation extends MonsterActivation {
 	public void setTrigger(Trigger trig) {
 		// TODO Auto-generated method stub
 		this.trigger=(MonsterTurnTrigger) trig;
+	}
+
+
+	@Override
+	public Activation clone() {
+		// TODO Auto-generated method stub
+		return new ForceMonsterActivation(trigger);
 	}
 
 }

@@ -33,7 +33,7 @@ public class MainStackManager extends StackManager {
 		if(toPerform==null){
 			return toPerform;
 		}
-		System.out.println("received command: "+ toPerform.getClass().getName() );
+		//System.out.println("received command: "+ toPerform.getClass().getName() );
 		topChanged=false;
 		toPerform.setMainStackManager(this);
 		toPerform.setView(view);

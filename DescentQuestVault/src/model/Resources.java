@@ -53,7 +53,8 @@ public class Resources {
 			new Ettin(),
 			new Elemental(),
 			new ShadowDragon(),
-			new Tentacle()
+			new Tentacle(),
+			new Sword()
 			
 			));
 	

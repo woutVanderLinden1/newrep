@@ -132,7 +132,7 @@ public class GridMouseListener implements MouseListener,MouseMotionListener{
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
 		
-		System.out.println("griddragged");
+		//System.out.println("griddragged");
 		UserInputController control=UserInputController.getController();
 		ViewSquare tile=container.getSquareAt(arg0.getX(), arg0.getY());
 		ICommand command=null;
@@ -145,7 +145,7 @@ public class GridMouseListener implements MouseListener,MouseMotionListener{
 		}
 		if(command==null) {
 			if(tile!=null) {
-				System.out.println("this hapens "+tile);
+				//System.out.println("this hapens "+tile);
 				container.moveMap(origin,arg0);
 			}
 		

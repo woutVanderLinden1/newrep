@@ -18,12 +18,14 @@ import javax.swing.SwingConstants;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import ItemEditor.ActionTaker;
 import activation.SearchTokenActivation;
 import controller.UserInputController;
 import controller.command.AddActivationToMapItemCommand;
 import controller.command.RemoveActivationFromMapItemCommand;
 import controller.commands.AddEventToTriggerFieldCommand;
 import controller.commands.AddTriggerToTriggerFieldCommand;
+import controller.commands.select.SelectCommand;
 import frame.SubContainer;
 import misc.ActivateAble;
 import model.Activation;
@@ -37,6 +39,7 @@ import model.event.Trigger;
 import model.event.Univent;
 import model.event.advancedevents.PlaceSpecialMonsterEvent;
 import model.event.advancedevents.SearchEffectEvent;
+import model.event.modifier.Modifier;
 import model.search.BasicToken;
 import view.game.MonsterActivation;
 import view.viewItems.TokenItem;
@@ -45,6 +48,14 @@ import view.viewItems.ItemBox.ItemInfoContainer;
 import view.viewItems.ItemBox.SelectKind;
 
 public class ViewToken extends MapItem {
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3227645467329891231L;
+
+
 	protected PlaceSearchTokenEvent placeevent;
 	
 
@@ -54,6 +65,16 @@ public class ViewToken extends MapItem {
 	protected TokenMonster asmonster;
 	private TokenItem token;
 	protected PlaceSpecialMonsterEvent placeMonsterEv;
+	public PlaceSpecialMonsterEvent getPlaceMonsterEv() {
+		return placeMonsterEv;
+	}
+
+
+	public void setPlaceMonsterEv(PlaceSpecialMonsterEvent placeMonsterEv) {
+		this.placeMonsterEv = placeMonsterEv;
+	}
+
+
 	protected boolean isMonster=false;
 	
 	
@@ -181,8 +202,76 @@ public class ViewToken extends MapItem {
 	public void InitialiseActivation( ItemInfoContainer itemInfoText) {
 		addNewActivationCreator(itemInfoText);
 		addActivationsShower(itemInfoText);
+		itemInfoText.addButton("Copy", "Make", new ActionTaker() {
+
+			@Override
+			public void perform(Object value) {
+				ViewToken token=copy();
+				SelectCommand comm=new SelectCommand(token);
+				UserInputController control=UserInputController.getController();
+				control.performCommand(comm);
+			}
+			
+		});
 	}
 	
+
+	protected ViewToken copy() {
+		//copies a viewtoken
+		//with all activations
+		//and all things in it referring to the new one.
+		ViewToken copy=new ViewToken((BasicToken) token.getItem());
+		for(Activation act:activationList) {
+			copy.addActivation(act.clone());
+			this.makeTriggerIntoThis(copy,act.getTrigger());
+			
+		}
+		return copy;
+	}
+
+
+	private void makeTriggerIntoThis(ViewToken copy, Trigger trigger) {
+		ArrayList<Univent> vents=trigger.getUnivents();
+		for(int i=0;i<vents.size();i++) {
+			Univent vent=vents.get(i);
+			switch(vent.getKind()) {
+			case EVENT:
+				Event event=(Event) vent;
+				//if one of the two of this replace with the thing of the copy
+				if(event==removeevent) {
+					trigger.removeEvent(event);
+					trigger.addEvent(copy.getRemoveSearchTokenEvent());
+				}
+				/*
+				if(event==placeevent) {
+					trigger.removeEvent(event);
+					trigger.addEvent(copy.getPlaceSearchTokenEvent());
+				}
+				*/
+				if(event==placeMonsterEv) {
+					trigger.removeEvent(event);
+					trigger.addEvent(copy.getPlaceMonsterEv());
+				}
+				break;
+			
+			case MODIFIER:
+				Modifier newmodifier=(Modifier) vent;
+				this.makeTriggerIntoThis(copy, newmodifier);
+				break;
+			
+			case TRIGGER:
+				Trigger newtrigger=(Modifier) vent;
+				this.makeTriggerIntoThis(copy, newtrigger);
+				break;
+			
+			default:
+				break;
+			
+			}
+		}
+		
+	}
+
 
 	private void addActivationsShower(ItemInfoContainer itemInfoText) {
 		for(Activation act:activations)  {
@@ -303,6 +392,11 @@ public class ViewToken extends MapItem {
       lab.setHorizontalAlignment(SwingConstants.RIGHT);
       
       itemInfoText.addPreText(lab,field);
+      
+      
+      //we need something that allows it to copy it but replace allinstances of special functions that 
+      //refer to this replaced with the new token
+      
 	}
 
 	private void addNewActivationCreator(ItemInfoContainer itemInfoText) {

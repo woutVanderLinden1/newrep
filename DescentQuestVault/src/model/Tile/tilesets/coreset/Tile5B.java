@@ -20,7 +20,7 @@ public class Tile5B extends InDoorTile {
 		shape=mat;
 		exits.add(new TileExit(new Point(0,2),new Point(0,1),Direction.LEFT));
 		exits.add(new TileExit(new Point(5,1),new Point(5,2),Direction.RIGHT));
-		exits.add(new TileExit(new Point(3,5),new Point(2,5),Direction.DOWN));
+		exits.add(new TileExit(new Point(3,3),new Point(2,3),Direction.DOWN));
 		this.setOrigxheight(6);
 		this.setOrigyheight(4);
 		

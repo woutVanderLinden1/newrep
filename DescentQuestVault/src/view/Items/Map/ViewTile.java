@@ -53,10 +53,16 @@ import view.viewItems.ItemBox.ViewTileExit;
 
 public class ViewTile extends MapItem implements SelectAble {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID =5604632238445610576L;
+
 	private static int scalefactor=275;
 	
 	protected ArrayList<MonsterActivation> activationList=new ArrayList<MonsterActivation>();
-	
+	private Image todraw;
+	private boolean needsrescale=true;
 	
 	private ArrayList<ViewTile> connectedTiles=new ArrayList<ViewTile>();
 	private ArrayList<ViewTileExit> exits;
@@ -120,47 +126,69 @@ public class ViewTile extends MapItem implements SelectAble {
 
 	@Override
 	public void draw(Graphics g, SubContainer jPanel) {
-		Image todraw=null;
-		int extrax=0;
-		int extray=0;
-		tileit=((TileItem) item);
-		ArrayList<TileExit> exits=tileit.getExits();
-		if(hasUpOrDownDirection(exits)) {
-			extray=20;
-		}
-		if(hasUpAndDownDirection(exits)) {
-			extray=40;
-		}
-		if(hasRightOrLeftDirection(exits)) {
-			extrax=20;
-		}
-		if(hasRightAndLeftDirection(exits)) {
-			extrax=40;
-		}
-		
-		
-		double xheight=tileit.getXheight()*Tools.scale+extrax;
-		double yheight=tileit.getYheight()*Tools.scale+extray;
-		switch (item.getAngle()) {
-		case 0:
+		if(!this.needsrescale&&todraw!=null) {
+			switch (item.getAngle()) {
+			case 0:
+				
+				g.drawImage(todraw,(int) point.getX()+item.getLeftOff(),(int) point.getY()+item.getTopOff(),(ImageObserver) jPanel);
+				break;
+			case 90:
+				g.drawImage(todraw,(int) point.getX()+item.getBottomOff(),(int) point.getY()+item.getLeftOff(),(ImageObserver) jPanel);
+				break;
+			case 180:
+				g.drawImage(todraw,(int) point.getX()+item.getRightOff(),(int) point.getY()+item.getBottomOff(),(ImageObserver) jPanel);
+			break;
+			case 270:
+				g.drawImage(todraw,(int) point.getX()+item.getTopOff(),(int) point.getY()+item.getRightOff(),(ImageObserver) jPanel);
+				break;
 			
-			todraw=item.getImage().getScaledInstance( (int)(xheight),(int)( yheight),  java.awt.Image.SCALE_SMOOTH ) ;
-			g.drawImage(todraw,(int) point.getX()+item.getLeftOff(),(int) point.getY()+item.getTopOff(),(ImageObserver) jPanel);
-			break;
-		case 90:
-			todraw=item.getImage().getScaledInstance( (int)(xheight),(int)( yheight),  java.awt.Image.SCALE_SMOOTH ) ;
-			g.drawImage(todraw,(int) point.getX()+item.getBottomOff(),(int) point.getY()+item.getLeftOff(),(ImageObserver) jPanel);
-			break;
-		case 180:
-			todraw=item.getImage().getScaledInstance( (int)(xheight),(int)( yheight),  java.awt.Image.SCALE_SMOOTH ) ;
-			g.drawImage(todraw,(int) point.getX()+item.getRightOff(),(int) point.getY()+item.getBottomOff(),(ImageObserver) jPanel);
-		break;
-		case 270:
-			todraw=item.getImage().getScaledInstance( (int)(xheight),(int)( yheight),  java.awt.Image.SCALE_SMOOTH ) ;
-			g.drawImage(todraw,(int) point.getX()+item.getTopOff(),(int) point.getY()+item.getRightOff(),(ImageObserver) jPanel);
-			break;
-		
+				
+			}
+		}
+		else {
+			int extrax=0;
+			int extray=0;
+			tileit=((TileItem) item);
+			ArrayList<TileExit> exits=tileit.getExits();
+			if(hasUpOrDownDirection(exits)) {
+				extray=20;
+			}
+			if(hasUpAndDownDirection(exits)) {
+				extray=40;
+			}
+			if(hasRightOrLeftDirection(exits)) {
+				extrax=20;
+			}
+			if(hasRightAndLeftDirection(exits)) {
+				extrax=40;
+			}
+			//rescale in front so we don't have to rescale every paint!!!
 			
+			
+			double xheight=tileit.getXheight()*Tools.scale+extrax;
+			double yheight=tileit.getYheight()*Tools.scale+extray;
+			switch (item.getAngle()) {
+			case 0:
+				
+				todraw=item.getImage().getScaledInstance( (int)(xheight),(int)( yheight),  java.awt.Image.SCALE_SMOOTH ) ;
+				g.drawImage(todraw,(int) point.getX()+item.getLeftOff(),(int) point.getY()+item.getTopOff(),(ImageObserver) jPanel);
+				break;
+			case 90:
+				todraw=item.getImage().getScaledInstance( (int)(xheight),(int)( yheight),  java.awt.Image.SCALE_SMOOTH ) ;
+				g.drawImage(todraw,(int) point.getX()+item.getBottomOff(),(int) point.getY()+item.getLeftOff(),(ImageObserver) jPanel);
+				break;
+			case 180:
+				todraw=item.getImage().getScaledInstance( (int)(xheight),(int)( yheight),  java.awt.Image.SCALE_SMOOTH ) ;
+				g.drawImage(todraw,(int) point.getX()+item.getRightOff(),(int) point.getY()+item.getBottomOff(),(ImageObserver) jPanel);
+			break;
+			case 270:
+				todraw=item.getImage().getScaledInstance( (int)(xheight),(int)( yheight),  java.awt.Image.SCALE_SMOOTH ) ;
+				g.drawImage(todraw,(int) point.getX()+item.getTopOff(),(int) point.getY()+item.getRightOff(),(ImageObserver) jPanel);
+				break;
+			
+				
+			}
+			needsrescale=false;
 		}
 		
 		
@@ -303,6 +331,7 @@ public class ViewTile extends MapItem implements SelectAble {
 		if(item!=null) {
 			this.getTileItem().setAngle(i);
 		}
+		this.needsrescale=true;
 	
 	}
 	

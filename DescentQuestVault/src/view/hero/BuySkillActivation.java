@@ -42,4 +42,10 @@ public class BuySkillActivation extends Activation {
 
 	}
 
+	@Override
+	public Activation clone() {
+		// TODO Auto-generated method stub
+		return new BuySkillActivation(hero);
+	}
+
 }

@@ -39,6 +39,7 @@ import view.Items.Map.MapItem;
 import view.Items.Map.ViewDoor;
 import view.Items.Map.ViewSquare;
 import view.Items.Map.ViewTile;
+import view.Items.Map.ViewToken;
 import view.events.BaseField;
 import view.events.EventField;
 import view.events.EventItem;
@@ -343,6 +344,7 @@ public class Analyzer {
 	public ICommand generateSelectCommand(int mousePressed,IView view ,int x,int y,MouseEvent ev) {
 		//should initialise selectcommand if selected area is not empty
 		SelectAble selected=view.getSelected();
+		System.out.println(selected.getKind());
 		if(view.hasSelected()) {
 			switch(selected.getKind()) {
 			case TRIGGER:
@@ -366,8 +368,15 @@ public class Analyzer {
 			case VIEWTILE:
 				ViewTile tile=(ViewTile) selected;
 				return new StartTileDragCommand(tile,x,y,ev.getXOnScreen(),ev.getYOnScreen());
+			case VIEWTOKEN:
+				ViewToken token=(ViewToken) selected;
+				return new StartDragElementCommand(token,x,y,ev.getXOnScreen(),ev.getYOnScreen(),null);
+				
+				//return new StartViewItemDragCommand(token,x,y,ev.getXOnScreen(),ev.getYOnScreen());
+		
 			case DOOR:
 			case TOKEN:
+				
 			case MONSTER:
 				return new StartDragCommand(selected,x,y);
 			case STORYELEMENT:

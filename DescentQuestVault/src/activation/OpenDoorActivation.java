@@ -10,11 +10,20 @@ import view.game.GameDoor;
 public class OpenDoorActivation extends Activation {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8948411201192434462L;
 	private Trigger opendoortrigger;
 	
 	public OpenDoorActivation(ViewDoor viewDoor) {
 		opendoortrigger=viewDoor.getOpenDoorTrigger();
 		//this.setName
+	}
+
+	public OpenDoorActivation(Trigger opendoortrigger2) {
+		// TODO Auto-generated constructor stub
+		opendoortrigger=opendoortrigger2;
 	}
 
 	public void trigger() {
@@ -43,6 +52,12 @@ public class OpenDoorActivation extends Activation {
 	public void setTrigger(Trigger trig) {
 		// TODO Auto-generated method stub
 		opendoortrigger=trig;
+	}
+
+	@Override
+	public Activation clone() {
+		// TODO Auto-generated method stub
+		return new OpenDoorActivation(opendoortrigger);
 	}
 
 	

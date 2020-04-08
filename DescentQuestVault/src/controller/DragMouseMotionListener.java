@@ -51,9 +51,9 @@ public class DragMouseMotionListener implements MouseListener,MouseMotionListene
 		
 		UserInputController control=UserInputController.getController();
 		control.dragMouseEvent(e.getXOnScreen(),e.getYOnScreen());
-		control.deactivateAWTEventListeners();
+		//control.deactivateAWTEventListeners();
 		control.sendDragListenerEvent(e);
-		control.activateAWTEventListeners();
+		//control.activateAWTEventListeners();
 		
 	}
 
@@ -75,7 +75,7 @@ public class DragMouseMotionListener implements MouseListener,MouseMotionListene
 		//System.out.println("event happened dispatch "+arg0.getID());
 		//System.out.println(MouseEvent.MOUSE_RELEASED);
 		
-		System.out.println(arg0.getID());
+	//	System.out.println(arg0.getID());
 		switch(arg0.getID()) {
 			case MouseEvent.MOUSE_RELEASED:
 				//System.out.println("it works");
@@ -108,19 +108,19 @@ public class DragMouseMotionListener implements MouseListener,MouseMotionListene
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("event happened");
+		//System.out.println("event happened");
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("event happened");
+		//System.out.println("event happened");
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("event happened");
+		//System.out.println("event happened");
 	}
 
 	@Override
